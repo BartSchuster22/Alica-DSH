@@ -62,7 +62,7 @@ RUN apt-get update -qq \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 STOPSIGNAL SIGRTMIN+3
-CMD ["/sbin/init"]
+CMD ["/lib/systemd/systemd"]
 EOF
 docker build -q -t alica-d2-debian13-systemd -f "$TOOLS/Dockerfile.debian13" "$TOOLS" >/dev/null
 docker run -d --privileged --cgroupns=private \
