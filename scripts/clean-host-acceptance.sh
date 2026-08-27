@@ -91,7 +91,7 @@ run_debian() {
 
 INSTALL='/bundle/alicactl install --manifest /bundle/manifest.json --signature /bundle/manifest.signature.json --public-key /bundle/public-key.json --request /bundle/install-request.json --json'
 
-run_debian "printf 'OS='; . /etc/os-release; printf '%s-%s\\n' \"\$ID\" \"\$VERSION_ID\"; uname -m; nproc; python3 -c 'import os; print(os.sysconf(\"SC_PAGE_SIZE\")*os.sysconf(\"SC_PHYS_PAGES\"))'; df -B1 '$ROOT'; docker version --format '{{.Server.Version}}'; docker compose version --short; ps -p 1 -o comm=" \
+run_debian "printf 'OS='; . /etc/os-release; printf '%s-%s\\n' \"\$ID\" \"\$VERSION_ID\"; uname -m; nproc; python3 -c 'import os; print(os.sysconf(\"SC_PAGE_SIZE\")*os.sysconf(\"SC_PHYS_PAGES\"))'; df -B1 '$ROOT'; docker version --format '{{.Server.Version}}'; docker compose version --short; cat /proc/1/comm" \
   > "$EVIDENCE/clean-host-facts.txt"
 
 run_debian "$INSTALL" | tee "$EVIDENCE/install-result.json"
