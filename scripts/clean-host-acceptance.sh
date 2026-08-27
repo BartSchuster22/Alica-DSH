@@ -7,10 +7,12 @@ TOOLS="$GITHUB_WORKSPACE/.acceptance-tools"
 EVIDENCE="$GITHUB_WORKSPACE/acceptance-evidence"
 NETWORK=alica-d2-clean-host
 DIND=alica-d2-dind
+CONTROL=alica-d2-debian13
 HTTP_PORT=38087
 HTTPS_PORT=38450
 
 cleanup() {
+  docker rm -f "$CONTROL" >/dev/null 2>&1 || true
   docker rm -f "$DIND" >/dev/null 2>&1 || true
   docker network rm "$NETWORK" >/dev/null 2>&1 || true
   sudo umount "$ROOT" >/dev/null 2>&1 || true
@@ -52,28 +54,48 @@ for _ in $(seq 1 60); do
 done
 docker exec "$DIND" docker info >/dev/null
 
+cat > "$TOOLS/Dockerfile.debian13" <<'EOF'
+FROM debian:13-slim
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq \
+ && apt-get install -y -qq --no-install-recommends ca-certificates systemd python3 >/dev/null \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]
+EOF
+docker build -q -t alica-d2-debian13-systemd -f "$TOOLS/Dockerfile.debian13" "$TOOLS" >/dev/null
+docker run -d --privileged --cgroupns=private \
+  --name "$CONTROL" \
+  --network "$NETWORK" \
+  --tmpfs /run --tmpfs /run/lock \
+  -e DOCKER_HOST=tcp://alica-d2-dind:2375 \
+  -e ALICACTL_HTTP_PORT="$HTTP_PORT" \
+  -e ALICACTL_HTTPS_PORT="$HTTPS_PORT" \
+  -v "$GITHUB_WORKSPACE/release/d2-candidate:/bundle:ro" \
+  -v "$TOOLS/docker-cli:/usr/local/bin/docker:ro" \
+  -v "$TOOLS/root/.docker/cli-plugins/docker-compose:/usr/local/lib/docker/cli-plugins/docker-compose:ro" \
+  -v "$ROOT:$ROOT" \
+  alica-d2-debian13-systemd >/dev/null
+for _ in $(seq 1 60); do
+  if docker exec "$CONTROL" systemctl is-system-running >/dev/null 2>&1; then break; fi
+  state=$(docker exec "$CONTROL" systemctl is-system-running 2>/dev/null || true)
+  if [ "$state" = degraded ]; then break; fi
+  sleep 2
+done
+docker exec "$CONTROL" sh -c 'test "$(cat /proc/1/comm)" = systemd'
+
 run_debian() {
-  docker run --rm \
-    --network "$NETWORK" \
-    -e DOCKER_HOST=tcp://alica-d2-dind:2375 \
-    -e ALICACTL_HTTP_PORT="$HTTP_PORT" \
-    -e ALICACTL_HTTPS_PORT="$HTTPS_PORT" \
-    -v "$GITHUB_WORKSPACE/release/d2-candidate:/bundle:ro" \
-    -v "$TOOLS/docker-cli:/usr/local/bin/docker:ro" \
-    -v "$TOOLS/root:/root:ro" \
-    -v "$ROOT:$ROOT" \
-    debian:13-slim \
-    bash -lc "$1"
+  docker exec "$CONTROL" bash -lc "$1"
 }
 
-COMMON='apt-get update -qq && apt-get install -y -qq --no-install-recommends ca-certificates systemd >/dev/null'
 INSTALL='/bundle/alicactl install --manifest /bundle/manifest.json --signature /bundle/manifest.signature.json --public-key /bundle/public-key.json --request /bundle/install-request.json --json'
 
-run_debian "$COMMON; printf 'OS='; . /etc/os-release; printf '%s-%s\\n' \"\$ID\" \"\$VERSION_ID\"; uname -m; nproc; python3 -c 'import os; print(os.sysconf(\"SC_PAGE_SIZE\")*os.sysconf(\"SC_PHYS_PAGES\"))' 2>/dev/null || true; df -B1 '$ROOT'; docker version --format '{{.Server.Version}}'; docker compose version --short" \
+run_debian "printf 'OS='; . /etc/os-release; printf '%s-%s\\n' \"\$ID\" \"\$VERSION_ID\"; uname -m; nproc; python3 -c 'import os; print(os.sysconf(\"SC_PAGE_SIZE\")*os.sysconf(\"SC_PHYS_PAGES\"))'; df -B1 '$ROOT'; docker version --format '{{.Server.Version}}'; docker compose version --short; ps -p 1 -o comm=" \
   > "$EVIDENCE/clean-host-facts.txt"
 
-run_debian "$COMMON; $INSTALL" | tee "$EVIDENCE/install-result.json"
-run_debian "$COMMON; $INSTALL" | tee "$EVIDENCE/noop-result.json"
+run_debian "$INSTALL" | tee "$EVIDENCE/install-result.json"
+run_debian "$INSTALL" | tee "$EVIDENCE/noop-result.json"
 
 DIND_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$DIND")
 docker run --rm --network "$NETWORK" curlimages/curl:8.16.0 \
