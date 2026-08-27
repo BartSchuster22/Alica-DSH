@@ -1,0 +1,54 @@
+name: Secure one-time GHCR credential handoff
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - handoff/host-public.pem
+      - .github/workflows/secure-ghcr-handoff.yml
+
+permissions:
+  contents: write
+
+jobs:
+  encrypt:
+    if: github.repository == 'BartSchuster22/Alica-DSH'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Encrypt repository secret for the D2 publisher host
+        shell: bash
+        env:
+          GHCR_PUBLISH_TOKEN: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$GHCR_PUBLISH_TOKEN"
+          umask 077
+          printf '%s' "$GHCR_PUBLISH_TOKEN" > /tmp/ghcr-token.txt
+          trap 'rm -f /tmp/ghcr-token.txt /tmp/ghcr-token.enc' EXIT
+          openssl pkeyutl -encrypt \
+            -pubin \
+            -inkey handoff/host-public.pem \
+            -pkeyopt rsa_padding_mode:oaep \
+            -pkeyopt rsa_oaep_md:sha256 \
+            -in /tmp/ghcr-token.txt \
+            -out /tmp/ghcr-token.enc
+          base64 -w 0 /tmp/ghcr-token.enc > /tmp/ghcr-token.enc.b64
+
+      - name: Publish ciphertext-only handoff branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'rm -f /tmp/ghcr-token.enc.b64' EXIT
+          git config user.name 'Alica-DSH secure handoff'
+          git config user.email 'actions@users.noreply.github.com'
+          git checkout --orphan credential-handoff
+          git rm -rf .
+          mkdir -p handoff
+          cp /tmp/ghcr-token.enc.b64 handoff/ghcr-token.enc.b64
+          printf '%s\n' 'One-time RSA-OAEP-SHA256 ciphertext. No plaintext credential is stored in Git.' > handoff/README.md
+          git add handoff
+          git commit -m 'chore: publish encrypted one-time GHCR handoff'
+          git push --force origin HEAD:credential-handoff
