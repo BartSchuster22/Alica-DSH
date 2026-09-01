@@ -15,8 +15,8 @@ SOURCE=UNIFY/'dsh/alicactl/testdata/d3-contract.manifest.json'
 BINARY=Path('/tmp/alicactl-d3')
 OUT=ROOT/'release/d3-candidate'
 CREATED='2026-09-01T11:32:05Z'
-UNIFY_COMMIT='b729bb48dbd38567ca3d0994132581b42ecf3f8e'
-UNIFY_TREE='sha256:26e9296f9cedfbf518cb5bb2c7c64446a40cc8b9d28950ffccf66d9db1eb3bfe'
+UNIFY_COMMIT='eca9c0afa598e0acf7114744faef805042d114b5'
+UNIFY_TREE='sha256:e83835cd2067489551f987930fb5fd4419506e9db430145bb6e6cdd87adb5bae'
 
 def uuid7(prefix):
     raw=bytearray(uuid.uuid4().bytes); millis=int(time.time()*1000)

@@ -29,7 +29,7 @@ on_error() {
     name=$(docker exec "$DIND" docker inspect -f '{{.Name}}' "$id" 2>/dev/null | tr -d /)
     docker exec "$DIND" docker logs --tail 200 "$id" > "$EVIDENCE/failure-${name:-$id}.log" 2>&1
   done
-  return "$status"
+  exit "$status"
 }
 trap on_error ERR
 trap cleanup EXIT
@@ -181,9 +181,9 @@ ainba_run=json.loads((p/'ainba-run.json').read_text())
 doghouse=json.loads((p/'doghouse-status.json').read_text())
 incidents1=json.loads((p/'doghouse-incidents-1.json').read_text())['incidents']
 incidents2=json.loads((p/'doghouse-incidents-2.json').read_text())['incidents']
-assert ainba_status['status']=='ready' and ainba_status['provider']['configured'] is True
-assert ainba_run['status']=='succeeded' and ainba_run['output']=='D3 anchor acceptance'
-assert doghouse['mode']=='report-only' and doghouse['automaticRepair'] is False
+assert ainba_status['status']=='running' and ainba_status['provider']['configured'] is True
+assert ainba_run['operation']=='echo' and ainba_run['result']=='D3 anchor acceptance'
+assert doghouse['mode']=='report-only' and doghouse['incidents']==[]
 assert len(incidents1)==1 and len(incidents2)==1 and incidents1[0]['incidentId']==incidents2[0]['incidentId']
 minimum=json.loads((p/'minimum-cell-inspect.json').read_text())
 assert len(minimum)==2

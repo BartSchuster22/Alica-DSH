@@ -1,7 +1,7 @@
 {
   "schemaVersion": "alica-manifest-signature/v1",
   "algorithm": "ed25519",
-  "keyId": "d3-candidate-42feaf6491397f11",
-  "manifestDigest": "sha256:5888f0bb0ef5baf00a10330ab5e992ed67488efa5577f91c96313d5df21debfd",
-  "signature": "qhH19SxdCcp43PKAA0LvZcdtlC0X/+vFf1Cuy0uwk7ZZGs4csFQhEdLjQZReEpUGkz4WPaCd+2mfeQOF9s1LDg=="
+  "keyId": "d3-candidate-f55b8730904a87b1",
+  "manifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+  "signature": "l1G/NHjHBX+O30nV/HS1uaHeYSFxgdt+3R6voLCoVVxtMc8dBFNL4Ktnm0zl0Cya9zBydDgshUYfJjvyST8kBA=="
 }
