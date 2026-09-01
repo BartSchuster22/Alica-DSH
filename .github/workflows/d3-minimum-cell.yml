@@ -1,0 +1,37 @@
+name: D3 public clean-host acceptance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - release/d3-candidate/**
+      - scripts/d3-minimum-cell-acceptance.sh
+      - .github/workflows/d3-minimum-cell.yml
+
+permissions:
+  contents: write
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run isolated Debian 13 and Docker 28 acceptance
+        run: scripts/d3-minimum-cell-acceptance.sh
+
+      - name: Publish acceptance evidence
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'Alica-DSH acceptance'
+          git config user.email 'actions@users.noreply.github.com'
+          cp -a acceptance-evidence /tmp/acceptance-evidence
+          git checkout --orphan clean-host-evidence
+          git rm -rf .
+          cp -a /tmp/acceptance-evidence .
+          git add acceptance-evidence
+          git commit -m 'evidence: D3 public clean-host acceptance'
+          git push --force origin HEAD:clean-host-evidence

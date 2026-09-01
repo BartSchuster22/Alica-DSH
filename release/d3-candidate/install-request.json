@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "alica-clean-install/v1",
+  "cellId": "ins_01a05cc2-1e62-7838-9029-b9dc7870c6f9",
+  "installationRoot": "/mnt/alica-d3/install",
+  "publicHost": "localhost",
+  "publicOrigin": "https://localhost",
+  "project": "alica-d3-public-clean-host",
+  "adminUsername": "admin",
+  "eulaDigest": "sha256:3b172e3850816750ff7b5a7d6d4b9f311f5c745159e201f42fea647c4dad1f3c",
+  "eulaAccepted": true,
+  "provider": {
+    "mode": "byok",
+    "providerId": "openai-compatible",
+    "baseUrl": "https://provider.invalid/v1",
+    "credentialFile": "/run/alica-d3/provider-api-key"
+  }
+}
