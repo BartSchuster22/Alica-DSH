@@ -39,9 +39,12 @@ PY
 UPDATE='ALICACTL_UPDATE_TEST_MODE=1 ALICACTL_OPERATIONS_TEST_MODE=1 ALICACTL_OPERATIONS_ACTIVATE_TEST_UNITS=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /d5/alicactl'
 run_debian "$UPDATE update-plan --manifest /d5/manifest.json --signature /d5/manifest.signature.json --public-key /d5/public-key.json --request '$ROOT/requests/update.json'" | tee "$EVIDENCE/update-plan.json"
 VOLUME=${PROJECT}_alica-data;run_debian "printf '%s\n' d5-preserved-state > /var/lib/docker/volumes/$VOLUME/_data/d5-marker.txt"
-set +e
-run_debian "ALICACTL_UPDATE_FAIL_PHASE=activate $UPDATE update --manifest /d5/manifest.json --signature /d5/manifest.signature.json --public-key /d5/public-key.json --request '$ROOT/requests/update.json'" > "$EVIDENCE/injected-failure.log" 2>&1;FAULT_RC=$?
-set -e;test "$FAULT_RC" -eq 3;grep -q 'target activation rolled back before acceptance' "$EVIDENCE/injected-failure.log"
+if run_debian "ALICACTL_UPDATE_FAIL_PHASE=activate $UPDATE update --manifest /d5/manifest.json --signature /d5/manifest.signature.json --public-key /d5/public-key.json --request '$ROOT/requests/update.json'" > "$EVIDENCE/injected-failure.log" 2>&1; then
+  FAULT_RC=0
+else
+  FAULT_RC=$?
+fi
+test "$FAULT_RC" -eq 3;grep -q 'target activation rolled back before acceptance' "$EVIDENCE/injected-failure.log"
 sudo python3 -c 'import json; x=json.load(open("/mnt/alica-d5/install/accepted/lifecycle-state.json")); assert x["acceptedCurrent"]["releaseId"]=="rel_01a05d82-be23-7079-a700-13651201b7d2"'
 test "$(run_debian "cat /var/lib/docker/volumes/$VOLUME/_data/d5-marker.txt")" = d5-preserved-state
 run_debian "$UPDATE update --manifest /d5/manifest.json --signature /d5/manifest.signature.json --public-key /d5/public-key.json --request '$ROOT/requests/update.json'" | tee "$EVIDENCE/update-result.json"
