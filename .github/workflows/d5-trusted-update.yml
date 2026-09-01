@@ -1,0 +1,36 @@
+name: D5 trusted directional update acceptance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - release/d4-candidate/**
+      - release/d5-candidate/**
+      - scripts/d5-trusted-update-acceptance.sh
+      - scripts/d4-s3-alert-mock.py
+      - .github/workflows/d5-trusted-update.yml
+
+permissions:
+  contents: write
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run isolated Debian 13 and Docker 28 D5 update acceptance
+        run: scripts/d5-trusted-update-acceptance.sh
+      - name: Publish immutable acceptance evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'Alica-DSH acceptance'
+          git config user.email 'actions@users.noreply.github.com'
+          cp -a acceptance-evidence-d5 /tmp/acceptance-evidence-d5
+          git checkout --orphan d5-update-evidence
+          git rm -rf .
+          cp -a /tmp/acceptance-evidence-d5 .
+          git add acceptance-evidence-d5
+          git commit -m 'evidence: D5 trusted directional update acceptance'
+          git push --force origin HEAD:d5-update-evidence

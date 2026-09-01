@@ -1,0 +1,31 @@
+{
+  "signed": {
+    "_type": "targets",
+    "version": 1,
+    "expires": "2027-09-01T00:00:00Z",
+    "targets": {
+      "releases/rel_01a05ddf-79b9-7f42-85c5-870e0b6b812f/manifest.json": {
+        "length": 29628,
+        "hashes": {
+          "sha256": "9822c01cd416982039490a1917572763ee81235d3b843a4839f7a783a883fb97"
+        },
+        "custom": {
+          "releaseId": "rel_01a05ddf-79b9-7f42-85c5-870e0b6b812f",
+          "manifestDigest": "sha256:c9779cc4442709a46f88a1e1f8d6b534c36dbb16a8bc1ff92f61c50970044a10",
+          "channel": "candidate",
+          "releaseClass": "candidate"
+        }
+      }
+    }
+  },
+  "signatures": [
+    {
+      "keyid": "sha256:c85aeb078c5e91edd8792f9445405154ba0713b080cc01e8ef402579a666e96f",
+      "sig": "TADJomeKzFLDJaBnQFegN6o96MpH6UettomGk2mzMlOgo1Glzccga3nm4RMuDe3a0K9asdyDoxkxTHVO6RbUAQ=="
+    },
+    {
+      "keyid": "sha256:1a4141efba7e62495f6718409cea6773e8be92bb7650199d13172cfa3c0ac7dd",
+      "sig": "FSunfvo6h217sgiVoIqTIUIW1nTon2haMcnwBxxLR22NB4kXkk/Bimyu3goHgSp+MHoP4m4EHI42rFkQkOdGCA=="
+    }
+  ]
+}

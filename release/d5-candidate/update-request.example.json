@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "alica-update/v1",
+  "cellId": "ins_01a05d82-be56-7faa-8ea7-ee0dd5e18e7b",
+  "installationRoot": "/mnt/alica-d5/install",
+  "project": "alica-d5-public-update",
+  "channel": "candidate",
+  "expectedCurrent": {
+    "releaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+    "manifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6"
+  },
+  "rootMetadata": "/mnt/alica-d5/candidate/root.json",
+  "timestampMetadata": "/mnt/alica-d5/candidate/timestamp.json",
+  "snapshotMetadata": "/mnt/alica-d5/candidate/snapshot.json",
+  "targetsMetadata": "/mnt/alica-d5/candidate/targets.json",
+  "pinnedRootDigest": "sha256:96071ec1346f078e5cae97665e9bc47c9a976cef8cde1aabf850c2d62e7b2169",
+  "recoveryRequest": "/mnt/alica-d5/requests/recovery.json",
+  "manualApproval": true,
+  "riskAcceptanceDigest": "sha256:d582d6da96a2e9f155bee073e7ca784ec836df1c164c1d522ef2b72c8d2e82b3"
+}
