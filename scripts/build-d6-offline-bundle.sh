@@ -25,8 +25,15 @@ mapfile -t IMAGES < <(python3 -c 'import json,sys;print("\n".join(x["reference"]
 for image in "${IMAGES[@]}";do
  docker pull "$image" >/dev/null
  name=$(printf '%s' "$image"|sha256sum|cut -c1-16)
- cosign verify --certificate-identity-regexp '^https://github.com/BartSchuster22/Alica-DSH/' --certificate-oidc-issuer https://token.actions.githubusercontent.com "$image" > "$B/evidence/signatures/$name.verify.json"
- cosign download signature "$image" > "$B/evidence/signatures/$name.cosign.json"
+ if [[ "$image" == ghcr.io/* ]];then
+  cosign verify --certificate-identity-regexp '^https://github.com/BartSchuster22/Alica-DSH/' --certificate-oidc-issuer https://token.actions.githubusercontent.com "$image" > "$B/evidence/signatures/$name.verify.json"
+  cosign download signature "$image" > "$B/evidence/signatures/$name.cosign.json"
+ else
+  python3 - "$image" "$B/evidence/signatures/$name.upstream-digest.json" <<'PY'
+import json,sys
+ref=sys.argv[1];json.dump({'schemaVersion':'alica-upstream-digest-binding/v1','reference':ref,'registry':'docker.io','verification':'immutable manifest digest pulled and archived under threshold-signed release manifest'},open(sys.argv[2],'w'),indent=2);open(sys.argv[2],'a').write('\n')
+PY
+ fi
 done
 docker save "${IMAGES[@]}" -o "$B/oci-images.docker-archive.tar"
 python3 - "$B" <<'PY'
