@@ -8,8 +8,8 @@ EVIDENCE="$GITHUB_WORKSPACE/acceptance-evidence"
 NETWORK=alica-d2-clean-host
 DIND=alica-d2-dind
 CONTROL=alica-d2-debian13
-HTTP_PORT=38087
-HTTPS_PORT=38450
+HTTP_PORT=80
+HTTPS_PORT=443
 
 cleanup() {
   docker rm -f "$CONTROL" >/dev/null 2>&1 || true
@@ -70,8 +70,6 @@ docker run -d --privileged --cgroupns=private \
   --network "$NETWORK" \
   --tmpfs /run --tmpfs /run/lock \
   -e DOCKER_HOST=tcp://alica-d2-dind:2375 \
-  -e ALICACTL_HTTP_PORT="$HTTP_PORT" \
-  -e ALICACTL_HTTPS_PORT="$HTTPS_PORT" \
   -v "$GITHUB_WORKSPACE/release/d2-candidate:/bundle:ro" \
   -v "$TOOLS/docker-cli:/usr/local/bin/docker:ro" \
   -v "$TOOLS/root/.docker/cli-plugins/docker-compose:/usr/local/lib/docker/cli-plugins/docker-compose:ro" \
