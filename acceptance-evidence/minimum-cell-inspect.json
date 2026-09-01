@@ -1,0 +1,666 @@
+[
+    {
+        "Id": "4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf",
+        "Created": "2026-09-01T12:11:34.110623498Z",
+        "Path": "/nodejs/bin/node",
+        "Args": [
+            "/opt/alica/ainba-anchor.mjs"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 5675,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-01T12:13:00.80856045Z",
+            "FinishedAt": "2026-09-01T12:12:24.395858524Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-09-01T12:12:05.26029236Z",
+                        "End": "2026-09-01T12:12:05.349540025Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:12:10.350634074Z",
+                        "End": "2026-09-01T12:12:10.442735897Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:12:15.443229922Z",
+                        "End": "2026-09-01T12:12:15.533923917Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:12:20.534646055Z",
+                        "End": "2026-09-01T12:12:20.626736116Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:13:05.885921195Z",
+                        "End": "2026-09-01T12:13:05.983043619Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:2a10be3cd64173a210694c6fba790b18a342b357cfbe654984b760d85be9db08",
+        "ResolvConfPath": "/var/lib/docker/containers/4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf/hostname",
+        "HostsPath": "/var/lib/docker/containers/4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf/hosts",
+        "LogPath": "/var/lib/docker/containers/4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf/4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf-json.log",
+        "Name": "/alica-d3-public-clean-host-ainba-anchor-1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/mnt/alica-d3/install/release/ainba-anchor.mjs:/opt/alica/ainba-anchor.mjs:ro",
+                "/mnt/alica-d3/install/release/provider-config.json:/opt/alica/provider-config.json:ro",
+                "/mnt/alica-d3/install/release/secrets/ainba-control-token:/run/secrets/ainba-control-token:ro",
+                "/mnt/alica-d3/install/release/secrets/provider-api-key:/run/secrets/provider-api-key:ro",
+                "alica-d3-public-clean-host_ainba-data:/var/lib/ainba:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "10m"
+                }
+            },
+            "NetworkMode": "alica-d3-public-clean-host_application",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges:true"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,nodev,size=16m,mode=1777"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "4b5687b051db81940068d4bc4a58e235a7aa34991612272c2653a58f0439bcbf",
+                "LowerDir": "/var/lib/docker/overlay2/d1b796145650fe5de01d5fd5b3d9538a3fa9676bc63ad3f2eee17146bd2bfbd9-init/diff:/var/lib/docker/overlay2/381b64636f03039d3d74374ff0388771b41db325210564e2afeb15745d8557c0/diff:/var/lib/docker/overlay2/238b4178ea6cc388f1c28b4c2a4ceea97c2a637a6db70181c310bb2775a643af/diff:/var/lib/docker/overlay2/7dcd862f0c73548f65a09e0092fd76dc81dc96d28b8f599f5a91306d217fe3b9/diff:/var/lib/docker/overlay2/216b0e5c244b6f3627197af637ec91d5bed96f2f2cb7f5352f4513cfdc925c2b/diff:/var/lib/docker/overlay2/80fea809998e63d6299bce640bf6000820b9836711475e79e7416c32bf6c2c4d/diff:/var/lib/docker/overlay2/8cb87b89546430eb18606f2bf6d3e9e48d33714ed3bd711573b17b50559d17ac/diff:/var/lib/docker/overlay2/e2cdd19913c6e0fd639830a16fec427abcf4e8ea06930c4019adb2d951d246d0/diff:/var/lib/docker/overlay2/386e57b45c99bd80b6686438f2ce1ae8101d4deedd05e2d16f0b39fe3b42db18/diff:/var/lib/docker/overlay2/edc873993581b087efe9a6c3b9c16acc6874045afe48af1d7198adf22d469b8c/diff:/var/lib/docker/overlay2/59453179294bff06afccb792ecbb4b6a843861e49f018bd5d51377de84df785d/diff:/var/lib/docker/overlay2/25fb63b7a951f9e6d0d375d28dd49cd9ce5f92fe412095de0995e660c6fb6d8c/diff:/var/lib/docker/overlay2/8e267e854f2cc6445dab34bab52dd4bfdf1549de08b24eb7c5353b858f7f9317/diff:/var/lib/docker/overlay2/ed4524e96f9140504e75ffdf217c76173d538e3a779344519fe0555cc5856166/diff:/var/lib/docker/overlay2/e1f78613556ce2e6461d506b411b89b5f588b71c5ec48ca16ebea81f8f1c4966/diff:/var/lib/docker/overlay2/f5815456bf7b8ade5c6e592d38f820a7c0bc97d9c299d5b29992dc7505c0b517/diff:/var/lib/docker/overlay2/97fc641ca935fc78cc28480c71ad0d2eec9ffd6d5615d09526aef3ca3f723dec/diff:/var/lib/docker/overlay2/4a08ec8ac680b0c206fb2e514db984452b7d26ba46bf8bb2b64f00812dba7d40/diff:/var/lib/docker/overlay2/025097b526c4736ea24e4a5d621e8753d454b5c9e498030e6cb5bdf5bdd18b1c/diff:/var/lib/docker/overlay2/ce1c49a43aed875db370aed06f5c5d12f5bef589b199aa86e10a1a7340575e5f/diff:/var/lib/docker/overlay2/860d454157339a6a371bf9e9f1517543ffe935a8eb3ab5c8693391a31378eb90/diff:/var/lib/docker/overlay2/32cf76598f2e6b2fbe039affd722a66d665ba2153cc1125422875a066ce5cccb/diff:/var/lib/docker/overlay2/064cdf00e16558fea7cab4d7530ac38be46bc611366c7bc2e32b47211a255c18/diff:/var/lib/docker/overlay2/7bd775483382ad854ba0fcd240f00208fa3e69b2440302304472920bd3adf125/diff:/var/lib/docker/overlay2/cbd34039779af6f262545aec78d4a93bedf23f1efb98e7242dde3fcd9b417c79/diff:/var/lib/docker/overlay2/de70bb45b1e9430e0cead39cf80c097299375cb043b8045c11b776b513d26d92/diff",
+                "MergedDir": "/var/lib/docker/overlay2/d1b796145650fe5de01d5fd5b3d9538a3fa9676bc63ad3f2eee17146bd2bfbd9/merged",
+                "UpperDir": "/var/lib/docker/overlay2/d1b796145650fe5de01d5fd5b3d9538a3fa9676bc63ad3f2eee17146bd2bfbd9/diff",
+                "WorkDir": "/var/lib/docker/overlay2/d1b796145650fe5de01d5fd5b3d9538a3fa9676bc63ad3f2eee17146bd2bfbd9/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "alica-d3-public-clean-host_ainba-data",
+                "Source": "/var/lib/docker/volumes/alica-d3-public-clean-host_ainba-data/_data",
+                "Destination": "/var/lib/ainba",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "bind",
+                "Source": "/mnt/alica-d3/install/release/ainba-anchor.mjs",
+                "Destination": "/opt/alica/ainba-anchor.mjs",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/mnt/alica-d3/install/release/provider-config.json",
+                "Destination": "/opt/alica/provider-config.json",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/mnt/alica-d3/install/release/secrets/ainba-control-token",
+                "Destination": "/run/secrets/ainba-control-token",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/mnt/alica-d3/install/release/secrets/provider-api-key",
+                "Destination": "/run/secrets/provider-api-key",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "4b5687b051db",
+            "Domainname": "",
+            "User": "0:0",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "NODE_ENV=production",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt",
+                "HOST=0.0.0.0",
+                "PORT=8080"
+            ],
+            "Cmd": [
+                "/opt/alica/ainba-anchor.mjs"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/nodejs/bin/node",
+                    "-e",
+                    "fetch('http://127.0.0.1:8787/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+                ],
+                "Interval": 5000000000,
+                "Timeout": 3000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 30
+            },
+            "Image": "ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "/nodejs/bin/node"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.alica.authority": "ainba",
+                "com.alica.cell.id": "ins_01a05cdf-5c0d-7ed6-b196-c74f8dc60228",
+                "com.alica.component.id": "ainba-anchor",
+                "com.alica.lifecycle": "cell-governed",
+                "com.alica.managed": "true",
+                "com.alica.release.id": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+                "com.docker.compose.config-hash": "f25027410c0efde409e5770ec0d00f48bc9fe5e910572d9d62d7a359df55c10f",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:2a10be3cd64173a210694c6fba790b18a342b357cfbe654984b760d85be9db08",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "alica-d3-public-clean-host",
+                "com.docker.compose.project.config_files": "/mnt/alica-d3/install/release/compose.yaml",
+                "com.docker.compose.project.environment_file": "/mnt/alica-d3/install/release/compose.env",
+                "com.docker.compose.project.working_dir": "/mnt/alica-d3/install/release",
+                "com.docker.compose.service": "ainba-anchor",
+                "com.docker.compose.version": "2.39.4",
+                "org.opencontainers.image.description": "Standalone UNIFY production gateway",
+                "org.opencontainers.image.licenses": "UNLICENSED",
+                "org.opencontainers.image.source": "https://github.com/BartSchuster22/UNIFY",
+                "org.opencontainers.image.title": "UNIFY Gateway"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "e6379d932215aa50721974be77fd138047c1f1f3ac1d988bd4cc0060fed72223",
+            "SandboxKey": "/var/run/docker/netns/e6379d932215",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "alica-d3-public-clean-host_application": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "alica-d3-public-clean-host-ainba-anchor-1",
+                        "ainba-anchor"
+                    ],
+                    "MacAddress": "86:fb:2d:e4:2b:76",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "a758a1a2fb622a519f51625f847447e2ad0a65ba2616f8cc5c777d846db2de68",
+                    "EndpointID": "317436a742a1c7b35d23ba26355f8f6dc206e8dec8d7bab67a2eb96c3e285c5c",
+                    "Gateway": "",
+                    "IPAddress": "172.19.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "alica-d3-public-clean-host-ainba-anchor-1",
+                        "ainba-anchor",
+                        "4b5687b051db"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "Id": "72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45",
+        "Created": "2026-09-01T12:11:34.130681531Z",
+        "Path": "/nodejs/bin/node",
+        "Args": [
+            "/opt/alica/doghouse-node.mjs"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 2494,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-01T12:11:39.757780171Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-09-01T12:12:46.412084655Z",
+                        "End": "2026-09-01T12:12:46.506923889Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:12:51.507635983Z",
+                        "End": "2026-09-01T12:12:51.64347114Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:12:56.645036976Z",
+                        "End": "2026-09-01T12:12:56.739868074Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:13:01.74133896Z",
+                        "End": "2026-09-01T12:13:01.839616353Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-09-01T12:13:06.840884833Z",
+                        "End": "2026-09-01T12:13:06.937490987Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:2a10be3cd64173a210694c6fba790b18a342b357cfbe654984b760d85be9db08",
+        "ResolvConfPath": "/var/lib/docker/containers/72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45/hostname",
+        "HostsPath": "/var/lib/docker/containers/72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45/hosts",
+        "LogPath": "/var/lib/docker/containers/72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45/72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45-json.log",
+        "Name": "/alica-d3-public-clean-host-doghouse-node-1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/mnt/alica-d3/install/release/doghouse-node.mjs:/opt/alica/doghouse-node.mjs:ro",
+                "alica-d3-public-clean-host_doghouse-state:/var/lib/doghouse:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "10m"
+                }
+            },
+            "NetworkMode": "alica-d3-public-clean-host_application",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges:true"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,nodev,size=16m,mode=1777"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "72464d3cf78707b1a70ffb762824bdc8a8aaa9795f163c2dbf578dfaca3ebb45",
+                "LowerDir": "/var/lib/docker/overlay2/a6a7a3c4c6208e1f022817b29150a8efd7cbbdf314c6aa743353b48a0a85a2ee-init/diff:/var/lib/docker/overlay2/381b64636f03039d3d74374ff0388771b41db325210564e2afeb15745d8557c0/diff:/var/lib/docker/overlay2/238b4178ea6cc388f1c28b4c2a4ceea97c2a637a6db70181c310bb2775a643af/diff:/var/lib/docker/overlay2/7dcd862f0c73548f65a09e0092fd76dc81dc96d28b8f599f5a91306d217fe3b9/diff:/var/lib/docker/overlay2/216b0e5c244b6f3627197af637ec91d5bed96f2f2cb7f5352f4513cfdc925c2b/diff:/var/lib/docker/overlay2/80fea809998e63d6299bce640bf6000820b9836711475e79e7416c32bf6c2c4d/diff:/var/lib/docker/overlay2/8cb87b89546430eb18606f2bf6d3e9e48d33714ed3bd711573b17b50559d17ac/diff:/var/lib/docker/overlay2/e2cdd19913c6e0fd639830a16fec427abcf4e8ea06930c4019adb2d951d246d0/diff:/var/lib/docker/overlay2/386e57b45c99bd80b6686438f2ce1ae8101d4deedd05e2d16f0b39fe3b42db18/diff:/var/lib/docker/overlay2/edc873993581b087efe9a6c3b9c16acc6874045afe48af1d7198adf22d469b8c/diff:/var/lib/docker/overlay2/59453179294bff06afccb792ecbb4b6a843861e49f018bd5d51377de84df785d/diff:/var/lib/docker/overlay2/25fb63b7a951f9e6d0d375d28dd49cd9ce5f92fe412095de0995e660c6fb6d8c/diff:/var/lib/docker/overlay2/8e267e854f2cc6445dab34bab52dd4bfdf1549de08b24eb7c5353b858f7f9317/diff:/var/lib/docker/overlay2/ed4524e96f9140504e75ffdf217c76173d538e3a779344519fe0555cc5856166/diff:/var/lib/docker/overlay2/e1f78613556ce2e6461d506b411b89b5f588b71c5ec48ca16ebea81f8f1c4966/diff:/var/lib/docker/overlay2/f5815456bf7b8ade5c6e592d38f820a7c0bc97d9c299d5b29992dc7505c0b517/diff:/var/lib/docker/overlay2/97fc641ca935fc78cc28480c71ad0d2eec9ffd6d5615d09526aef3ca3f723dec/diff:/var/lib/docker/overlay2/4a08ec8ac680b0c206fb2e514db984452b7d26ba46bf8bb2b64f00812dba7d40/diff:/var/lib/docker/overlay2/025097b526c4736ea24e4a5d621e8753d454b5c9e498030e6cb5bdf5bdd18b1c/diff:/var/lib/docker/overlay2/ce1c49a43aed875db370aed06f5c5d12f5bef589b199aa86e10a1a7340575e5f/diff:/var/lib/docker/overlay2/860d454157339a6a371bf9e9f1517543ffe935a8eb3ab5c8693391a31378eb90/diff:/var/lib/docker/overlay2/32cf76598f2e6b2fbe039affd722a66d665ba2153cc1125422875a066ce5cccb/diff:/var/lib/docker/overlay2/064cdf00e16558fea7cab4d7530ac38be46bc611366c7bc2e32b47211a255c18/diff:/var/lib/docker/overlay2/7bd775483382ad854ba0fcd240f00208fa3e69b2440302304472920bd3adf125/diff:/var/lib/docker/overlay2/cbd34039779af6f262545aec78d4a93bedf23f1efb98e7242dde3fcd9b417c79/diff:/var/lib/docker/overlay2/de70bb45b1e9430e0cead39cf80c097299375cb043b8045c11b776b513d26d92/diff",
+                "MergedDir": "/var/lib/docker/overlay2/a6a7a3c4c6208e1f022817b29150a8efd7cbbdf314c6aa743353b48a0a85a2ee/merged",
+                "UpperDir": "/var/lib/docker/overlay2/a6a7a3c4c6208e1f022817b29150a8efd7cbbdf314c6aa743353b48a0a85a2ee/diff",
+                "WorkDir": "/var/lib/docker/overlay2/a6a7a3c4c6208e1f022817b29150a8efd7cbbdf314c6aa743353b48a0a85a2ee/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/mnt/alica-d3/install/release/doghouse-node.mjs",
+                "Destination": "/opt/alica/doghouse-node.mjs",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+                "Name": "alica-d3-public-clean-host_doghouse-state",
+                "Source": "/var/lib/docker/volumes/alica-d3-public-clean-host_doghouse-state/_data",
+                "Destination": "/var/lib/doghouse",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "72464d3cf787",
+            "Domainname": "",
+            "User": "0:0",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "NODE_ENV=production",
+                "DOGHOUSE_TARGETS=[{\"id\":\"ainba-anchor\",\"url\":\"http://ainba-anchor:8787/health\"}]",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt",
+                "HOST=0.0.0.0",
+                "PORT=8080"
+            ],
+            "Cmd": [
+                "/opt/alica/doghouse-node.mjs"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/nodejs/bin/node",
+                    "-e",
+                    "fetch('http://127.0.0.1:8790/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+                ],
+                "Interval": 5000000000,
+                "Timeout": 3000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 30
+            },
+            "Image": "ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "/nodejs/bin/node"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.alica.authority": "doghouse",
+                "com.alica.cell.id": "ins_01a05cdf-5c0d-7ed6-b196-c74f8dc60228",
+                "com.alica.component.id": "doghouse-node",
+                "com.alica.managed": "true",
+                "com.alica.mode": "report-only",
+                "com.alica.release.id": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+                "com.docker.compose.config-hash": "178daad05d038eb50501b70fcf2e0cff5cd0d6e6137a53ed6bf1dac67c63138a",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "ainba-anchor:service_healthy:false",
+                "com.docker.compose.image": "sha256:2a10be3cd64173a210694c6fba790b18a342b357cfbe654984b760d85be9db08",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "alica-d3-public-clean-host",
+                "com.docker.compose.project.config_files": "/mnt/alica-d3/install/release/compose.yaml",
+                "com.docker.compose.project.environment_file": "/mnt/alica-d3/install/release/compose.env",
+                "com.docker.compose.project.working_dir": "/mnt/alica-d3/install/release",
+                "com.docker.compose.service": "doghouse-node",
+                "com.docker.compose.version": "2.39.4",
+                "org.opencontainers.image.description": "Standalone UNIFY production gateway",
+                "org.opencontainers.image.licenses": "UNLICENSED",
+                "org.opencontainers.image.source": "https://github.com/BartSchuster22/UNIFY",
+                "org.opencontainers.image.title": "UNIFY Gateway"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "b391bbf1acb31161dc0ba923e15f119985a039c136f9ed7bbd79334d45218691",
+            "SandboxKey": "/var/run/docker/netns/b391bbf1acb3",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "alica-d3-public-clean-host_application": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "alica-d3-public-clean-host-doghouse-node-1",
+                        "doghouse-node"
+                    ],
+                    "MacAddress": "ae:6c:93:b2:16:b0",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "a758a1a2fb622a519f51625f847447e2ad0a65ba2616f8cc5c777d846db2de68",
+                    "EndpointID": "64b5ee4135495b42db6eb5eb1d8195b8c305b42671ca2c20e139592b451cf7f6",
+                    "Gateway": "",
+                    "IPAddress": "172.19.0.7",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "alica-d3-public-clean-host-doghouse-node-1",
+                        "doghouse-node",
+                        "72464d3cf787"
+                    ]
+                }
+            }
+        }
+    }
+]

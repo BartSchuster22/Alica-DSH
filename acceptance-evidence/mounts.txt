@@ -1,0 +1,10 @@
+/alica-d3-public-clean-host-ainba-anchor-1|/mnt/alica-d3/install/release/ainba-anchor.mjs|/mnt/alica-d3/install/release/provider-config.json|/mnt/alica-d3/install/release/secrets/ainba-control-token|/mnt/alica-d3/install/release/secrets/provider-api-key
+/alica-d3-public-clean-host-alica-1|/mnt/alica-d3/install/release/secrets/alica-database-url|/mnt/alica-d3/install/release/secrets/alica-api-token|/mnt/alica-d3/install/release/secrets/alica-token-bundle.json|/mnt/alica-d3/install/release/secrets/alica.key|/mnt/alica-d3/install/release/secrets/alica.crt|/mnt/alica-d3/install/release/secrets/framework-ca.crt
+/alica-d3-public-clean-host-caddy-1|/mnt/alica-d3/install/release/Caddyfile
+/alica-d3-public-clean-host-doghouse-node-1|/mnt/alica-d3/install/release/doghouse-node.mjs
+/alica-d3-public-clean-host-herman-1|/mnt/alica-d3/install/release/secrets/herman-database-url|/mnt/alica-d3/install/release/secrets/herman-api-token|/mnt/alica-d3/install/release/secrets/herman-token-bundle.json|/mnt/alica-d3/install/release/secrets/herman.key|/mnt/alica-d3/install/release/secrets/herman.crt|/mnt/alica-d3/install/release/secrets/framework-ca.crt
+/alica-d3-public-clean-host-keycloak-1|/mnt/alica-d3/install/release/secrets/keycloak-database-password|/mnt/alica-d3/install/release/secrets/keycloak-admin-password
+/alica-d3-public-clean-host-memory-v4-1|/mnt/alica-d3/install/release/secrets/memory-v4-token
+/alica-d3-public-clean-host-postgresql-1|/mnt/alica-d3/install/release/postgres-init.sql|/mnt/alica-d3/install/release/secrets/postgres-password
+/alica-d3-public-clean-host-unify-core-1|/mnt/alica-d3/install/release/secrets/core-database-url|/mnt/alica-d3/install/release/secrets/auth-pepper|/mnt/alica-d3/install/release/secrets/alica-token|/mnt/alica-d3/install/release/secrets/herman-token|/mnt/alica-d3/install/release/secrets/memory-v4-token|/mnt/alica-d3/install/release/secrets/framework-ca.crt
+/alica-d3-public-clean-host-uniui-1

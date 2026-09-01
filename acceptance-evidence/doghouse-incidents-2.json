@@ -1,0 +1,1 @@
+{"schemaVersion":"doghouse-report/v1","mode":"report-only","sequence":6,"observedAt":"2026-09-01T12:12:55.088Z","incidents":[{"incidentId":"inc_cf6c55178474413e02c35c1c","target":"ainba-anchor","condition":"unreachable","disposition":"reported"}]}

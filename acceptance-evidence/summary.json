@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "anonymousRegistryAuthentication": false,
+  "acceptanceClass": "D3 incremental runtime acceptance",
+  "hostResourceContractEvidence": {
+    "phase": "D2",
+    "workflowRun": 33494819700
+  },
+  "hostResourceRevalidation": false,
+  "testModePurpose": "bypass only the undersized CI host-resource preflight; runtime is real",
+  "runtimeServices": 10,
+  "allHealthy": true,
+  "httpsStatus": 200,
+  "httpStatus": 301,
+  "noopChanged": false,
+  "stableReleaseMounts": true,
+  "anchorAInBALifecycle": true,
+  "localBYOKConfigured": true,
+  "doghouseMode": "report-only",
+  "deterministicIncidentIds": true,
+  "automaticRepair": false,
+  "centralRuntimeDependency": false,
+  "journalTerminal": "accepted/succeeded"
+}

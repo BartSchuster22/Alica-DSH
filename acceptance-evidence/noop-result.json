@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "alica-install-result/v1",
+  "mode": "install",
+  "status": "PASS",
+  "changed": false,
+  "cellId": "ins_01a05cdf-5c0d-7ed6-b196-c74f8dc60228",
+  "releaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+  "manifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+  "components": [
+    "alica-runtime",
+    "caddy",
+    "herman-runtime",
+    "keycloak",
+    "memory-v4",
+    "postgresql",
+    "unify-core",
+    "uniui",
+    "ainba-anchor",
+    "doghouse-node"
+  ],
+  "mutationPerformed": false
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "alica-cell-declaration/v1",
+  "cellId": "ins_01a05cdf-5c0d-7ed6-b196-c74f8dc60228",
+  "createdAt": "2026-09-01T12:12:12Z",
+  "productId": "com.alica.community-dsh",
+  "profile": "dsh-minimal/v1",
+  "deploymentMode": "single-host"
+}

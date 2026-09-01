@@ -1,0 +1,9 @@
+OS=debian-13
+x86_64
+4
+16770748416
+Filesystem        1B-blocks  Used    Available Use% Mounted on
+/dev/loop0     126227120128 24576 119767867392   1% /mnt/alica-d3
+28.4.0
+2.39.4
+systemd

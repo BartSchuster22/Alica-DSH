@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "alica-operation-journal/v1",
+  "entries": [
+    {
+      "operationId": "op_01a05ce0-28f9-7043-923b-1199a5aeb042",
+      "sequence": 1,
+      "kind": "install",
+      "occurredAt": "2026-09-01T12:09:49.561036468Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+      "targetManifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+      "phase": "planned",
+      "result": "pending",
+      "mutationAuthorized": false,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entryDigest": "sha256:93246a30cb8d4194d037cd642424454435fac951f7517fd1f1dcc830497e1b70"
+    },
+    {
+      "operationId": "op_01a05ce0-28f9-7043-923b-1199a5aeb042",
+      "sequence": 2,
+      "kind": "install",
+      "occurredAt": "2026-09-01T12:09:49.563720848Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+      "targetManifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+      "phase": "preflight",
+      "result": "pending",
+      "mutationAuthorized": false,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:93246a30cb8d4194d037cd642424454435fac951f7517fd1f1dcc830497e1b70",
+      "entryDigest": "sha256:38e577b13c55886f6b3c8ccdf484f9f7ab4bbe006d89f23052b8f8cd8886dc03"
+    },
+    {
+      "operationId": "op_01a05ce0-28f9-7043-923b-1199a5aeb042",
+      "sequence": 3,
+      "kind": "install",
+      "occurredAt": "2026-09-01T12:09:50.185488666Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+      "targetManifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+      "phase": "running",
+      "result": "pending",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:38e577b13c55886f6b3c8ccdf484f9f7ab4bbe006d89f23052b8f8cd8886dc03",
+      "entryDigest": "sha256:3db6d2348faee27e79fb0b85085d77c9fd07818624df78eb48ec5977c76a9f5d"
+    },
+    {
+      "operationId": "op_01a05ce0-28f9-7043-923b-1199a5aeb042",
+      "sequence": 4,
+      "kind": "install",
+      "occurredAt": "2026-09-01T12:12:12.618284118Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+      "targetManifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+      "phase": "verify",
+      "result": "pending",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:3db6d2348faee27e79fb0b85085d77c9fd07818624df78eb48ec5977c76a9f5d",
+      "entryDigest": "sha256:e380b098a2b2b7262d1b041a2885b28c851e37b456922a20e32a3cf3b8148a3e"
+    },
+    {
+      "operationId": "op_01a05ce0-28f9-7043-923b-1199a5aeb042",
+      "sequence": 5,
+      "kind": "install",
+      "occurredAt": "2026-09-01T12:12:12.708331602Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05cdf-5bb3-70d0-a4b9-1b71d61a3a63",
+      "targetManifestDigest": "sha256:d4e3ab02254a040a9f77d1f87ead4d865e405f2b362f4e8fadfa1c0bd7037751",
+      "phase": "accepted",
+      "result": "succeeded",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:e380b098a2b2b7262d1b041a2885b28c851e37b456922a20e32a3cf3b8148a3e",
+      "entryDigest": "sha256:8f7bef0137d6b4fdf9e13f853c0ce9c58b9360ed7ae67d697df8ed2f31f90f78"
+    }
+  ]
+}

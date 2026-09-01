@@ -1,0 +1,10 @@
+alica-d3-public-clean-host-ainba-anchor-1|Up 6 seconds (healthy)|ghcr.io/bartschuster22/alica-community-dsh/unify-core
+alica-d3-public-clean-host-alica-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime
+alica-d3-public-clean-host-caddy-1|Up 59 seconds (healthy)|ghcr.io/bartschuster22/alica-community-dsh/caddy
+alica-d3-public-clean-host-doghouse-node-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/unify-core
+alica-d3-public-clean-host-herman-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime
+alica-d3-public-clean-host-keycloak-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/keycloak
+alica-d3-public-clean-host-memory-v4-1|Up 2 minutes (healthy)|ghcr.io/bartschuster22/alica-community-dsh/memory-v4
+alica-d3-public-clean-host-postgresql-1|Up 2 minutes (healthy)|postgres
+alica-d3-public-clean-host-unify-core-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/unify-core
+alica-d3-public-clean-host-uniui-1|Up About a minute (healthy)|ghcr.io/bartschuster22/alica-community-dsh/uniui

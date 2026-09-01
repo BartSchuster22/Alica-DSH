@@ -1,0 +1,10 @@
+alica-d3-public-clean-host-caddy-1|80/tcp, 443/tcp, 2019/tcp, 443/udp, 0.0.0.0:80->8080/tcp, [::]:80->8080/tcp, 0.0.0.0:443->8443/tcp, [::]:443->8443/tcp
+alica-d3-public-clean-host-uniui-1|
+alica-d3-public-clean-host-unify-core-1|
+alica-d3-public-clean-host-doghouse-node-1|
+alica-d3-public-clean-host-herman-1|28082/tcp
+alica-d3-public-clean-host-alica-1|28082/tcp
+alica-d3-public-clean-host-ainba-anchor-1|
+alica-d3-public-clean-host-keycloak-1|
+alica-d3-public-clean-host-postgresql-1|
+alica-d3-public-clean-host-memory-v4-1|
