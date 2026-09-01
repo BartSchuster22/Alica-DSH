@@ -96,7 +96,7 @@ run_debian "printf 'OS='; . /etc/os-release; printf '%s-%s\\n' \"\$ID\" \"\$VERS
 
 run_debian "$INSTALL" | tee "$EVIDENCE/install-result.json"
 run_debian "$INSTALL" | tee "$EVIDENCE/noop-result.json"
-run_debian "cat '$INSTALL_ROOT/release/assets/compose.yaml'" | tee "$EVIDENCE/compose.yaml"
+run_debian "python3 -c 'import pathlib; print(next(pathlib.Path(\"$INSTALL_ROOT\").rglob(\"compose.yaml\")).read_text(), end=\"\")'" | tee "$EVIDENCE/compose.yaml"
 
 DIND_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$DIND")
 "$TOOLS/docker-cli" --host tcp://"$DIND_IP":2375 ps --format '{{.Names}}|{{.Ports}}' | tee "$EVIDENCE/published-ports.txt"
