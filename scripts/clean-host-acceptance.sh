@@ -114,7 +114,6 @@ DIND_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{
 
 run_debian "python3 -c 'import pathlib; print(next(pathlib.Path(\"$INSTALL_ROOT\").rglob(\"operation-journal.json\")).read_text(), end=\"\")'" > "$EVIDENCE/operation-journal.json"
 run_debian "python3 -c 'import pathlib; print(next(pathlib.Path(\"$INSTALL_ROOT\").rglob(\"cell-declaration.json\")).read_text(), end=\"\")'" > "$EVIDENCE/cell-declaration.json"
-run_debian "python3 -c 'import pathlib; print(next(pathlib.Path(\"$INSTALL_ROOT\").rglob(\"cell-state.json\")).read_text(), end=\"\")'" > "$EVIDENCE/cell-state.json"
 
 python3 - "$EVIDENCE" <<'PY'
 import json, pathlib, sys
