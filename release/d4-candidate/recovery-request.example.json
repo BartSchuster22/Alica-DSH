@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "alica-recovery-operations/v1",
+  "cellId": "ins_01a05d82-be56-7faa-8ea7-ee0dd5e18e7b",
+  "installationRoot": "/mnt/alica-d4/install",
+  "project": "alica-d4-public-clean-host",
+  "encryptionKeyFile": "/etc/alica/recovery/backup-key",
+  "localRepository": "/var/backups/alica",
+  "s3": {
+    "endpoint": "https://s3.example.invalid",
+    "region": "eu-west-1",
+    "bucket": "alica-cell-backups",
+    "prefix": "cells/ins_01a05d82-be56-7faa-8ea7-ee0dd5e18e7b",
+    "accessKeyFile": "/etc/alica/recovery/s3-access-key",
+    "secretAccessKeyFile": "/etc/alica/recovery/s3-secret-key"
+  },
+  "operations": {
+    "webhookUrl": "https://alerts.example.invalid/alica",
+    "canaryUrl": "https://localhost/",
+    "backupMaxAgeSeconds": 90000,
+    "minimumFreeDiskBytes": 21474836480,
+    "certificateWarnSeconds": 2592000
+  }
+}

@@ -1,0 +1,38 @@
+name: D4 recovery and operations acceptance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - release/d4-candidate/**
+      - scripts/d4-recovery-operations-acceptance.sh
+      - scripts/d4-s3-alert-mock.py
+      - .github/workflows/d4-recovery-operations.yml
+
+permissions:
+  contents: write
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run isolated Debian 13 and Docker 28 D4 recovery acceptance
+        run: scripts/d4-recovery-operations-acceptance.sh
+
+      - name: Publish acceptance evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'Alica-DSH acceptance'
+          git config user.email 'actions@users.noreply.github.com'
+          cp -a acceptance-evidence-d4 /tmp/acceptance-evidence-d4
+          git checkout --orphan d4-recovery-evidence
+          git rm -rf .
+          cp -a /tmp/acceptance-evidence-d4 .
+          git add acceptance-evidence-d4
+          git commit -m 'evidence: D4 recovery and operations acceptance'
+          git push --force origin HEAD:d4-recovery-evidence
