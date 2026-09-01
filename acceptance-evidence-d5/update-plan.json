@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "alica-update-result/v1",
+  "mode": "update-plan",
+  "status": "PASS",
+  "changed": false,
+  "cellId": "ins_01a05d82-be56-7faa-8ea7-ee0dd5e18e7b",
+  "sourceReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+  "targetReleaseId": "rel_01a05ddf-79b9-7f42-85c5-870e0b6b812f",
+  "targetManifestDigest": "sha256:c9779cc4442709a46f88a1e1f8d6b534c36dbb16a8bc1ff92f61c50970044a10",
+  "trustRootVersion": 1,
+  "timestampVersion": 1,
+  "snapshotVersion": 1,
+  "targetsVersion": 1,
+  "mutationPerformed": false
+}

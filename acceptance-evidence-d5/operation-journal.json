@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "alica-operation-journal/v1",
+  "entries": [
+    {
+      "operationId": "op_01a05de7-deaa-7990-a09d-7f22c5e3e5b3",
+      "sequence": 1,
+      "kind": "install",
+      "occurredAt": "2026-09-01T16:57:52.042093878Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+      "phase": "planned",
+      "result": "pending",
+      "mutationAuthorized": false,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "entryDigest": "sha256:adc6f018230e753ad124fd9a62dfc5eb2624b4ae9281ee9d18cba6cede9c7128"
+    },
+    {
+      "operationId": "op_01a05de7-deaa-7990-a09d-7f22c5e3e5b3",
+      "sequence": 2,
+      "kind": "install",
+      "occurredAt": "2026-09-01T16:57:52.046761744Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+      "phase": "preflight",
+      "result": "pending",
+      "mutationAuthorized": false,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:adc6f018230e753ad124fd9a62dfc5eb2624b4ae9281ee9d18cba6cede9c7128",
+      "entryDigest": "sha256:76152a7cb1692b926ea9e518e9e356d652a7da7454ad5b38c21d684e379b5448"
+    },
+    {
+      "operationId": "op_01a05de7-deaa-7990-a09d-7f22c5e3e5b3",
+      "sequence": 3,
+      "kind": "install",
+      "occurredAt": "2026-09-01T16:57:53.018053601Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+      "phase": "running",
+      "result": "pending",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:76152a7cb1692b926ea9e518e9e356d652a7da7454ad5b38c21d684e379b5448",
+      "entryDigest": "sha256:21a7837bd9be21477f8f0740d64734fc93f845fa4eba9cfed2b2645757564d28"
+    },
+    {
+      "operationId": "op_01a05de7-deaa-7990-a09d-7f22c5e3e5b3",
+      "sequence": 4,
+      "kind": "install",
+      "occurredAt": "2026-09-01T16:59:00.584079633Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+      "phase": "verify",
+      "result": "pending",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:21a7837bd9be21477f8f0740d64734fc93f845fa4eba9cfed2b2645757564d28",
+      "entryDigest": "sha256:739370223791567596cd382dc4491d37eb700fb71eae644b7142c028213dc073"
+    },
+    {
+      "operationId": "op_01a05de7-deaa-7990-a09d-7f22c5e3e5b3",
+      "sequence": 5,
+      "kind": "install",
+      "occurredAt": "2026-09-01T16:59:00.69477385Z",
+      "sourceReleaseId": "none",
+      "targetReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+      "phase": "accepted",
+      "result": "succeeded",
+      "mutationAuthorized": true,
+      "evidenceDigests": [],
+      "previousEntryDigest": "sha256:739370223791567596cd382dc4491d37eb700fb71eae644b7142c028213dc073",
+      "entryDigest": "sha256:ef6b66830b04c29d41eee31abdeb3d896d1381ddd325518cf6b9f0dd469d111f"
+    },
+    {
+      "operationId": "op_a3a8771f-2227-79a8-9cfb-47e12901aaec",
+      "sequence": 6,
+      "kind": "update",
+      "occurredAt": "2026-09-01T17:05:57Z",
+      "sourceReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+      "targetReleaseId": "rel_01a05ddf-79b9-7f42-85c5-870e0b6b812f",
+      "targetManifestDigest": "sha256:c9779cc4442709a46f88a1e1f8d6b534c36dbb16a8bc1ff92f61c50970044a10",
+      "phase": "accepted",
+      "result": "succeeded",
+      "mutationAuthorized": true,
+      "evidenceDigests": [
+        "sha256:96071ec1346f078e5cae97665e9bc47c9a976cef8cde1aabf850c2d62e7b2169",
+        "sha256:d582d6da96a2e9f155bee073e7ca784ec836df1c164c1d522ef2b72c8d2e82b3"
+      ],
+      "previousEntryDigest": "sha256:ef6b66830b04c29d41eee31abdeb3d896d1381ddd325518cf6b9f0dd469d111f",
+      "entryDigest": "sha256:2835153ecb25655b0462548258b1c3ed01b9d2440887093826efab5e76a5aa99"
+    }
+  ]
+}

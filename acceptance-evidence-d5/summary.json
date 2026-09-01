@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "acceptanceClass": "D5 trusted directional update acceptance",
+  "sourceReleaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+  "targetReleaseId": "rel_01a05ddf-79b9-7f42-85c5-870e0b6b812f",
+  "targetManifestDigest": "sha256:c9779cc4442709a46f88a1e1f8d6b534c36dbb16a8bc1ff92f61c50970044a10",
+  "candidateChannelOnly": true,
+  "manualApprovalRequired": true,
+  "thresholdTrust": {
+    "root": "2/3",
+    "targets": "2/3",
+    "snapshot": "1/1",
+    "timestamp": "1/1"
+  },
+  "exactDirectionalEdge": true,
+  "mandatoryEncryptedOffHostBackup": true,
+  "preAcceptanceAutomaticDefinitionRollback": true,
+  "statePreserved": true,
+  "runtimeServices": 10,
+  "atomicAcceptedCurrent": true,
+  "unattendedOrStableUpdate": false,
+  "postAcceptanceCrossReleaseRollback": false,
+  "generalAvailability": false
+}
