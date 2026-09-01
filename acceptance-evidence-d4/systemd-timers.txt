@@ -1,0 +1,5 @@
+NEXT                        LEFT LAST PASSED UNIT               ACTIVATES
+Tue 2026-09-01 15:26:20 UTC  54s -         - alica-canary.timer alica-canary.service
+Wed 2026-09-02 00:02:36 UTC   8h -         - alica-backup.timer alica-backup.service
+
+2 timers listed.

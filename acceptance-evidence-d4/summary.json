@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "acceptanceClass": "D4 isolated recovery and operations acceptance",
+  "hostResourceContractEvidence": {
+    "phase": "D2",
+    "workflowRun": 33494819700
+  },
+  "encryptedBackup": true,
+  "s3CompatibleOffHostReplication": true,
+  "isolatedRestoreFromOffHost": true,
+  "cellIdentityPreserved": true,
+  "stateMarkerPreserved": true,
+  "runtimeServices": 10,
+  "hostRebootRecovery": true,
+  "restartRecovery": true,
+  "systemdTimersPersistent": true,
+  "operationsChecks": [
+    "backup-age",
+    "canary",
+    "certificate",
+    "disk",
+    "drift",
+    "unhealthy-service"
+  ],
+  "webhookAlertDelivered": true,
+  "automaticRepair": false,
+  "rpoSeconds": 0,
+  "backupBytes": 185232600,
+  "restartRtoMilliseconds": 60646,
+  "restoreRtoMilliseconds": 51278
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "alica-backup-manifest/v1",
+  "backupId": "bak_01a05d90-9b34-741d-b0fa-9ec577b550c4",
+  "cellId": "ins_01a05d82-be56-7faa-8ea7-ee0dd5e18e7b",
+  "releaseId": "rel_01a05d82-be23-7079-a700-13651201b7d2",
+  "releaseManifestDigest": "sha256:6f9891aeb869f1e31ac84ad67463f374a649efd0cce28b31c5f273a4d19904c6",
+  "createdAt": "2026-09-01T15:24:34.868419873Z",
+  "consistency": "coordinated-cold",
+  "encryption": "aes-256-gcm-chunked/v1",
+  "archiveDigest": "sha256:b56abe119176cd2678fa071166efaa73491319a46172116dfae30f11ffefb953",
+  "encryptedObjectDigest": "sha256:aca6e3513239a6eddd76068028d53b9d97bbd6a2a4e7edfd8c20c94aa089a2c4",
+  "encryptedBytes": 185232600,
+  "dataUnits": [
+    {
+      "id": "lifecycle-state",
+      "kind": "installation-root",
+      "digest": "sha256:b9301e5296bee9a759067e4cc54fb9bf54d1851fa48f6f4ba88633ba76c2f18d",
+      "bytes": 43823
+    },
+    {
+      "id": "ainba-data",
+      "kind": "docker-volume",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "id": "alica-data",
+      "kind": "docker-volume",
+      "digest": "sha256:a6c30163efcaafa97ec4e0c86ad7dd4dbcbe29b1767da030313d733f343500f3",
+      "bytes": 51461675
+    },
+    {
+      "id": "caddy-config",
+      "kind": "docker-volume",
+      "digest": "sha256:b4bfbfdc6e8f49bf84fd47e9fe9957a8681bb6f96e9cebee50d37e66277fefb7",
+      "bytes": 579
+    },
+    {
+      "id": "caddy-data",
+      "kind": "docker-volume",
+      "digest": "sha256:f54a2b7bcc90174ac1be91aeba44fbd43eb3b04fbf96984c1c8d7cf0217f0502",
+      "bytes": 3545
+    },
+    {
+      "id": "doghouse-state",
+      "kind": "docker-volume",
+      "digest": "sha256:29e6f36163aa11d837aeb58a3dd145c270a72306cdedc744f01cd05c8f59b36d",
+      "bytes": 149
+    },
+    {
+      "id": "herman-data",
+      "kind": "docker-volume",
+      "digest": "sha256:fa22686c2d59c30d93dd2982c04143aec29f844c7a80d38e3206d2c8eb1b7ad7",
+      "bytes": 51461657
+    },
+    {
+      "id": "memory-backups",
+      "kind": "docker-volume",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "id": "memory-data",
+      "kind": "docker-volume",
+      "digest": "sha256:b90bd8a926705bd334a512f2b7b097f718a4224c08665ac3640ba7de4b860d9d",
+      "bytes": 403576
+    },
+    {
+      "id": "postgresql-data",
+      "kind": "docker-volume",
+      "digest": "sha256:24bba30c46f94c583d0e79e36056dc12e86d02dcc982e40d80f28cee831fd5e7",
+      "bytes": 79503805
+    }
+  ],
+  "rpoSeconds": 0,
+  "quiesceMilliseconds": 121727,
+  "manifestMac": "hmac-sha256:d4282256138a55613e3bdc91ca182f985f61611adb127a59c14551e19b63605d"
+}
