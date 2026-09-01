@@ -23,15 +23,15 @@ jobs:
         run: scripts/d3-minimum-cell-acceptance.sh
 
       - name: Publish acceptance evidence
-        if: success()
+        if: always()
         run: |
           set -euo pipefail
           git config user.name 'Alica-DSH acceptance'
           git config user.email 'actions@users.noreply.github.com'
           cp -a acceptance-evidence /tmp/acceptance-evidence
-          git checkout --orphan clean-host-evidence
+          git checkout --orphan d3-runtime-evidence
           git rm -rf .
           cp -a /tmp/acceptance-evidence .
           git add acceptance-evidence
           git commit -m 'evidence: D3 minimum-Cell incremental acceptance'
-          git push --force origin HEAD:clean-host-evidence
+          git push --force origin HEAD:d3-runtime-evidence

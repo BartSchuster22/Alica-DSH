@@ -19,6 +19,19 @@ cleanup() {
   sudo rm -f /tmp/alica-d3-clean-host.img
   rm -rf "$TOOLS"
 }
+on_error() {
+  status=$?
+  set +e
+  mkdir -p "$EVIDENCE"
+  printf 'exit=%s line=%s command=%s\n' "$status" "${BASH_LINENO[0]:-unknown}" "${BASH_COMMAND:-unknown}" > "$EVIDENCE/failure.txt"
+  docker exec "$DIND" docker ps -a --format '{{.Names}}|{{.Status}}|{{.Image}}' > "$EVIDENCE/failure-containers.txt" 2>&1
+  for id in $(docker exec "$DIND" docker ps -aq 2>/dev/null); do
+    name=$(docker exec "$DIND" docker inspect -f '{{.Name}}' "$id" 2>/dev/null | tr -d /)
+    docker exec "$DIND" docker logs --tail 200 "$id" > "$EVIDENCE/failure-${name:-$id}.log" 2>&1
+  done
+  return "$status"
+}
+trap on_error ERR
 trap cleanup EXIT
 
 rm -rf "$TOOLS" "$EVIDENCE"
