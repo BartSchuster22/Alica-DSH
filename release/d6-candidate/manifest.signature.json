@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "alica-manifest-signature/v1",
+  "algorithm": "ed25519",
+  "keyId": "d6-candidate-307f7019085a9bf2",
+  "manifestDigest": "sha256:4607e1875ebc111f9fe26f1aa159b9c2c6bf7a71a04e57bae26bc1dd7a8bf757",
+  "signature": "LyYxxyCKyOYoxGToXVagqQZNf7nqDZ7CjcP3WYVFS/6J0wJk07YSAOcA27S3g2jOws96PM7pF5hEfKMVGN86BA=="
+}

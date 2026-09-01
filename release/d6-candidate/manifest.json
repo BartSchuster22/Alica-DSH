@@ -1,0 +1,827 @@
+{
+  "schemaVersion": "alica-release/v1",
+  "canonicalEncoding": "alica-canonical-json/v1",
+  "releaseId": "rel_01a05f64-a085-7ff0-886b-c4fd4235b46e",
+  "releaseVersion": "1.0.0-d6.independent-candidate.1",
+  "createdAt": "2026-09-01T18:15:00Z",
+  "cellContract": "alica-cell/v0.1",
+  "releaseClass": "candidate",
+  "installable": true,
+  "product": {
+    "productId": "com.alica.community-dsh",
+    "releaseLine": "1.0",
+    "profile": "dsh-minimal/v1",
+    "freezeDigest": "sha256:084ee1cfe6a16afcfac7178484afd359c7f9012d69552ce37839594a39c4b3b1",
+    "binaryLicense": "ALICA-Community-DSH-EULA-1.0",
+    "eulaDigest": "sha256:3b172e3850816750ff7b5a7d6d4b9f311f5c745159e201f42fea647c4dad1f3c",
+    "centralRuntimeDependencies": []
+  },
+  "profiles": [
+    "dsh-minimal/v1"
+  ],
+  "platforms": [
+    {
+      "osId": "debian",
+      "osVersion": "13",
+      "architecture": "amd64",
+      "init": "systemd",
+      "docker": {
+        "minimumInclusive": "28.4.0",
+        "maximumExclusive": "29.0.0"
+      },
+      "compose": {
+        "minimumInclusive": "2.39.4",
+        "maximumExclusive": "3.0.0"
+      },
+      "minimum": {
+        "vcpu": 4,
+        "memoryBytes": 8589934592,
+        "freeDiskBytes": 107374182400
+      },
+      "upgradeHeadroomBytes": 21474836480
+    }
+  ],
+  "sources": [
+    {
+      "repository": "BartSchuster22/UNIFY",
+      "commit": "3864b684efa702b6c30976415143fa686c12275f",
+      "treeDigest": "sha256:8e9fea0d64901469a38675d7ae2d293ceb758e7c9525b26eae98aa3569bb863b"
+    },
+    {
+      "repository": "BartSchuster22/memory-v4",
+      "commit": "6111107fa709826c0642651f7f256c0c7fe3116a",
+      "treeDigest": "sha256:cb93f06749129b0143656f00fd3f14ed8aaac47a35822afa1761ef812c6f7df5"
+    },
+    {
+      "repository": "BartSchuster22/doghouse",
+      "commit": "8ce1b1c09c0a7f2b91d8c65a9c820a64e4cea271",
+      "treeDigest": "sha256:3cbcb7f1701a7242023969dec1ec001f5adcf06a5df15c32fdd5bc3e182a75c8"
+    },
+    {
+      "repository": "NousResearch/hermes-agent",
+      "commit": "9e54eee44f1cbbe62247a36546e51ff8940373c6",
+      "treeDigest": "sha256:0b051afe7003bacd7536d801969d7456ea7aaedd2f278a8637d2e18fc902fecd"
+    }
+  ],
+  "components": [
+    {
+      "componentId": "caddy",
+      "authority": "edge",
+      "version": "2.8.4",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "digest": "sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "caddy-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/caddy.cdx.json@sha256:20a0418d20fc5f4590c2af44c32f15c7b16c5d9ddb20a1b15afe3613dcdf3ba7",
+        "digest": "sha256:20a0418d20fc5f4590c2af44c32f15c7b16c5d9ddb20a1b15afe3613dcdf3ba7"
+      },
+      "provenance": {
+        "id": "caddy-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/caddy.intoto.json@sha256:4565e4b6e2ada10defc21c48c60966c827e326a6be0a12e71d5348620e09c7e4",
+        "digest": "sha256:4565e4b6e2ada10defc21c48c60966c827e326a6be0a12e71d5348620e09c7e4"
+      },
+      "componentContract": "caddy/v1",
+      "provides": [
+        "alica-https/v1"
+      ],
+      "requires": [],
+      "configSchema": {
+        "id": "caddy-config/v1",
+        "digest": "sha256:4d6ac2d31e6baef3cec44a02a7bf6c403447eb960506efdb5b7aef7c140f61b8"
+      },
+      "dataSchema": {
+        "authority": "edge",
+        "target": "caddy-config/v1"
+      }
+    },
+    {
+      "componentId": "uniui",
+      "authority": "uniui",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "digest": "sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "uniui-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/uniui.cdx.json@sha256:c6d612bf8c031806508d1d345baa03a0db6225b3a1e449dc3367d412ced46324",
+        "digest": "sha256:c6d612bf8c031806508d1d345baa03a0db6225b3a1e449dc3367d412ced46324"
+      },
+      "provenance": {
+        "id": "uniui-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/uniui.intoto.json@sha256:22c8311f945016ec32c76f52b7bde55951b87271ad23c01dd4550b1291c25b5e",
+        "digest": "sha256:22c8311f945016ec32c76f52b7bde55951b87271ad23c01dd4550b1291c25b5e"
+      },
+      "componentContract": "uniui/v1",
+      "provides": [
+        "uniui-web/v1"
+      ],
+      "requires": [
+        "unify-api/v1"
+      ],
+      "configSchema": {
+        "id": "uniui-config/v1",
+        "digest": "sha256:021f8376a02123fc8deb0b9060644552f7851d558e8c27832746672b4ab798f7"
+      },
+      "dataSchema": {
+        "authority": "uniui",
+        "target": "stateless/v1"
+      }
+    },
+    {
+      "componentId": "unify-core",
+      "authority": "unify",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "unify-core-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/unify-core.cdx.json@sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+        "digest": "sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965"
+      },
+      "provenance": {
+        "id": "unify-core-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/unify-core.intoto.json@sha256:dc45c5a37e7f3edc73dea0f5ab444ab8d9ecf930117bffa9cdc6c628445099d3",
+        "digest": "sha256:dc45c5a37e7f3edc73dea0f5ab444ab8d9ecf930117bffa9cdc6c628445099d3"
+      },
+      "componentContract": "unify-core/v1",
+      "provides": [
+        "unify-api/v1"
+      ],
+      "requires": [
+        "postgresql/v16",
+        "keycloak-oidc/v1",
+        "memory-v4-api/v1"
+      ],
+      "configSchema": {
+        "id": "unify-core-config/v1",
+        "digest": "sha256:4ba030d30fe52c43a6d8d4d084be21b2feb0dbf4a3c67ffe0de051345c82351c"
+      },
+      "dataSchema": {
+        "authority": "unify",
+        "target": "core-migrations/d1"
+      }
+    },
+    {
+      "componentId": "keycloak",
+      "authority": "identity",
+      "version": "26.0.8",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "digest": "sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "keycloak-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/keycloak.cdx.json@sha256:beaaa599ef94ad711302a006e146a50eb024eac4e0c3a13b8d80b47c173ea860",
+        "digest": "sha256:beaaa599ef94ad711302a006e146a50eb024eac4e0c3a13b8d80b47c173ea860"
+      },
+      "provenance": {
+        "id": "keycloak-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/keycloak.intoto.json@sha256:52ff8cd08afafea44ad21144dd303859aa62cd25123d31b84aec99b64c8036a4",
+        "digest": "sha256:52ff8cd08afafea44ad21144dd303859aa62cd25123d31b84aec99b64c8036a4"
+      },
+      "componentContract": "keycloak/v1",
+      "provides": [
+        "keycloak-oidc/v1"
+      ],
+      "requires": [
+        "postgresql/v16"
+      ],
+      "configSchema": {
+        "id": "keycloak-config/v1",
+        "digest": "sha256:98bf4195db7b56e0a68d5c7b4009196103137b54016338e9c221b941be8a7fbb"
+      },
+      "dataSchema": {
+        "authority": "identity",
+        "target": "keycloak-schema/d1"
+      }
+    },
+    {
+      "componentId": "postgresql",
+      "authority": "postgresql",
+      "version": "16.10.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://docker.io/library/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "digest": "sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "postgresql-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/postgresql.cdx.json@sha256:61baeea8565c782a126270d2326accd3c15d50fb0d429fbbb8604c8a560ee34d",
+        "digest": "sha256:61baeea8565c782a126270d2326accd3c15d50fb0d429fbbb8604c8a560ee34d"
+      },
+      "provenance": {
+        "id": "postgresql-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/postgresql.intoto.json@sha256:ae408864bff047453a7bbc7cdfa4709e219864890dd32aac8f5856e1dc967738",
+        "digest": "sha256:ae408864bff047453a7bbc7cdfa4709e219864890dd32aac8f5856e1dc967738"
+      },
+      "componentContract": "postgresql/v1",
+      "provides": [
+        "postgresql/v16"
+      ],
+      "requires": [],
+      "configSchema": {
+        "id": "postgresql-config/v1",
+        "digest": "sha256:b8bf7d6576098d4f33971fc2dbc53936ca15c1ab25f8834bcdadd0739e5dcc1a"
+      },
+      "dataSchema": {
+        "authority": "postgresql",
+        "target": "postgresql-schema/d1"
+      }
+    },
+    {
+      "componentId": "alica-runtime",
+      "authority": "alica",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "digest": "sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "alica-runtime-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/alica-runtime.cdx.json@sha256:66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+        "digest": "sha256:66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4"
+      },
+      "provenance": {
+        "id": "alica-runtime-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/alica-runtime.intoto.json@sha256:417241599e474e3c3cb9df2e6a983bb8a64017c6d30d03abc7ed7719487e006e",
+        "digest": "sha256:417241599e474e3c3cb9df2e6a983bb8a64017c6d30d03abc7ed7719487e006e"
+      },
+      "componentContract": "alica-runtime/v1",
+      "provides": [
+        "framework-agent/v1"
+      ],
+      "requires": [
+        "unify-api/v1",
+        "memory-v4-api/v1"
+      ],
+      "configSchema": {
+        "id": "alica-runtime-config/v1",
+        "digest": "sha256:511275bfc3b29371065cae4356602560e34ecf2088502f22195302736fcb4628"
+      },
+      "dataSchema": {
+        "authority": "alica",
+        "target": "alica-state/d1"
+      }
+    },
+    {
+      "componentId": "herman-runtime",
+      "authority": "herman",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "digest": "sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "herman-runtime-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/herman-runtime.cdx.json@sha256:66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4",
+        "digest": "sha256:66cace8be5a6c4e5f74a50f7f6b93f731d72ff19f46758fcacad2106457c7bb4"
+      },
+      "provenance": {
+        "id": "herman-runtime-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/herman-runtime.intoto.json@sha256:29838fbed3e8f0c84faf157663b45b8662b585601c680175ee181da48ad9f57f",
+        "digest": "sha256:29838fbed3e8f0c84faf157663b45b8662b585601c680175ee181da48ad9f57f"
+      },
+      "componentContract": "herman-runtime/v1",
+      "provides": [
+        "framework-agent/v1"
+      ],
+      "requires": [
+        "unify-api/v1",
+        "memory-v4-api/v1"
+      ],
+      "configSchema": {
+        "id": "herman-runtime-config/v1",
+        "digest": "sha256:da7fb70dfcae8e8ea4f2737325d12fa3282ea63be5366fbeb5b4fed024a6a28a"
+      },
+      "dataSchema": {
+        "authority": "herman",
+        "target": "herman-state/d1"
+      }
+    },
+    {
+      "componentId": "memory-v4",
+      "authority": "memory-v4",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "digest": "sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "memory-v4-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/memory-v4.cdx.json@sha256:2507127c9b5015f75d36a00fd441f8f981a590594f67725401ff2919604a5934",
+        "digest": "sha256:2507127c9b5015f75d36a00fd441f8f981a590594f67725401ff2919604a5934"
+      },
+      "provenance": {
+        "id": "memory-v4-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/memory-v4.intoto.json@sha256:f093d6c43c8bd509a830ce2d85cf20d5d4ce31c7c8128344c10c10d18ff2f3e2",
+        "digest": "sha256:f093d6c43c8bd509a830ce2d85cf20d5d4ce31c7c8128344c10c10d18ff2f3e2"
+      },
+      "componentContract": "memory-v4/v1",
+      "provides": [
+        "memory-v4-api/v1"
+      ],
+      "requires": [
+        "postgresql/v16"
+      ],
+      "configSchema": {
+        "id": "memory-v4-config/v1",
+        "digest": "sha256:de95290f191f856bc5baead879d1ca6ab0bc7ee47cd5ac7e68dc141fc31a17d6"
+      },
+      "dataSchema": {
+        "authority": "memory-v4",
+        "target": "memory-v4-schema/d1"
+      }
+    },
+    {
+      "componentId": "ainba-anchor",
+      "authority": "ainba",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "ainba-anchor-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/ainba-anchor.cdx.json@sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+        "digest": "sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965"
+      },
+      "provenance": {
+        "id": "ainba-anchor-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/ainba-anchor.intoto.json@sha256:2b4c5941dc95470c9706e852e4f5fdb9f64d897c61d6cfbac2e37b7bc203f256",
+        "digest": "sha256:2b4c5941dc95470c9706e852e4f5fdb9f64d897c61d6cfbac2e37b7bc203f256"
+      },
+      "componentContract": "ainba-anchor/v1",
+      "provides": [
+        "ainba-workload/v1"
+      ],
+      "requires": [
+        "framework-agent/v1",
+        "memory-v4-api/v1"
+      ],
+      "configSchema": {
+        "id": "ainba-anchor-config/v1",
+        "digest": "sha256:9e4fc9d49800b7fcdfde1252cc70e0deddc6eddf2c3563738d45f273112ce2c7"
+      },
+      "dataSchema": {
+        "authority": "ainba",
+        "target": "ainba-data/d1"
+      }
+    },
+    {
+      "componentId": "doghouse-node",
+      "authority": "doghouse",
+      "version": "1.0.0",
+      "kind": "oci-image",
+      "realization": "oci-container",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "doghouse-node-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/doghouse-node.cdx.json@sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965",
+        "digest": "sha256:3bf8bd0bd1363873162cb4ff472d8319a295fb6128f326c78dc17e79e074a965"
+      },
+      "provenance": {
+        "id": "doghouse-node-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/doghouse-node.intoto.json@sha256:9f71b59823d33782c12924ad2a03a2df38e602dcef3150bf418ea1ae9248348a",
+        "digest": "sha256:9f71b59823d33782c12924ad2a03a2df38e602dcef3150bf418ea1ae9248348a"
+      },
+      "componentContract": "doghouse-node/v1",
+      "provides": [
+        "doghouse-report/v1"
+      ],
+      "requires": [
+        "unify-api/v1"
+      ],
+      "configSchema": {
+        "id": "doghouse-report-config/v1",
+        "digest": "sha256:c529e7ce0a7987f8622e477700e0d611398a1ceab967ef93ce62bbdf6cd788e5"
+      },
+      "dataSchema": {
+        "authority": "doghouse",
+        "target": "doghouse-state/d1"
+      }
+    },
+    {
+      "componentId": "alicactl",
+      "authority": "lifecycle",
+      "version": "1.0.0-d5",
+      "kind": "host-binary",
+      "realization": "host-binary",
+      "artifact": "file://bundle/alicactl@sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "digest": "sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "alicactl-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/alicactl.cdx.json@sha256:01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+        "digest": "sha256:01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059"
+      },
+      "provenance": {
+        "id": "alicactl-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/alicactl.intoto.json@sha256:1e474a13071fe0c1a64277e0517a7b4fbf97c6565f63057b66de673f2e43f527",
+        "digest": "sha256:1e474a13071fe0c1a64277e0517a7b4fbf97c6565f63057b66de673f2e43f527"
+      },
+      "componentContract": "alicactl/v1",
+      "provides": [
+        "alica-lifecycle-readonly/v1",
+        "alica-clean-install/v1",
+        "alica-recovery-operations/v1",
+        "alica-trusted-update/v1"
+      ],
+      "requires": [],
+      "configSchema": {
+        "id": "alicactl-config/v1",
+        "digest": "sha256:993ed52c3e5dbb108ca730aad9c14aed48570505dd8cf617ded818ce0e71b35b"
+      },
+      "dataSchema": {
+        "authority": "lifecycle",
+        "target": "lifecycle-state/v1"
+      }
+    },
+    {
+      "componentId": "operations-jobs",
+      "authority": "operations",
+      "version": "1.0.0-d5",
+      "kind": "host-unit-bundle",
+      "realization": "systemd-units",
+      "artifact": "file://bundle/alicactl@sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "digest": "sha256:ade98a40bd288c3c6da4ccdb2523e70f16a93d7731d9024849918a7b6ec1d8b3",
+      "signaturePolicy": "alica-executable/v1",
+      "sbom": {
+        "id": "operations-jobs-sbom-cyclonedx-1.6",
+        "artifact": "file://bundle/evidence/sbom/operations-jobs.cdx.json@sha256:01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059",
+        "digest": "sha256:01e2e4df865875bbd5c25af119f4f0bac8881ef6f5372a585a78e6f2ae14c059"
+      },
+      "provenance": {
+        "id": "operations-jobs-provenance-slsa-v1",
+        "artifact": "file://bundle/evidence/provenance/operations-jobs.intoto.json@sha256:9ef3b3621155a81f67b7512c22ac130270cb053922394a18fe9a7afc647081b4",
+        "digest": "sha256:9ef3b3621155a81f67b7512c22ac130270cb053922394a18fe9a7afc647081b4"
+      },
+      "componentContract": "operations-jobs/v1",
+      "provides": [
+        "alica-operations-jobs/v1",
+        "alica-coordinated-backup/v1",
+        "alica-operations-alerts/v1",
+        "alica-update-preflight/v1"
+      ],
+      "requires": [
+        "alica-lifecycle-readonly/v1"
+      ],
+      "configSchema": {
+        "id": "operations-jobs-config/v1",
+        "digest": "sha256:b0ee748d7fa5532b39cba80987e023c653a94308cd230e231c6b8ff04792cc4b"
+      },
+      "dataSchema": {
+        "authority": "operations",
+        "target": "operations-jobs-state/v1"
+      }
+    }
+  ],
+  "topology": {
+    "project": "alica",
+    "labels": {
+      "cellId": "com.alica.cell.id",
+      "releaseId": "com.alica.release.id",
+      "componentId": "com.alica.component.id",
+      "managed": "com.alica.managed"
+    },
+    "containers": [
+      {
+        "componentId": "caddy",
+        "service": "caddy",
+        "networks": [
+          "edge",
+          "app"
+        ],
+        "volumes": [
+          "caddy-config"
+        ],
+        "publishedPorts": [
+          {
+            "hostIp": "0.0.0.0",
+            "published": 80,
+            "target": 80,
+            "protocol": "tcp"
+          },
+          {
+            "hostIp": "0.0.0.0",
+            "published": 443,
+            "target": 443,
+            "protocol": "tcp"
+          }
+        ],
+        "healthRequired": true
+      },
+      {
+        "componentId": "uniui",
+        "service": "uniui",
+        "networks": [
+          "app"
+        ],
+        "volumes": [],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "unify-core",
+        "service": "unify-core",
+        "networks": [
+          "app",
+          "data",
+          "frameworks",
+          "assurance"
+        ],
+        "volumes": [],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "keycloak",
+        "service": "keycloak",
+        "networks": [
+          "app",
+          "data"
+        ],
+        "volumes": [],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "postgresql",
+        "service": "postgresql",
+        "networks": [
+          "data"
+        ],
+        "volumes": [
+          "postgres-data"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "alica-runtime",
+        "service": "alica-runtime",
+        "networks": [
+          "frameworks",
+          "app"
+        ],
+        "volumes": [
+          "alica-state"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "herman-runtime",
+        "service": "herman-runtime",
+        "networks": [
+          "frameworks",
+          "app"
+        ],
+        "volumes": [
+          "herman-state"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "memory-v4",
+        "service": "memory-v4",
+        "networks": [
+          "data",
+          "frameworks"
+        ],
+        "volumes": [
+          "memory-data"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "ainba-anchor",
+        "service": "ainba-anchor",
+        "networks": [
+          "frameworks",
+          "app"
+        ],
+        "volumes": [
+          "ainba-data"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      },
+      {
+        "componentId": "doghouse-node",
+        "service": "doghouse-node",
+        "networks": [
+          "assurance",
+          "app"
+        ],
+        "volumes": [
+          "doghouse-state"
+        ],
+        "publishedPorts": [],
+        "healthRequired": true
+      }
+    ],
+    "networks": [
+      {
+        "id": "edge",
+        "internal": false
+      },
+      {
+        "id": "app",
+        "internal": true
+      },
+      {
+        "id": "data",
+        "internal": true
+      },
+      {
+        "id": "frameworks",
+        "internal": true
+      },
+      {
+        "id": "assurance",
+        "internal": true
+      }
+    ],
+    "volumes": [
+      {
+        "id": "caddy-config",
+        "authority": "edge"
+      },
+      {
+        "id": "postgres-data",
+        "authority": "postgresql"
+      },
+      {
+        "id": "memory-data",
+        "authority": "memory-v4"
+      },
+      {
+        "id": "alica-state",
+        "authority": "alica"
+      },
+      {
+        "id": "herman-state",
+        "authority": "herman"
+      },
+      {
+        "id": "ainba-data",
+        "authority": "ainba"
+      },
+      {
+        "id": "doghouse-state",
+        "authority": "doghouse"
+      }
+    ],
+    "hostUnits": [
+      {
+        "componentId": "operations-jobs",
+        "unit": "alica-backup.service",
+        "required": true
+      },
+      {
+        "componentId": "operations-jobs",
+        "unit": "alica-canary.timer",
+        "required": true
+      },
+      {
+        "componentId": "operations-jobs",
+        "unit": "alica-update-check.timer",
+        "required": true
+      }
+    ]
+  },
+  "compatibility": {
+    "freshInstall": true,
+    "supportedOrigins": []
+  },
+  "migrationPlan": {
+    "planId": "migration-plan/d6-publication-envelope",
+    "steps": []
+  },
+  "rollback": {
+    "supportedTargets": [],
+    "forwardRecovery": "No D6 cross-release mutation edge is authorized; recovery uses accepted same-release D4 operations and separately custodied complete backups."
+  },
+  "dataUnits": [
+    {
+      "authority": "identity-postgres",
+      "backupContract": "postgresql-native-backup/v1",
+      "restoreOrder": 10
+    },
+    {
+      "authority": "unify-postgres",
+      "backupContract": "postgresql-native-backup/v1",
+      "restoreOrder": 20
+    },
+    {
+      "authority": "memory-v4",
+      "backupContract": "memory-v4-backup/v1",
+      "restoreOrder": 30
+    },
+    {
+      "authority": "alica-state",
+      "backupContract": "framework-state-backup/v1",
+      "restoreOrder": 40
+    },
+    {
+      "authority": "herman-state",
+      "backupContract": "framework-state-backup/v1",
+      "restoreOrder": 50
+    },
+    {
+      "authority": "ainba-data",
+      "backupContract": "ainba-backup/v1",
+      "restoreOrder": 60
+    },
+    {
+      "authority": "doghouse-state",
+      "backupContract": "doghouse-backup/v1",
+      "restoreOrder": 70
+    },
+    {
+      "authority": "lifecycle-state",
+      "backupContract": "alicactl-state-backup/v1",
+      "restoreOrder": 80
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "alica-http-redirect",
+      "exposure": "public",
+      "protocol": "http",
+      "port": 80,
+      "owner": "caddy"
+    },
+    {
+      "id": "alica-https",
+      "exposure": "public",
+      "protocol": "https",
+      "port": 443,
+      "owner": "caddy"
+    }
+  ],
+  "secretRequirements": [
+    {
+      "reference": "secret://cell/postgresql/admin",
+      "class": "database-password",
+      "consumers": [
+        "postgresql"
+      ]
+    },
+    {
+      "reference": "secret://cell/keycloak/admin",
+      "class": "identity-bootstrap",
+      "consumers": [
+        "keycloak"
+      ]
+    },
+    {
+      "reference": "secret://cell/unify/oidc-client",
+      "class": "oidc-client-secret",
+      "consumers": [
+        "unify-core"
+      ]
+    },
+    {
+      "reference": "secret://cell/providers/byok",
+      "class": "provider-credentials",
+      "consumers": [
+        "alica-runtime",
+        "herman-runtime"
+      ]
+    }
+  ],
+  "acceptanceSuite": {
+    "id": "alica-cell-acceptance/v1",
+    "artifact": "file://bundle/acceptance-matrix.json@sha256:d8ac43810071f78057e48a1f0609566240bdeed432206ceae626cb58adf215c4",
+    "digest": "sha256:d8ac43810071f78057e48a1f0609566240bdeed432206ceae626cb58adf215c4"
+  },
+  "releaseNotes": {
+    "id": "alica-dsh-release-notes/v1",
+    "artifact": "file://bundle/RELEASE-NOTES.md@sha256:b7158382b243a1c374e2e7d3cecb7f8fd9c7c29e3e4be2e95c75a4e977ba3b53",
+    "digest": "sha256:b7158382b243a1c374e2e7d3cecb7f8fd9c7c29e3e4be2e95c75a4e977ba3b53"
+  },
+  "knownRisks": [
+    "D6 independently qualifies candidate publication bytes; stable/general-availability channel promotion is not implied.",
+    "Community edition includes no paid support, SLA, multi-node high availability or managed hosting rights.",
+    "No D6 cross-release mutation edge is authorized; only clean installation is independently qualified."
+  ],
+  "irreversibleChanges": []
+}

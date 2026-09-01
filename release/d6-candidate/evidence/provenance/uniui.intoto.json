@@ -1,0 +1,38 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "digest": {
+        "sha256": "5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
+      }
+    }
+  ],
+  "predicateType": "https://slsa.dev/provenance/v1",
+  "predicate": {
+    "buildDefinition": {
+      "buildType": "https://alica.hk/dsh/publication/v1",
+      "externalParameters": {
+        "componentId": "uniui",
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
+      },
+      "internalParameters": {},
+      "resolvedDependencies": [
+        {
+          "uri": "BartSchuster22/UNIFY@3864b684efa702b6c30976415143fa686c12275f",
+          "digest": {
+            "sha256": "8e9fea0d64901469a38675d7ae2d293ceb758e7c9525b26eae98aa3569bb863b"
+          }
+        }
+      ]
+    },
+    "runDetails": {
+      "builder": {
+        "id": "https://github.com/BartSchuster22/Alica-DSH/actions/workflows/d6-independent-acceptance.yml"
+      },
+      "metadata": {
+        "invocationId": "D6-independent-candidate"
+      }
+    }
+  }
+}
