@@ -98,10 +98,10 @@ run_debian "$INSTALL" | tee "$EVIDENCE/install-result.json"
 run_debian "$INSTALL" | tee "$EVIDENCE/noop-result.json"
 
 DIND_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$DIND")
-docker run --rm --network "container:$DIND" curlimages/curl:8.16.0 \
+"$TOOLS/docker-cli" --host tcp://"$DIND_IP":2375 run --rm --network host curlimages/curl:8.16.0 \
   -ksS -o /dev/null -w '%{http_code}\n' "https://localhost:$HTTPS_PORT/" \
   > "$EVIDENCE/https-status.txt"
-docker run --rm --network "container:$DIND" curlimages/curl:8.16.0 \
+"$TOOLS/docker-cli" --host tcp://"$DIND_IP":2375 run --rm --network host curlimages/curl:8.16.0 \
   -sS -H 'Host: localhost' -o /dev/null -w '%{http_code} %{redirect_url}\n' \
   "http://localhost:$HTTP_PORT/" > "$EVIDENCE/http-redirect.txt"
 
