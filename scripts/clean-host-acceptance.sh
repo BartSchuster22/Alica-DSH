@@ -112,9 +112,9 @@ DIND_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{
   $("$TOOLS/docker-cli" --host tcp://"$DIND_IP":2375 ps -q --filter label=com.docker.compose.project=alica-d2-public-clean-host) \
   --format '{{.Name}}{{range .Mounts}}{{if eq .Type "bind"}}|{{.Source}}{{end}}{{end}}' | sort > "$EVIDENCE/mounts.txt"
 
-cp "$INSTALL_ROOT/accepted/operation-journal.json" "$EVIDENCE/operation-journal.json"
-cp "$INSTALL_ROOT/accepted/cell-declaration.json" "$EVIDENCE/cell-declaration.json"
-cp "$INSTALL_ROOT/accepted/cell-state.json" "$EVIDENCE/cell-state.json"
+run_debian "cat '$INSTALL_ROOT/accepted/operation-journal.json'" > "$EVIDENCE/operation-journal.json"
+run_debian "cat '$INSTALL_ROOT/accepted/cell-declaration.json'" > "$EVIDENCE/cell-declaration.json"
+run_debian "cat '$INSTALL_ROOT/accepted/cell-state.json'" > "$EVIDENCE/cell-state.json"
 
 python3 - "$EVIDENCE" <<'PY'
 import json, pathlib, sys
