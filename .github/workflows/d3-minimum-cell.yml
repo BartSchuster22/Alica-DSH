@@ -1,4 +1,4 @@
-name: D3 public clean-host acceptance
+name: D3 minimum-Cell incremental runtime acceptance
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run isolated Debian 13 and Docker 28 acceptance
+      - name: Run isolated Debian 13 and Docker 28 D3 incremental runtime acceptance
         run: scripts/d3-minimum-cell-acceptance.sh
 
       - name: Publish acceptance evidence
@@ -33,5 +33,5 @@ jobs:
           git rm -rf .
           cp -a /tmp/acceptance-evidence .
           git add acceptance-evidence
-          git commit -m 'evidence: D3 public clean-host acceptance'
+          git commit -m 'evidence: D3 minimum-Cell incremental acceptance'
           git push --force origin HEAD:clean-host-evidence

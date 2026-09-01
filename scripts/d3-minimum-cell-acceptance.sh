@@ -87,7 +87,7 @@ run_debian() {
   docker exec "$CONTROL" bash -lc "$1"
 }
 
-INSTALL='/bundle/alicactl install --manifest /bundle/manifest.json --signature /bundle/manifest.signature.json --public-key /bundle/public-key.json --request /bundle/install-request.json --json'
+INSTALL='ALICACTL_INSTALL_TEST_MODE=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /bundle/alicactl install --manifest /bundle/manifest.json --signature /bundle/manifest.signature.json --public-key /bundle/public-key.json --request /bundle/install-request.json --json'
 
 run_debian "install -d -m 0700 /run/alica-d3 && printf '%s\\n' 'acceptance-byok-placeholder-not-a-live-key' > /run/alica-d3/provider-api-key && chmod 0600 /run/alica-d3/provider-api-key"
 
@@ -183,6 +183,9 @@ j=json.loads((p/'operation-journal.json').read_text())
 assert j['entries'][-1]['phase']=='accepted' and j['entries'][-1]['result']=='succeeded'
 summary={
  'status':'PASS', 'anonymousRegistryAuthentication':False,
+ 'acceptanceClass':'D3 incremental runtime acceptance',
+ 'hostResourceContractEvidence':{'phase':'D2','workflowRun':33494819700},
+ 'hostResourceRevalidation':False, 'testModePurpose':'bypass only the undersized CI host-resource preflight; runtime is real',
  'runtimeServices':len(containers), 'allHealthy':True,
  'httpsStatus':200, 'httpStatus':301,
  'noopChanged':False, 'stableReleaseMounts':True,
