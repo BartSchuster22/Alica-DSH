@@ -36,6 +36,13 @@ ref=sys.argv[1];json.dump({'schemaVersion':'alica-upstream-digest-binding/v1','r
 PY
  fi
 done
+python3 - "$B/image-map.json" <<'PY'
+import json,subprocess,sys
+p=sys.argv[1];x=json.load(open(p))
+for image in x['images']:
+ image['imageId']=subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',image['reference']],text=True).strip()
+json.dump(x,open(p,'w'),indent=2);open(p,'a').write('\n')
+PY
 docker save "${IMAGES[@]}" -o "$B/oci-images.docker-archive.tar"
 python3 - "$B" <<'PY'
 import json,hashlib,pathlib,sys

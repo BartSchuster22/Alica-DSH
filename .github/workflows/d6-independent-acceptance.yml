@@ -23,6 +23,7 @@ permissions:
 
 env:
   BUNDLE: alica-community-dsh-1.0.0-linux-amd64.bundle.tar.zst
+  RELEASE_TAG: d6-independent-candidate-v2
 
 jobs:
   sign-images:
@@ -74,7 +75,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$RUNNER_TEMP/dist"
-          if gh release download d6-independent-candidate --pattern "$BUNDLE" --pattern "$BUNDLE.sha256" --dir "$RUNNER_TEMP/dist" --clobber 2>/dev/null && (cd "$RUNNER_TEMP/dist" && sha256sum -c "$BUNDLE.sha256"); then
+          if gh release download $RELEASE_TAG --pattern "$BUNDLE" --pattern "$BUNDLE.sha256" --dir "$RUNNER_TEMP/dist" --clobber 2>/dev/null && (cd "$RUNNER_TEMP/dist" && sha256sum -c "$BUNDLE.sha256"); then
             echo 'Reusing checksum-verified exact candidate bundle'
           else
             rm -f "$RUNNER_TEMP/dist/$BUNDLE" "$RUNNER_TEMP/dist/$BUNDLE.sha256"
@@ -85,9 +86,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           sha=$(cut -d' ' -f1 "$RUNNER_TEMP/dist/$BUNDLE.sha256")
-          gh release view d6-independent-candidate >/dev/null 2>&1 || gh release create d6-independent-candidate --prerelease --target "$GITHUB_SHA" --title 'ALICA Community DSH 1.0.0 independent-acceptance candidate' --notes 'Candidate publication pending two-host D6 independent acceptance.'
-          gh release upload d6-independent-candidate "$RUNNER_TEMP/dist/$BUNDLE" "$RUNNER_TEMP/dist/$BUNDLE.sha256" --clobber
-          echo "url=https://github.com/${GITHUB_REPOSITORY}/releases/download/d6-independent-candidate/$BUNDLE" >> "$GITHUB_OUTPUT"
+          gh release view $RELEASE_TAG >/dev/null 2>&1 || gh release create $RELEASE_TAG --prerelease --target "$GITHUB_SHA" --title 'ALICA Community DSH 1.0.0 independent-acceptance candidate' --notes 'Candidate publication pending two-host D6 independent acceptance.'
+          gh release upload $RELEASE_TAG "$RUNNER_TEMP/dist/$BUNDLE" "$RUNNER_TEMP/dist/$BUNDLE.sha256" --clobber
+          echo "url=https://github.com/${GITHUB_REPOSITORY}/releases/download/$RELEASE_TAG/$BUNDLE" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
