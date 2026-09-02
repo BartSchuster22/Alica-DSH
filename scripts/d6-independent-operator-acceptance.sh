@@ -9,6 +9,15 @@ on_error(){ rc=$?;set +e;mkdir -p "$EVIDENCE";printf 'exit=%s line=%s command=%s
 trap on_error ERR;trap cleanup EXIT;rm -rf "$TOOLS" "$EVIDENCE";mkdir -p "$TOOLS/root/.docker/cli-plugins" "$EVIDENCE"
 test -x "$CANDIDATE/alicactl";find "$CANDIDATE" -maxdepth 1 -type f -print0|sort -z|xargs -0 sha256sum > "$EVIDENCE/candidate-sha256.txt"
 curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-28.4.0.tgz|tar -xz -C "$TOOLS";cp "$TOOLS/docker/docker" "$TOOLS/docker-cli";chmod 0755 "$TOOLS/docker-cli"
+cat > "$TOOLS/docker-wrapper" <<'EOF'
+#!/bin/sh
+if [ "${1:-}" = pull ] && /usr/local/bin/docker-real image inspect "${2:-}" >/dev/null 2>&1; then
+  printf '%s\n' "${2:-}"
+  exit 0
+fi
+exec /usr/local/bin/docker-real "$@"
+EOF
+chmod 0755 "$TOOLS/docker-wrapper"
 curl -fsSL https://github.com/docker/compose/releases/download/v2.39.4/docker-compose-linux-x86_64 -o "$TOOLS/root/.docker/cli-plugins/docker-compose";chmod 0755 "$TOOLS/root/.docker/cli-plugins/docker-compose"
 sudo truncate -s 120G /tmp/alica-d6-$MODE.img;sudo mkfs.ext4 -q -F /tmp/alica-d6-$MODE.img;sudo mkdir -p "$ROOT";sudo mount -o loop /tmp/alica-d6-$MODE.img "$ROOT";sudo chmod 0777 "$ROOT";mkdir -p "$ROOT/docker-data" "$ROOT/secrets" "$ROOT/repository" "$ROOT/off-host" "$ROOT/requests";chmod 0700 "$ROOT/secrets" "$ROOT/off-host"
 for pair in 'backup-key:d6-encryption-key-0123456789abcdef' 's3-access-key:ALICAD6ACCESSKEY1234' 's3-secret-key:d6-secret-access-key-0123456789abcdef' 'provider-api-key:d6-provider-test-key-not-a-secret';do name=${pair%%:*};printf '%s\n' "${pair#*:}">"$ROOT/secrets/$name";chmod 0600 "$ROOT/secrets/$name";done
@@ -18,7 +27,7 @@ for _ in $(seq 1 60);do docker exec "$DIND" docker info>/dev/null 2>&1&&break;sl
 if [ "$MODE" = offline ];then test -n "$BUNDLE_ROOT";test -f "$BUNDLE_ROOT/oci-images.docker-archive.tar";docker exec -i "$DIND" docker load < "$BUNDLE_ROOT/oci-images.docker-archive.tar" > "$EVIDENCE/offline-import.txt";docker exec "$DIND" test ! -e /root/.docker/config.json;else while IFS= read -r image;do docker exec "$DIND" docker pull "$image">/dev/null;done < <(python3 -c 'import json,sys;m=json.load(open(sys.argv[1]));print("\n".join(sorted({c["artifact"][6:] for c in m["components"] if c["artifact"].startswith("oci://")})))' "$CANDIDATE/manifest.json");fi
 printf '%s\n' 'FROM debian:13-slim' 'ENV DEBIAN_FRONTEND=noninteractive' 'RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends ca-certificates curl systemd python3 >/dev/null && apt-get clean && rm -rf /var/lib/apt/lists/*' 'STOPSIGNAL SIGRTMIN+3' 'CMD ["/lib/systemd/systemd"]'>$TOOLS/Dockerfile
 docker build -q -t alica-d6-$MODE-debian13 -f "$TOOLS/Dockerfile" "$TOOLS">/dev/null
-docker run -d --privileged --cgroupns=private --name "$CONTROL" --network "$NETWORK" --tmpfs /run --tmpfs /run/lock -e DOCKER_HOST=tcp://alica-d6.localhost:2375 -v "$CANDIDATE:/candidate:ro" -v "$WORKSPACE/scripts/d6-authenticated-qa10.sh:/usr/local/bin/d6-qa10:ro" -v "$WORKSPACE/scripts/d4-s3-alert-mock.py:/usr/local/lib/s3-alert-mock.py:ro" -v "$TOOLS/docker-cli:/usr/local/bin/docker:ro" -v "$TOOLS/root/.docker/cli-plugins/docker-compose:/usr/local/lib/docker/cli-plugins/docker-compose:ro" -v "$ROOT:$ROOT" alica-d6-$MODE-debian13 >/dev/null
+docker run -d --privileged --cgroupns=private --name "$CONTROL" --network "$NETWORK" --tmpfs /run --tmpfs /run/lock -e DOCKER_HOST=tcp://alica-d6.localhost:2375 -v "$CANDIDATE:/candidate:ro" -v "$WORKSPACE/scripts/d6-authenticated-qa10.sh:/usr/local/bin/d6-qa10:ro" -v "$WORKSPACE/scripts/d4-s3-alert-mock.py:/usr/local/lib/s3-alert-mock.py:ro" -v "$TOOLS/docker-cli:/usr/local/bin/docker-real:ro" -v "$TOOLS/docker-wrapper:/usr/local/bin/docker:ro" -v "$TOOLS/root/.docker/cli-plugins/docker-compose:/usr/local/lib/docker/cli-plugins/docker-compose:ro" -v "$ROOT:$ROOT" alica-d6-$MODE-debian13 >/dev/null
 for _ in $(seq 1 60);do s=$(docker exec "$CONTROL" systemctl is-system-running 2>/dev/null||true);{ [ "$s" = running ]||[ "$s" = degraded ]; }&&break;sleep 2;done
 run(){ docker exec "$CONTROL" bash -lc "$1"; };run "systemd-run --unit=d6-mock --property=Restart=always /usr/bin/python3 /usr/local/lib/s3-alert-mock.py '$ROOT/off-host'">/dev/null
 python3 - "$CANDIDATE/manifest.json" "$ROOT/requests/install.json" "$MODE" <<'PY'
@@ -30,7 +39,8 @@ open(sys.argv[2],'w').write(json.dumps(x)+'\n')
 PY
 INSTALL="ALICACTL_INSTALL_TEST_MODE=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /candidate/alicactl install --manifest /candidate/manifest.json --signature /candidate/manifest.signature.json --public-key /candidate/public-key.json --request '$ROOT/requests/install.json' --json"
 run "$INSTALL" 2>&1|tee "$EVIDENCE/install.json";run "$INSTALL" 2>&1|tee "$EVIDENCE/noop.json"
-run "UNIFY_ROOT='$INSTALL_ROOT/release' UNIFY_PUBLIC_ORIGIN=https://alica-d6.localhost QA10_USERNAME=admin /usr/local/bin/d6-qa10"|tee "$EVIDENCE/qa10.txt"
+run "for _ in \$(seq 1 120); do code=\$(curl -ksS -o /dev/null -w '%{http_code}' https://alica-d6.localhost/api/v1/frameworks || true); [ \"\$code\" = 401 ] && exit 0; sleep 2; done; exit 1"
+run "UNIFY_ROOT='$INSTALL_ROOT/release' UNIFY_PUBLIC_ORIGIN=https://alica-d6.localhost QA10_USERNAME=admin /usr/local/bin/d6-qa10" 2>&1|tee "$EVIDENCE/qa10.txt"
 CELL=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["cellId"])' "$ROOT/requests/install.json")
 cat >$ROOT/requests/recovery.json <<EOF
 {"schemaVersion":"alica-recovery-operations/v1","cellId":"$CELL","installationRoot":"$INSTALL_ROOT","project":"$PROJECT","encryptionKeyFile":"$ROOT/secrets/backup-key","localRepository":"$ROOT/repository","s3":{"endpoint":"http://127.0.0.1:9000","region":"eu-west-1","bucket":"d6-$MODE","prefix":"independent","accessKeyFile":"$ROOT/secrets/s3-access-key","secretAccessKeyFile":"$ROOT/secrets/s3-secret-key"},"operations":{"webhookUrl":"http://127.0.0.1:9000/webhook","canaryUrl":"https://alica-d6.localhost/","backupMaxAgeSeconds":90000,"minimumFreeDiskBytes":1,"certificateWarnSeconds":60}}
