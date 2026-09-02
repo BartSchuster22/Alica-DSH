@@ -79,7 +79,7 @@ cat >$ROOT/requests/recovery.json <<EOF
 EOF
 OPS="ALICACTL_OPERATIONS_TEST_MODE=1 ALICACTL_OPERATIONS_ACTIVATE_TEST_UNITS=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /candidate/alicactl"
 run "$OPS operations-check --request '$ROOT/requests/recovery.json' --synthetic-alert" 2>&1|tee "$EVIDENCE/operations.json";run "$OPS backup --request '$ROOT/requests/recovery.json'" 2>&1|tee "$EVIDENCE/backup.json";run "$OPS restart --request '$ROOT/requests/recovery.json'" 2>&1|tee "$EVIDENCE/restart.json"
-docker restart "$DIND">/dev/null;for _ in $(seq 1 90);do n=$(docker exec "$DIND" docker ps --filter label=com.docker.compose.project=$PROJECT --filter health=healthy -q 2>/dev/null|wc -l);[ "$n" -eq 10 ]&&break;sleep 3;done;test "$n" -eq 10
+docker restart "$DIND">/dev/null;for _ in $(seq 1 90);do n=$(docker exec "$DIND" docker ps --filter label=com.docker.compose.project=$PROJECT --filter health=healthy -q 2>/dev/null|wc -l||true);n=${n:-0};[ "$n" -eq 10 ]&&break;sleep 3;done;test "$n" -eq 10
 run "UNIFY_ROOT='$INSTALL_ROOT/release' UNIFY_PUBLIC_ORIGIN=https://alica-d6.localhost QA10_USERNAME=admin /usr/local/bin/d6-qa10"|tee "$EVIDENCE/qa10-after-restart.txt"
 run "docker compose --env-file '$INSTALL_ROOT/release/compose.env' -f '$INSTALL_ROOT/release/compose.yaml' --project-name '$PROJECT' --profile minimum-cell ps --format json">$EVIDENCE/containers.jsonl
 python3 - "$EVIDENCE" "$MODE" <<'PY'
