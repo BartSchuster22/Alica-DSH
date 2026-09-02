@@ -48,11 +48,21 @@ if [ "${1:-}" = pull ] && [ -n "${D6_IMAGE_MAP:-}" ] && [ -f "$D6_IMAGE_MAP" ]; 
   fi
 fi
 if [ "${1:-}" = compose ] && [ -n "${D6_IMAGE_MAP:-}" ] && [ -f "$D6_IMAGE_MAP" ]; then
-  previous=''
+  previous='';is_up=false;is_wait=false
   for argument in "$@"; do
-    if [ "$previous" = --env-file ]; then /usr/bin/python3 /usr/local/lib/d6-offline-image-map.py rewrite "$D6_IMAGE_MAP" "$argument"; break; fi
+    [ "$argument" = up ] && is_up=true
+    [ "$argument" = --wait ] && is_wait=true
+    if [ "$previous" = --env-file ]; then /usr/bin/python3 /usr/local/lib/d6-offline-image-map.py rewrite "$D6_IMAGE_MAP" "$argument"; fi
     previous=$argument
   done
+  if $is_up && $is_wait;then
+    rc=1
+    for attempt in 1 2 3 4 5 6;do
+      /usr/local/bin/docker-real "$@" && exit 0
+      rc=$?;printf 'd6-offline: compose readiness attempt %s failed with exit %s; retrying without registry access\n' "$attempt" "$rc" >&2;sleep 10
+    done
+    exit "$rc"
+  fi
 fi
 exec /usr/local/bin/docker-real "$@"
 EOF
