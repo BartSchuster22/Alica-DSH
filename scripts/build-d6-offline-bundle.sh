@@ -45,6 +45,6 @@ json.dump(x,open(p/'bundle-manifest.json','w'),indent=2);open(p/'bundle-manifest
 PY
 (cd "$B";find . -type f ! -name SHA256SUMS -print0|sort -z|xargs -0 sha256sum > SHA256SUMS;sha256sum -c SHA256SUMS)
 ARCHIVE="$OUT/alica-community-dsh-1.0.0-linux-amd64.bundle.tar.zst"
-tar --sort=name --mtime='UTC 2026-09-01' --owner=0 --group=0 --numeric-owner -C "$STAGE" -cf - "$(basename "$B")"|zstd -19 -T0 -o "$ARCHIVE"
+tar --sort=name --mtime='UTC 2026-09-01' --owner=0 --group=0 --numeric-owner -C "$STAGE" -cf - alica-community-dsh-1.0.0-linux-amd64|zstd -q -6 -T0 -o "$ARCHIVE"
 sha256sum "$ARCHIVE" > "$ARCHIVE.sha256"
 printf '%s\n' "$ARCHIVE"
