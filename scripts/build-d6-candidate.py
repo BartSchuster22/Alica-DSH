@@ -27,10 +27,16 @@ if OUT.exists():
  shutil.rmtree(OUT)
 (OUT/'evidence/sbom').mkdir(parents=True);(OUT/'evidence/provenance').mkdir(parents=True)
 m.update(releaseId=uid('rel_'),releaseVersion='1.0.0-d6.independent-candidate.1',createdAt=CREATED,releaseClass='candidate',installable=True)
+source_map=[];source_by_dest={}
+for c in m['components']:
+ if c['artifact'].startswith('oci://'):
+  original=c['artifact'][6:];repo,digest=original.rsplit('@',1);name=repo.rsplit('/',1)[1];dest=f'ghcr.io/bartschuster22/alica-dsh-d6/{name}@{digest}';c['artifact']='oci://'+dest;source_by_dest[c['artifact']]=original
+  if not any(x['destination']==dest for x in source_map):source_map.append({'source':original,'destination':dest,'digest':digest})
+(OUT/'publication-source-map.json').write_bytes(pretty({'schemaVersion':'alica-publication-source-map/v1','images':source_map}))
 source=m['sources'][0];generated={}
 for c in m['components']:
  cid=c['componentId'];artifact=c['artifact'];sb=OUT/f'evidence/sbom/{cid}.cdx.json';pr=OUT/f'evidence/provenance/{cid}.intoto.json'
- target=('registry:'+artifact[6:]) if artifact.startswith('oci://') else str(SOURCE/'alicactl');cached=CACHE/(hashlib.sha256(artifact.encode()).hexdigest()+'.json')
+ source_artifact=source_by_dest.get(artifact,str(SOURCE/'alicactl'));target=('registry:'+source_artifact) if artifact.startswith('oci://') else source_artifact;cache_key=('oci://'+source_artifact) if artifact.startswith('oci://') else artifact;cached=CACHE/(hashlib.sha256(cache_key.encode()).hexdigest()+'.json')
  if artifact in generated: shutil.copy2(generated[artifact],sb)
  elif valid_json(cached):shutil.copy2(cached,sb);generated[artifact]=sb
  elif '/hermes-runtime@' in artifact:
@@ -41,6 +47,7 @@ for c in m['components']:
  statement={'_type':'https://in-toto.io/Statement/v1','subject':[{'name':artifact,'digest':{'sha256':c['digest'][7:]}}],'predicateType':'https://slsa.dev/provenance/v1','predicate':{'buildDefinition':{'buildType':'https://alica.hk/dsh/publication/v1','externalParameters':{'componentId':cid,'immutableArtifact':artifact},'internalParameters':{},'resolvedDependencies':[{'uri':source['repository']+'@'+source['commit'],'digest':{'sha256':source['treeDigest'][7:]}}]},'runDetails':{'builder':{'id':'https://github.com/BartSchuster22/Alica-DSH/actions/workflows/d6-independent-acceptance.yml'},'metadata':{'invocationId':'D6-independent-candidate'}}}}
  pr.write_bytes(pretty(statement));c['sbom']={'id':cid+'-sbom-cyclonedx-1.6','artifact':f'file://bundle/evidence/sbom/{cid}.cdx.json@{sha(sb.read_bytes())}','digest':sha(sb.read_bytes())};c['provenance']={'id':cid+'-provenance-slsa-v1','artifact':f'file://bundle/evidence/provenance/{cid}.intoto.json@{sha(pr.read_bytes())}','digest':sha(pr.read_bytes())}
 for src,dst in [(ROOT/'release/d6-independent-acceptance.json','acceptance-matrix.json'),(ROOT/'docs/D6-INDEPENDENT-ACCEPTANCE.md','RELEASE-NOTES.md'),(ROOT/'licenses/ALICA-COMMUNITY-DSH-EULA-1.0.md','ALICA-COMMUNITY-DSH-EULA-1.0.md'),(ROOT/'THIRD-PARTY-NOTICES.md','THIRD-PARTY-NOTICES.md'),(ROOT/'SECURITY.md','SECURITY.md'),(ROOT/'SUPPORT.md','SUPPORT.md'),(ROOT/'docs/DATA-PRIVACY.md','DATA-PRIVACY.md'),(ROOT/'docs/OPERATOR.md','OPERATOR.md')]:shutil.copy2(src,OUT/dst)
+source_map_digest=sha((OUT/'publication-source-map.json').read_bytes());matrix=json.loads((OUT/'acceptance-matrix.json').read_text());matrix['publicationSourceMapDigest']=source_map_digest;(OUT/'acceptance-matrix.json').write_bytes(pretty(matrix))
 a=OUT/'acceptance-matrix.json';r=OUT/'RELEASE-NOTES.md';m['acceptanceSuite']={'id':'alica-cell-acceptance/v1','artifact':f'file://bundle/acceptance-matrix.json@{sha(a.read_bytes())}','digest':sha(a.read_bytes())};m['releaseNotes']={'id':'alica-dsh-release-notes/v1','artifact':f'file://bundle/RELEASE-NOTES.md@{sha(r.read_bytes())}','digest':sha(r.read_bytes())}
 m['compatibility']={'freshInstall':True,'supportedOrigins':[]};m['migrationPlan']={'planId':'migration-plan/d6-publication-envelope','steps':[]};m['rollback']={'supportedTargets':[],'forwardRecovery':'No D6 cross-release mutation edge is authorized; recovery uses accepted same-release D4 operations and separately custodied complete backups.'};m['knownRisks']=['D6 independently qualifies candidate publication bytes; stable/general-availability channel promotion is not implied.','Community edition includes no paid support, SLA, multi-node high availability or managed hosting rights.','No D6 cross-release mutation edge is authorized; only clean installation is independently qualified.'];m['irreversibleChanges']=[]
 raw=pretty(m);md=sha(canonical(m));priv=Ed25519PrivateKey.generate();pub=priv.public_key().public_bytes(serialization.Encoding.Raw,serialization.PublicFormat.Raw);kid='d6-candidate-'+hashlib.sha256(pub).hexdigest()[:16]

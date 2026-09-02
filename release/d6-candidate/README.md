@@ -1,7 +1,7 @@
 # ALICA Community DSH D6 independent candidate
 
-- Release: `rel_01a05f64-a085-7ff0-886b-c4fd4235b46e` / `1.0.0-d6.independent-candidate.1`
-- Manifest digest: `sha256:4607e1875ebc111f9fe26f1aa159b9c2c6bf7a71a04e57bae26bc1dd7a8bf757`
+- Release: `rel_01a05f6f-a113-7c59-8e72-921b1d0a0b72` / `1.0.0-d6.independent-candidate.1`
+- Manifest digest: `sha256:87b6b4555359c99e9aec934a09eee277051948c782042aa3069bed3778352fb2`
 - Runtime OCI digests: unchanged from accepted D5 candidate.
 - Evidence: real bundled CycloneDX SBOMs, SLSA statements, notices, policies and closed acceptance matrix.
 - Trust: signed manifest plus threshold root 2/3, targets 2/3, snapshot 1/1 and timestamp 1/1.

@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
       "digest": {
         "sha256": "f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "memory-v4",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8"
       },
       "internalParameters": {},
       "resolvedDependencies": [

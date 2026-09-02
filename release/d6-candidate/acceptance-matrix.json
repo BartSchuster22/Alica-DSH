@@ -2,8 +2,16 @@
   "schemaVersion": "alica-independent-acceptance/v1",
   "candidate": "release/d6-candidate",
   "operators": [
-    {"id":"public-online-operator","host":"clean GitHub-hosted runner with isolated Debian 13 control host","transport":"public online signed metadata and anonymous OCI digest pulls"},
-    {"id":"public-offline-operator","host":"separate clean GitHub-hosted runner with isolated Debian 13 control host","transport":"checksum-verified complete offline bundle; application daemon network denied during install"}
+    {
+      "id": "public-online-operator",
+      "host": "clean GitHub-hosted runner with isolated Debian 13 control host",
+      "transport": "public online signed metadata and anonymous OCI digest pulls"
+    },
+    {
+      "id": "public-offline-operator",
+      "host": "separate clean GitHub-hosted runner with isolated Debian 13 control host",
+      "transport": "checksum-verified complete offline bundle; application daemon network denied during install"
+    }
   ],
   "required": [
     "exact candidate-byte digest inventory",
@@ -17,5 +25,6 @@
     "full-stack restart and daemon restart convergence",
     "no PSI, UPRM, Fleet, Modelm8 or private ALICA credential dependency",
     "zero unresolved P0 or P1 acceptance blockers"
-  ]
+  ],
+  "publicationSourceMapDigest": "sha256:e845dfd50bf70c67da5223eb343cb2099805a42abcfdf3a9ccd3c827bdf9ce92"
 }

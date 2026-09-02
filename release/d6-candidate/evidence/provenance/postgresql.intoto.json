@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://docker.io/library/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
       "digest": {
         "sha256": "1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "postgresql",
-        "immutableArtifact": "oci://docker.io/library/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef"
       },
       "internalParameters": {},
       "resolvedDependencies": [

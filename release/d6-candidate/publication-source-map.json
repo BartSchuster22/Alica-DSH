@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "alica-publication-source-map/v1",
+  "images": [
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "digest": "sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab"
+    },
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "digest": "sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
+    },
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e"
+    },
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "digest": "sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25"
+    },
+    {
+      "source": "docker.io/library/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "digest": "sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef"
+    },
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "digest": "sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c"
+    },
+    {
+      "source": "ghcr.io/bartschuster22/alica-community-dsh/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "destination": "ghcr.io/bartschuster22/alica-dsh-d6/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "digest": "sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8"
+    }
+  ]
+}

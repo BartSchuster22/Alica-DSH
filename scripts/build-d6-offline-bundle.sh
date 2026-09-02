@@ -8,6 +8,7 @@ mkdir -p "$OUT" "$B/release" "$B/licenses" "$B/docs" "$B/scripts" "$B/evidence/s
 cp -a "$ROOT/release/d6-candidate/." "$B/release/"
 cp "$ROOT/release/d6-candidate/alicactl" "$B/alicactl"
 cp "$ROOT/release/d6-candidate/RELEASE-NOTES.md" "$B/RELEASE-NOTES.md"
+cp "$ROOT/release/d6-candidate/publication-source-map.json" "$B/publication-source-map.json"
 cp -a "$ROOT/release/d6-candidate/evidence/." "$B/evidence/"
 cp "$ROOT/licenses/ALICA-COMMUNITY-DSH-EULA-1.0.md" "$ROOT/THIRD-PARTY-NOTICES.md" "$B/licenses/"
 cp "$ROOT/SECURITY.md" "$ROOT/SUPPORT.md" "$ROOT/docs/DATA-PRIVACY.md" "$ROOT/docs/OPERATOR.md" "$ROOT/docs/D6-INDEPENDENT-ACCEPTANCE.md" "$B/docs/"

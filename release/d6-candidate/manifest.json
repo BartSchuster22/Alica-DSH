@@ -1,7 +1,7 @@
 {
   "schemaVersion": "alica-release/v1",
   "canonicalEncoding": "alica-canonical-json/v1",
-  "releaseId": "rel_01a05f64-a085-7ff0-886b-c4fd4235b46e",
+  "releaseId": "rel_01a05f6f-a113-7c59-8e72-921b1d0a0b72",
   "releaseVersion": "1.0.0-d6.independent-candidate.1",
   "createdAt": "2026-09-01T18:15:00Z",
   "cellContract": "alica-cell/v0.1",
@@ -70,18 +70,18 @@
       "version": "2.8.4",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
       "digest": "sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
         "id": "caddy-sbom-cyclonedx-1.6",
-        "artifact": "file://bundle/evidence/sbom/caddy.cdx.json@sha256:20a0418d20fc5f4590c2af44c32f15c7b16c5d9ddb20a1b15afe3613dcdf3ba7",
-        "digest": "sha256:20a0418d20fc5f4590c2af44c32f15c7b16c5d9ddb20a1b15afe3613dcdf3ba7"
+        "artifact": "file://bundle/evidence/sbom/caddy.cdx.json@sha256:0759160ce74b72040f2bdfb7d8d53ea3bba9d83066ef7f3ab9170593f8124dd0",
+        "digest": "sha256:0759160ce74b72040f2bdfb7d8d53ea3bba9d83066ef7f3ab9170593f8124dd0"
       },
       "provenance": {
         "id": "caddy-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/caddy.intoto.json@sha256:4565e4b6e2ada10defc21c48c60966c827e326a6be0a12e71d5348620e09c7e4",
-        "digest": "sha256:4565e4b6e2ada10defc21c48c60966c827e326a6be0a12e71d5348620e09c7e4"
+        "artifact": "file://bundle/evidence/provenance/caddy.intoto.json@sha256:9a83f532815a0e4b63931666e8fc9596b2176e4c428efff30595951fa9bd36cd",
+        "digest": "sha256:9a83f532815a0e4b63931666e8fc9596b2176e4c428efff30595951fa9bd36cd"
       },
       "componentContract": "caddy/v1",
       "provides": [
@@ -103,7 +103,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
       "digest": "sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -113,8 +113,8 @@
       },
       "provenance": {
         "id": "uniui-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/uniui.intoto.json@sha256:22c8311f945016ec32c76f52b7bde55951b87271ad23c01dd4550b1291c25b5e",
-        "digest": "sha256:22c8311f945016ec32c76f52b7bde55951b87271ad23c01dd4550b1291c25b5e"
+        "artifact": "file://bundle/evidence/provenance/uniui.intoto.json@sha256:9a2dce2c30e58972d64146be5ad2d33fb46dd0e335f0120da737d37d4c649b72",
+        "digest": "sha256:9a2dce2c30e58972d64146be5ad2d33fb46dd0e335f0120da737d37d4c649b72"
       },
       "componentContract": "uniui/v1",
       "provides": [
@@ -138,7 +138,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -148,8 +148,8 @@
       },
       "provenance": {
         "id": "unify-core-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/unify-core.intoto.json@sha256:dc45c5a37e7f3edc73dea0f5ab444ab8d9ecf930117bffa9cdc6c628445099d3",
-        "digest": "sha256:dc45c5a37e7f3edc73dea0f5ab444ab8d9ecf930117bffa9cdc6c628445099d3"
+        "artifact": "file://bundle/evidence/provenance/unify-core.intoto.json@sha256:a763656dd1be9a2e325d83ef3e4a1f32505a6b2275eb4a8a343701c4ec3585f7",
+        "digest": "sha256:a763656dd1be9a2e325d83ef3e4a1f32505a6b2275eb4a8a343701c4ec3585f7"
       },
       "componentContract": "unify-core/v1",
       "provides": [
@@ -175,7 +175,7 @@
       "version": "26.0.8",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
       "digest": "sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -185,8 +185,8 @@
       },
       "provenance": {
         "id": "keycloak-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/keycloak.intoto.json@sha256:52ff8cd08afafea44ad21144dd303859aa62cd25123d31b84aec99b64c8036a4",
-        "digest": "sha256:52ff8cd08afafea44ad21144dd303859aa62cd25123d31b84aec99b64c8036a4"
+        "artifact": "file://bundle/evidence/provenance/keycloak.intoto.json@sha256:ad869eec4362faf86a063760924e31faecc32d2d68a750b4294a0f271528b35f",
+        "digest": "sha256:ad869eec4362faf86a063760924e31faecc32d2d68a750b4294a0f271528b35f"
       },
       "componentContract": "keycloak/v1",
       "provides": [
@@ -210,7 +210,7 @@
       "version": "16.10.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://docker.io/library/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/postgres@sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
       "digest": "sha256:1d04b9ba1d4996401f2552b51beda8187f175c0645c091e4781134fc9c9a3eef",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -220,8 +220,8 @@
       },
       "provenance": {
         "id": "postgresql-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/postgresql.intoto.json@sha256:ae408864bff047453a7bbc7cdfa4709e219864890dd32aac8f5856e1dc967738",
-        "digest": "sha256:ae408864bff047453a7bbc7cdfa4709e219864890dd32aac8f5856e1dc967738"
+        "artifact": "file://bundle/evidence/provenance/postgresql.intoto.json@sha256:e9b9935a13daeefef2ec859f31419789e4cbecb45a9171da581f6985969070cd",
+        "digest": "sha256:e9b9935a13daeefef2ec859f31419789e4cbecb45a9171da581f6985969070cd"
       },
       "componentContract": "postgresql/v1",
       "provides": [
@@ -243,7 +243,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
       "digest": "sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -253,8 +253,8 @@
       },
       "provenance": {
         "id": "alica-runtime-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/alica-runtime.intoto.json@sha256:417241599e474e3c3cb9df2e6a983bb8a64017c6d30d03abc7ed7719487e006e",
-        "digest": "sha256:417241599e474e3c3cb9df2e6a983bb8a64017c6d30d03abc7ed7719487e006e"
+        "artifact": "file://bundle/evidence/provenance/alica-runtime.intoto.json@sha256:e2b4c0d492f8e8541e318cbadf4b02ed46e3f1bd8d87f2ffcd1d618f1d0e7265",
+        "digest": "sha256:e2b4c0d492f8e8541e318cbadf4b02ed46e3f1bd8d87f2ffcd1d618f1d0e7265"
       },
       "componentContract": "alica-runtime/v1",
       "provides": [
@@ -279,7 +279,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
       "digest": "sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -289,8 +289,8 @@
       },
       "provenance": {
         "id": "herman-runtime-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/herman-runtime.intoto.json@sha256:29838fbed3e8f0c84faf157663b45b8662b585601c680175ee181da48ad9f57f",
-        "digest": "sha256:29838fbed3e8f0c84faf157663b45b8662b585601c680175ee181da48ad9f57f"
+        "artifact": "file://bundle/evidence/provenance/herman-runtime.intoto.json@sha256:6ddb8ca6be63356c04ca062f3c5338ee4cf7d50900586704c260abaa3cb962a5",
+        "digest": "sha256:6ddb8ca6be63356c04ca062f3c5338ee4cf7d50900586704c260abaa3cb962a5"
       },
       "componentContract": "herman-runtime/v1",
       "provides": [
@@ -315,7 +315,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/memory-v4@sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
       "digest": "sha256:f3d6eb63447520298890c9f224dea7f86777f085f8ec1c51b79fb322eed512f8",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -325,8 +325,8 @@
       },
       "provenance": {
         "id": "memory-v4-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/memory-v4.intoto.json@sha256:f093d6c43c8bd509a830ce2d85cf20d5d4ce31c7c8128344c10c10d18ff2f3e2",
-        "digest": "sha256:f093d6c43c8bd509a830ce2d85cf20d5d4ce31c7c8128344c10c10d18ff2f3e2"
+        "artifact": "file://bundle/evidence/provenance/memory-v4.intoto.json@sha256:cccb052dc229e2ece9616c3a2e0d0e178b1861262b78412e27dbc5753cb41d21",
+        "digest": "sha256:cccb052dc229e2ece9616c3a2e0d0e178b1861262b78412e27dbc5753cb41d21"
       },
       "componentContract": "memory-v4/v1",
       "provides": [
@@ -350,7 +350,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -360,8 +360,8 @@
       },
       "provenance": {
         "id": "ainba-anchor-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/ainba-anchor.intoto.json@sha256:2b4c5941dc95470c9706e852e4f5fdb9f64d897c61d6cfbac2e37b7bc203f256",
-        "digest": "sha256:2b4c5941dc95470c9706e852e4f5fdb9f64d897c61d6cfbac2e37b7bc203f256"
+        "artifact": "file://bundle/evidence/provenance/ainba-anchor.intoto.json@sha256:dd3c42f816718df732fdc724e9f795c7e6dd28efa5582204d702d9b08a12507e",
+        "digest": "sha256:dd3c42f816718df732fdc724e9f795c7e6dd28efa5582204d702d9b08a12507e"
       },
       "componentContract": "ainba-anchor/v1",
       "provides": [
@@ -386,7 +386,7 @@
       "version": "1.0.0",
       "kind": "oci-image",
       "realization": "oci-container",
-      "artifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "artifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "digest": "sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "signaturePolicy": "alica-executable/v1",
       "sbom": {
@@ -396,8 +396,8 @@
       },
       "provenance": {
         "id": "doghouse-node-provenance-slsa-v1",
-        "artifact": "file://bundle/evidence/provenance/doghouse-node.intoto.json@sha256:9f71b59823d33782c12924ad2a03a2df38e602dcef3150bf418ea1ae9248348a",
-        "digest": "sha256:9f71b59823d33782c12924ad2a03a2df38e602dcef3150bf418ea1ae9248348a"
+        "artifact": "file://bundle/evidence/provenance/doghouse-node.intoto.json@sha256:8be84687bc485f48ed938955dbadc805dffca3ab74e2ca4b03ad876430c7f700",
+        "digest": "sha256:8be84687bc485f48ed938955dbadc805dffca3ab74e2ca4b03ad876430c7f700"
       },
       "componentContract": "doghouse-node/v1",
       "provides": [
@@ -810,8 +810,8 @@
   ],
   "acceptanceSuite": {
     "id": "alica-cell-acceptance/v1",
-    "artifact": "file://bundle/acceptance-matrix.json@sha256:d8ac43810071f78057e48a1f0609566240bdeed432206ceae626cb58adf215c4",
-    "digest": "sha256:d8ac43810071f78057e48a1f0609566240bdeed432206ceae626cb58adf215c4"
+    "artifact": "file://bundle/acceptance-matrix.json@sha256:368c8e039a15af642d6b017ba62bff43f996254563c3adfe9cb79cce69a9b3ea",
+    "digest": "sha256:368c8e039a15af642d6b017ba62bff43f996254563c3adfe9cb79cce69a9b3ea"
   },
   "releaseNotes": {
     "id": "alica-dsh-release-notes/v1",

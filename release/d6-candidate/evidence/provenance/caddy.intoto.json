@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab",
       "digest": {
         "sha256": "108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "caddy",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/caddy@sha256:108a242cdaa59e995eaff1dbeb2e5435a1203985f345115d35127f2a63c771ab"
       },
       "internalParameters": {},
       "resolvedDependencies": [

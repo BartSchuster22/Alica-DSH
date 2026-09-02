@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58",
       "digest": {
         "sha256": "5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "uniui",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/uniui@sha256:5e9ef7d61f91e9c22eb2640028f32247174c25a0e987185e5bbad17fede0de58"
       },
       "internalParameters": {},
       "resolvedDependencies": [

@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25",
       "digest": {
         "sha256": "840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "keycloak",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/keycloak@sha256:840aa7366bda8b9b194646580ee11f0f6fec0f01d1c2500be5298059e1893f25"
       },
       "internalParameters": {},
       "resolvedDependencies": [

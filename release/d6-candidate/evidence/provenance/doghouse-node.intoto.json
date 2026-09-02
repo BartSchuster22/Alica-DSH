@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e",
       "digest": {
         "sha256": "114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "doghouse-node",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/unify-core@sha256:114a16a81ef07ca0a34e7d94e92d1d253ef1c6440950a906e9f326a095862c5e"
       },
       "internalParameters": {},
       "resolvedDependencies": [

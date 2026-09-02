@@ -2,7 +2,7 @@
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [
     {
-      "name": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
+      "name": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c",
       "digest": {
         "sha256": "c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c"
       }
@@ -14,7 +14,7 @@
       "buildType": "https://alica.hk/dsh/publication/v1",
       "externalParameters": {
         "componentId": "alica-runtime",
-        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-community-dsh/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c"
+        "immutableArtifact": "oci://ghcr.io/bartschuster22/alica-dsh-d6/hermes-runtime@sha256:c8a170cf00d9bd598e45fd317d244d0cb949920c5eb5ee68346918c261755a6c"
       },
       "internalParameters": {},
       "resolvedDependencies": [

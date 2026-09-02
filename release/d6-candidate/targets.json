@@ -4,14 +4,14 @@
     "version": 1,
     "expires": "2027-09-01T00:00:00Z",
     "targets": {
-      "releases/rel_01a05f64-a085-7ff0-886b-c4fd4235b46e/manifest.json": {
-        "length": 28340,
+      "releases/rel_01a05f6f-a113-7c59-8e72-921b1d0a0b72/manifest.json": {
+        "length": 28295,
         "hashes": {
-          "sha256": "5be3d10ccf31484b8d89205c133bade0b8f6ec87de8b2607678579537b657d6e"
+          "sha256": "e45624bd2c123405ca407f12755a71874c36d994330d419b4a4d46a7443b7c18"
         },
         "custom": {
-          "releaseId": "rel_01a05f64-a085-7ff0-886b-c4fd4235b46e",
-          "manifestDigest": "sha256:4607e1875ebc111f9fe26f1aa159b9c2c6bf7a71a04e57bae26bc1dd7a8bf757",
+          "releaseId": "rel_01a05f6f-a113-7c59-8e72-921b1d0a0b72",
+          "manifestDigest": "sha256:87b6b4555359c99e9aec934a09eee277051948c782042aa3069bed3778352fb2",
           "channel": "candidate",
           "releaseClass": "candidate"
         }
@@ -20,12 +20,12 @@
   },
   "signatures": [
     {
-      "keyid": "sha256:006f462948b9fef3beb0fe936cb9f19b05a15fe5702ab704914d796a888d61e2",
-      "sig": "6vigW3sEb55aMyLbNZkdscfrzpfg+p3HYf3q177BFv7X5yZMdLmc3bpRgKGq+Khh1o+X3Uw/s/3A3gX5Q105Cw=="
+      "keyid": "sha256:e6fdadd363443f916b824d9ffb0a419b6f26abfa8846f30cd56f5b6e13dc982e",
+      "sig": "VaQfgJ94tNcaIVlExvlD0y/zZ72eOXNfrJgoxARsNnSlNoTtkO2+NpENlhOmZpEZuUAgNI/Frbl5VIyB7kbrBg=="
     },
     {
-      "keyid": "sha256:f576dd6575a48ff00951e25cbf13395839bd1243a9982fe004ba40a093697ea9",
-      "sig": "NBjJsKj7DuWt3ULTaYFbwdv5hQ5njlWqY38Zp5WhIpQh0ij+f8l2rdNTPX8IgbZq5AXWzSl6ciT+ko05Rl3JCQ=="
+      "keyid": "sha256:d19e8fc351f3f4da56bec3f4f949dc1e1a996d3fc2d86102e6092f7fc20517c8",
+      "sig": "1O/thTdmG4r88WBy5kCVZDGE8PJmvBKHpyRXxYx8Dp+/Ck5ubG3WbJPOdPTiY0+o66yUzxAhTyBGaSP+/foHCQ=="
     }
   ]
 }
