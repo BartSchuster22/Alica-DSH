@@ -5,7 +5,7 @@ WORKSPACE=${GITHUB_WORKSPACE:-$PWD};CANDIDATE=${D6_CANDIDATE_DIR:-$WORKSPACE/rel
 ROOT=/mnt/alica-d6-$MODE;INSTALL_ROOT=$ROOT/install;TOOLS=$WORKSPACE/.d6-tools-$MODE;EVIDENCE=$WORKSPACE/acceptance-evidence-d6-$MODE
 NETWORK=alica-d6-$MODE;DIND=alica-d6-$MODE-dind;CONTROL=alica-d6-$MODE-debian13;PROJECT=alica-d6-$MODE
 cleanup(){ docker rm -f "$CONTROL" "$DIND" >/dev/null 2>&1||true;docker network rm "$NETWORK">/dev/null 2>&1||true;sudo umount "$ROOT">/dev/null 2>&1||true;sudo rm -f /tmp/alica-d6-$MODE.img;rm -rf "$TOOLS"; }
-on_error(){ rc=$?;set +e;mkdir -p "$EVIDENCE";printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}">$EVIDENCE/failure.txt;docker exec "$DIND" docker ps -a >$EVIDENCE/failure-containers.txt 2>&1;exit "$rc"; }
+on_error(){ rc=$?;set +e;mkdir -p "$EVIDENCE";printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}">$EVIDENCE/failure.txt;docker exec "$DIND" docker ps -a >$EVIDENCE/failure-containers.txt 2>&1;docker exec "$DIND" sh -c 'for id in $(docker ps -aq);do echo ===$(docker inspect -f "{{.Name}}" "$id")===;docker inspect -f "health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} error={{.State.Error}}" "$id";docker logs --tail 120 "$id" 2>&1;done' >$EVIDENCE/failure-runtime-logs.txt 2>&1;exit "$rc"; }
 trap on_error ERR;trap cleanup EXIT;rm -rf "$TOOLS" "$EVIDENCE";mkdir -p "$TOOLS/root/.docker/cli-plugins" "$EVIDENCE"
 test -x "$CANDIDATE/alicactl";find "$CANDIDATE" -maxdepth 1 -type f -print0|sort -z|xargs -0 sha256sum > "$EVIDENCE/candidate-sha256.txt"
 curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-28.4.0.tgz|tar -xz -C "$TOOLS";cp "$TOOLS/docker/docker" "$TOOLS/docker-cli";chmod 0755 "$TOOLS/docker-cli"
