@@ -111,7 +111,7 @@ jobs:
         run: |
           chmod +x scripts/d6-*.sh
           set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
-          if [ "$rc" -ne 0 ]; then failure=$(tr '\n' ' ' < acceptance-evidence-d6-online/failure.txt 2>/dev/null || true); detail=$({ cat acceptance-evidence-d6-online/readiness.txt acceptance-evidence-d6-online/qa10.txt acceptance-evidence-d6-online/failure-unhealthy-logs.txt 2>/dev/null || true; } | tail -c 5000 | tr '\n' ' '); echo "::error title=D6 online operator failed::${failure:-no failure evidence} ${detail}"; exit "$rc"; fi
+          if [ "$rc" -ne 0 ]; then failure=$(tr '\n' ' ' < acceptance-evidence-d6-online/failure.txt 2>/dev/null || true); detail=$({ cat acceptance-evidence-d6-online/readiness.txt acceptance-evidence-d6-online/qa10.txt acceptance-evidence-d6-online/operations.json acceptance-evidence-d6-online/backup.json acceptance-evidence-d6-online/restart.json acceptance-evidence-d6-online/failure-unhealthy-logs.txt 2>/dev/null || true; } | tail -c 5000 | tr '\n' ' '); echo "::error title=D6 online operator failed::${failure:-no failure evidence} ${detail}"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -145,7 +145,7 @@ jobs:
         run: |
           chmod +x scripts/d6-*.sh
           set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
-          if [ "$rc" -ne 0 ]; then failure=$(tr '\n' ' ' < acceptance-evidence-d6-offline/failure.txt 2>/dev/null || true); detail=$({ cat acceptance-evidence-d6-offline/readiness.txt acceptance-evidence-d6-offline/qa10.txt acceptance-evidence-d6-offline/failure-unhealthy-logs.txt 2>/dev/null || true; } | tail -c 5000 | tr '\n' ' '); echo "::error title=D6 offline operator failed::${failure:-no failure evidence} ${detail}"; exit "$rc"; fi
+          if [ "$rc" -ne 0 ]; then failure=$(tr '\n' ' ' < acceptance-evidence-d6-offline/failure.txt 2>/dev/null || true); detail=$({ cat acceptance-evidence-d6-offline/readiness.txt acceptance-evidence-d6-offline/qa10.txt acceptance-evidence-d6-offline/operations.json acceptance-evidence-d6-offline/backup.json acceptance-evidence-d6-offline/restart.json acceptance-evidence-d6-offline/failure-unhealthy-logs.txt 2>/dev/null || true; } | tail -c 5000 | tr '\n' ' '); echo "::error title=D6 offline operator failed::${failure:-no failure evidence} ${detail}"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
