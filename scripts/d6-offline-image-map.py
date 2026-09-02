@@ -30,10 +30,13 @@ def main():
         target = pathlib.Path(sys.argv[3])
         original = target.read_text()
         updated = original
-        for ref, _, tag in entries(image_map):
+        replacements = list(entries(image_map))
+        for ref, _, tag in replacements:
             updated = updated.replace(ref, tag)
         if updated == original:
-            raise SystemExit("no immutable image references found in compose environment")
+            if any(tag in original for _, _, tag in replacements):
+                return
+            raise SystemExit("no immutable or mapped image references found in compose environment")
         target.write_text(updated)
         return
     raise SystemExit(2)
