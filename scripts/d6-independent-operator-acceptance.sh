@@ -5,7 +5,22 @@ WORKSPACE=${GITHUB_WORKSPACE:-$PWD};CANDIDATE=${D6_CANDIDATE_DIR:-$WORKSPACE/rel
 ROOT=/mnt/alica-d6-$MODE;INSTALL_ROOT=$ROOT/install;TOOLS=$WORKSPACE/.d6-tools-$MODE;EVIDENCE=$WORKSPACE/acceptance-evidence-d6-$MODE
 NETWORK=alica-d6-$MODE;DIND=alica-d6-$MODE-dind;CONTROL=alica-d6-$MODE-debian13;PROJECT=alica-d6-$MODE
 cleanup(){ docker rm -f "$CONTROL" "$DIND" >/dev/null 2>&1||true;docker network rm "$NETWORK">/dev/null 2>&1||true;sudo umount "$ROOT">/dev/null 2>&1||true;sudo rm -f /tmp/alica-d6-$MODE.img;rm -rf "$TOOLS"; }
-on_error(){ rc=${1:-$?};set +e;mkdir -p "$EVIDENCE";printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}">$EVIDENCE/failure.txt;docker exec "$DIND" docker ps -a >$EVIDENCE/failure-containers.txt 2>&1;docker exec "$DIND" sh -c 'for id in $(docker ps -aq --filter health=unhealthy --filter name=alica);do echo ===$(docker inspect -f "{{.Name}}" "$id")===;docker inspect -f "health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} error={{.State.Error}}" "$id";docker logs --tail 200 "$id" 2>&1;done' >$EVIDENCE/failure-unhealthy-logs.txt 2>&1;docker exec "$DIND" sh -c 'for id in $(docker ps -aq);do echo ===$(docker inspect -f "{{.Name}}" "$id")===;docker inspect -f "health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} error={{.State.Error}}" "$id";docker logs --tail 120 "$id" 2>&1;done' >$EVIDENCE/failure-runtime-logs.txt 2>&1;exit "$rc"; }
+on_error(){
+  rc=${1:-$?};set +e;mkdir -p "$EVIDENCE"
+  printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}" > "$EVIDENCE/failure.txt"
+  docker exec "$DIND" docker ps -a > "$EVIDENCE/failure-containers.txt" 2>&1
+  : > "$EVIDENCE/failure-unhealthy-logs.txt"
+  for id in $(docker exec "$DIND" docker ps -aq --filter health=unhealthy --filter name=alica 2>/dev/null);do
+    docker exec "$DIND" docker inspect -f 'name={{.Name}} health={{json .State.Health}} error={{.State.Error}}' "$id" >> "$EVIDENCE/failure-unhealthy-logs.txt" 2>&1
+    docker exec "$DIND" docker logs --tail 200 "$id" >> "$EVIDENCE/failure-unhealthy-logs.txt" 2>&1
+  done
+  : > "$EVIDENCE/failure-runtime-logs.txt"
+  for id in $(docker exec "$DIND" docker ps -aq 2>/dev/null);do
+    docker exec "$DIND" docker inspect -f 'name={{.Name}} health={{json .State.Health}} error={{.State.Error}}' "$id" >> "$EVIDENCE/failure-runtime-logs.txt" 2>&1
+    docker exec "$DIND" docker logs --tail 120 "$id" >> "$EVIDENCE/failure-runtime-logs.txt" 2>&1
+  done
+  exit "$rc"
+}
 trap on_error ERR;trap cleanup EXIT;rm -rf "$TOOLS" "$EVIDENCE";mkdir -p "$TOOLS/root/.docker/cli-plugins" "$EVIDENCE"
 test -x "$CANDIDATE/alicactl";find "$CANDIDATE" -maxdepth 1 -type f -print0|sort -z|xargs -0 sha256sum > "$EVIDENCE/candidate-sha256.txt"
 curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-28.4.0.tgz|tar -xz -C "$TOOLS";cp "$TOOLS/docker/docker" "$TOOLS/docker-cli";chmod 0755 "$TOOLS/docker-cli"
@@ -53,7 +68,7 @@ PY
 INSTALL="ALICACTL_INSTALL_TEST_MODE=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /candidate/alicactl install --manifest /candidate/manifest.json --signature /candidate/manifest.signature.json --public-key /candidate/public-key.json --request '$ROOT/requests/install.json' --json"
 run "$INSTALL" 2>&1|tee "$EVIDENCE/install.json";run "$INSTALL" 2>&1|tee "$EVIDENCE/noop.json"
 set +e
-run "for _ in \$(seq 1 120); do framework_code=\$(curl -ksS -o /dev/null -w '%{http_code}' https://alica-d6.localhost/api/v1/frameworks || true); auth_code=\$(curl -ksS -o /dev/null -w '%{http_code}' -H content-type:application/json --data '{\"username\":\"qa10-no-such-user\",\"password\":\"invalid\"}' https://alica-d6.localhost/api/v1/auth/login || true); { [ \"\$framework_code\" = 401 ] && { [ \"\$auth_code\" = 401 ] || [ \"\$auth_code\" = 429 ]; }; } && exit 0; sleep 2; done; echo final_framework_http_code=\$framework_code final_auth_http_code=\$auth_code; getent hosts alica-d6.localhost; curl -kv --connect-timeout 10 https://alica-d6.localhost/api/v1/frameworks; exit 1" > "$EVIDENCE/readiness.txt" 2>&1
+run "for _ in \$(seq 1 120); do framework_code=\$(curl -ksS -o /dev/null -w '%{http_code}' https://alica-d6.localhost/api/v1/frameworks || true); auth_code=\$(curl -ksS -o /dev/null -w '%{http_code}' -H content-type:application/json --data '{\"username\":\"qa10-no-such-user\",\"password\":\"invalid-password\"}' https://alica-d6.localhost/api/v1/auth/login || true); { [ \"\$framework_code\" = 401 ] && { [ \"\$auth_code\" = 401 ] || [ \"\$auth_code\" = 429 ]; }; } && exit 0; sleep 2; done; echo final_framework_http_code=\$framework_code final_auth_http_code=\$auth_code; getent hosts alica-d6.localhost; curl -kv --connect-timeout 10 https://alica-d6.localhost/api/v1/frameworks; exit 1" > "$EVIDENCE/readiness.txt" 2>&1
 rc=$?;set -e;[ "$rc" -eq 0 ]||on_error "$rc"
 run "UNIFY_ROOT='$INSTALL_ROOT/release' UNIFY_PUBLIC_ORIGIN=https://alica-d6.localhost QA10_USERNAME=admin /usr/local/bin/d6-qa10" 2>&1|tee "$EVIDENCE/qa10.txt"
 CELL=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["cellId"])' "$ROOT/requests/install.json")

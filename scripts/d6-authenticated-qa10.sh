@@ -9,7 +9,7 @@ tmp=$(mktemp -d);trap 'rm -rf "$tmp"' EXIT
 cookie=$tmp/cookie;headers=$tmp/headers;body=$tmp/body
 password=$(cat "$ROOT/secrets/bootstrap-admin-password")
 payload=$(python3 -c 'import json,sys;print(json.dumps({"username":sys.argv[1],"password":sys.argv[2],"deviceLabel":"D6 independent QA10"}))' "$USERNAME" "$password")
-code=$(curl -ksS -o "$body" -w '%{http_code}' -H content-type:application/json --data '{"username":"qa10-no-such-user","password":"invalid"}' "$ORIGIN/api/v1/auth/login");{ [ "$code" = 401 ]||[ "$code" = 429 ]; }
+code=$(curl -ksS -o "$body" -w '%{http_code}' -H content-type:application/json --data '{"username":"qa10-no-such-user","password":"invalid-password"}' "$ORIGIN/api/v1/auth/login");{ [ "$code" = 401 ]||[ "$code" = 429 ]; }
 test "$(curl -ksS -o "$body" -w '%{http_code}' "$ORIGIN/api/v1/frameworks")" = 401
 curl -kfsS -D "$headers" -c "$cookie" -H content-type:application/json --data "$payload" "$ORIGIN/api/v1/auth/login" > "$body"
 csrf=$(tr -d '\r' < "$headers"|awk 'tolower($1)=="x-csrf-token:"{print $2}');test -n "$csrf"
