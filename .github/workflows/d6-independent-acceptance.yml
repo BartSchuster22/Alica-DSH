@@ -69,8 +69,17 @@ jobs:
       - uses: sigstore/cosign-installer@v3
         with: { cosign-release: v2.5.3 }
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq zstd
-      - name: Build complete offline bundle
-        run: chmod +x scripts/build-d6-offline-bundle.sh && scripts/build-d6-offline-bundle.sh "$RUNNER_TEMP/dist"
+      - name: Build or reuse complete offline bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/dist"
+          if gh release download d6-independent-candidate --pattern "$BUNDLE" --pattern "$BUNDLE.sha256" --dir "$RUNNER_TEMP/dist" --clobber 2>/dev/null && (cd "$RUNNER_TEMP/dist" && sha256sum -c "$BUNDLE.sha256"); then
+            echo 'Reusing checksum-verified exact candidate bundle'
+          else
+            rm -f "$RUNNER_TEMP/dist/$BUNDLE" "$RUNNER_TEMP/dist/$BUNDLE.sha256"
+            chmod +x scripts/build-d6-offline-bundle.sh && scripts/build-d6-offline-bundle.sh "$RUNNER_TEMP/dist"
+          fi
       - id: asset
         env:
           GH_TOKEN: ${{ github.token }}
@@ -98,7 +107,10 @@ jobs:
           while IFS= read -r image; do cosign verify --certificate-identity-regexp '^https://github.com/BartSchuster22/Alica-DSH/' --certificate-oidc-issuer https://token.actions.githubusercontent.com "$image" >/dev/null; done < "$RUNNER_TEMP/images"
       - name: Independent public online operator
         env: { D6_MODE: online }
-        run: chmod +x scripts/d6-*.sh && scripts/d6-independent-operator-acceptance.sh
+        run: |
+          chmod +x scripts/d6-*.sh
+          set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
+          if [ "$rc" -ne 0 ]; then detail=$(tr '\n' ' ' < acceptance-evidence-d6-online/failure.txt 2>/dev/null || printf 'no failure evidence'); echo "::error title=D6 online operator failed::$detail"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -129,7 +141,10 @@ jobs:
           D6_MODE: offline
           D6_CANDIDATE_DIR: ${{ runner.temp }}/offline/alica-community-dsh-1.0.0-linux-amd64/release
           D6_BUNDLE_ROOT: ${{ runner.temp }}/offline/alica-community-dsh-1.0.0-linux-amd64
-        run: chmod +x scripts/d6-*.sh && scripts/d6-independent-operator-acceptance.sh
+        run: |
+          chmod +x scripts/d6-*.sh
+          set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
+          if [ "$rc" -ne 0 ]; then detail=$(tr '\n' ' ' < acceptance-evidence-d6-offline/failure.txt 2>/dev/null || printf 'no failure evidence'); echo "::error title=D6 offline operator failed::$detail"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
