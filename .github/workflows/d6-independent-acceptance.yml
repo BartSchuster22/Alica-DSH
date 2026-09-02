@@ -110,7 +110,7 @@ jobs:
         run: |
           chmod +x scripts/d6-*.sh
           set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
-          if [ "$rc" -ne 0 ]; then detail=$(tr '\n' ' ' < acceptance-evidence-d6-online/failure.txt 2>/dev/null || printf 'no failure evidence'); echo "::error title=D6 online operator failed::$detail"; exit "$rc"; fi
+          if [ "$rc" -ne 0 ]; then detail=$({ cat acceptance-evidence-d6-online/failure.txt acceptance-evidence-d6-online/install.json 2>/dev/null || true; } | tail -c 3000 | tr '\n' ' '); echo "::error title=D6 online operator failed::${detail:-no failure evidence}"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -144,7 +144,7 @@ jobs:
         run: |
           chmod +x scripts/d6-*.sh
           set +e; scripts/d6-independent-operator-acceptance.sh; rc=$?; set -e
-          if [ "$rc" -ne 0 ]; then detail=$(tr '\n' ' ' < acceptance-evidence-d6-offline/failure.txt 2>/dev/null || printf 'no failure evidence'); echo "::error title=D6 offline operator failed::$detail"; exit "$rc"; fi
+          if [ "$rc" -ne 0 ]; then detail=$({ cat acceptance-evidence-d6-offline/failure.txt acceptance-evidence-d6-offline/install.json 2>/dev/null || true; } | tail -c 3000 | tr '\n' ' '); echo "::error title=D6 offline operator failed::${detail:-no failure evidence}"; exit "$rc"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -22,13 +22,14 @@ docker run -d --privileged --cgroupns=private --name "$CONTROL" --network "$NETW
 for _ in $(seq 1 60);do s=$(docker exec "$CONTROL" systemctl is-system-running 2>/dev/null||true);{ [ "$s" = running ]||[ "$s" = degraded ]; }&&break;sleep 2;done
 run(){ docker exec "$CONTROL" bash -lc "$1"; };run "systemd-run --unit=d6-mock --property=Restart=always /usr/bin/python3 /usr/local/lib/s3-alert-mock.py '$ROOT/off-host'">/dev/null
 python3 - "$CANDIDATE/manifest.json" "$ROOT/requests/install.json" "$MODE" <<'PY'
-import json,sys,uuid
+import json,sys,uuid,time,secrets
 m=json.load(open(sys.argv[1]));mode=sys.argv[3]
-x={'schemaVersion':'alica-clean-install/v1','cellId':'ins_'+str(uuid.uuid4()),'installationRoot':f'/mnt/alica-d6-{mode}/install','publicHost':'alica-d6.localhost','publicOrigin':'https://alica-d6.localhost','project':f'alica-d6-{mode}','adminUsername':'admin','eulaDigest':m['product']['eulaDigest'],'eulaAccepted':True,'provider':{'mode':'byok','providerId':'openai-compatible','baseUrl':'https://provider.invalid/v1','credentialFile':f'/mnt/alica-d6-{mode}/secrets/provider-api-key'}}
+value=((int(time.time()*1000)&((1<<48)-1))<<80)|(0x7<<76)|(secrets.randbits(12)<<64)|(0x2<<62)|secrets.randbits(62)
+x={'schemaVersion':'alica-clean-install/v1','cellId':'ins_'+str(uuid.UUID(int=value)),'installationRoot':f'/mnt/alica-d6-{mode}/install','publicHost':'alica-d6.localhost','publicOrigin':'https://alica-d6.localhost','project':f'alica-d6-{mode}','adminUsername':'admin','eulaDigest':m['product']['eulaDigest'],'eulaAccepted':True,'provider':{'mode':'byok','providerId':'openai-compatible','baseUrl':'https://provider.invalid/v1','credentialFile':f'/mnt/alica-d6-{mode}/secrets/provider-api-key'}}
 open(sys.argv[2],'w').write(json.dumps(x)+'\n')
 PY
 INSTALL="ALICACTL_INSTALL_TEST_MODE=1 ALICACTL_DOCKER_BIN=/usr/local/bin/docker /candidate/alicactl install --manifest /candidate/manifest.json --signature /candidate/manifest.signature.json --public-key /candidate/public-key.json --request '$ROOT/requests/install.json' --json"
-run "$INSTALL"|tee "$EVIDENCE/install.json";run "$INSTALL"|tee "$EVIDENCE/noop.json"
+run "$INSTALL" 2>&1|tee "$EVIDENCE/install.json";run "$INSTALL" 2>&1|tee "$EVIDENCE/noop.json"
 run "UNIFY_ROOT='$INSTALL_ROOT/release' UNIFY_PUBLIC_ORIGIN=https://alica-d6.localhost QA10_USERNAME=admin /usr/local/bin/d6-qa10"|tee "$EVIDENCE/qa10.txt"
 CELL=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["cellId"])' "$ROOT/requests/install.json")
 cat >$ROOT/requests/recovery.json <<EOF
