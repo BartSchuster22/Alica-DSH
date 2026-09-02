@@ -7,11 +7,11 @@ NETWORK=alica-d6-$MODE;DIND=alica-d6-$MODE-dind;CONTROL=alica-d6-$MODE-debian13;
 cleanup(){ docker rm -f "$CONTROL" "$DIND" >/dev/null 2>&1||true;docker network rm "$NETWORK">/dev/null 2>&1||true;sudo umount "$ROOT">/dev/null 2>&1||true;sudo rm -f /tmp/alica-d6-$MODE.img;rm -rf "$TOOLS"; }
 on_error(){ rc=$?;set +e;mkdir -p "$EVIDENCE";printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}">$EVIDENCE/failure.txt;docker exec "$DIND" docker ps -a >$EVIDENCE/failure-containers.txt 2>&1;exit "$rc"; }
 trap on_error ERR;trap cleanup EXIT;rm -rf "$TOOLS" "$EVIDENCE";mkdir -p "$TOOLS/root/.docker/cli-plugins" "$EVIDENCE"
-test -x "$CANDIDATE/alicactl";sha256sum "$CANDIDATE"/* > "$EVIDENCE/candidate-sha256.txt"
+test -x "$CANDIDATE/alicactl";find "$CANDIDATE" -maxdepth 1 -type f -print0|sort -z|xargs -0 sha256sum > "$EVIDENCE/candidate-sha256.txt"
 curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-28.4.0.tgz|tar -xz -C "$TOOLS";cp "$TOOLS/docker/docker" "$TOOLS/docker-cli";chmod 0755 "$TOOLS/docker-cli"
 curl -fsSL https://github.com/docker/compose/releases/download/v2.39.4/docker-compose-linux-x86_64 -o "$TOOLS/root/.docker/cli-plugins/docker-compose";chmod 0755 "$TOOLS/root/.docker/cli-plugins/docker-compose"
 sudo truncate -s 120G /tmp/alica-d6-$MODE.img;sudo mkfs.ext4 -q -F /tmp/alica-d6-$MODE.img;sudo mkdir -p "$ROOT";sudo mount -o loop /tmp/alica-d6-$MODE.img "$ROOT";sudo chmod 0777 "$ROOT";mkdir -p "$ROOT/docker-data" "$ROOT/secrets" "$ROOT/repository" "$ROOT/off-host" "$ROOT/requests";chmod 0700 "$ROOT/secrets" "$ROOT/off-host"
-for pair in 'backup-key:d6-encryption-key-0123456789abcdef' 's3-access-key:ALICAD6ACCESSKEY1234' 's3-secret-key:d6-secret-access-key-0123456789abcdef' 'provider-api-key:*** name=${pair%%:*};printf '%s\n' "${pair#*:}">$ROOT/secrets/$name;chmod 0600 "$ROOT/secrets/$name";done
+for pair in 'backup-key:d6-encryption-key-0123456789abcdef' 's3-access-key:ALICAD6ACCESSKEY1234' 's3-secret-key:d6-secret-access-key-0123456789abcdef' 'provider-api-key:d6-provider-test-key-not-a-secret';do name=${pair%%:*};printf '%s\n' "${pair#*:}">"$ROOT/secrets/$name";chmod 0600 "$ROOT/secrets/$name";done
 if [ "$MODE" = offline ];then docker network create --internal "$NETWORK">/dev/null;else docker network create "$NETWORK">/dev/null;fi
 docker run -d --privileged --name "$DIND" --network "$NETWORK" --network-alias alica-d6.localhost -e DOCKER_TLS_CERTDIR= -v "$ROOT:$ROOT" -v "$ROOT/docker-data:/var/lib/docker" docker:28.4-dind --host=tcp://0.0.0.0:2375 >/dev/null
 for _ in $(seq 1 60);do docker exec "$DIND" docker info>/dev/null 2>&1&&break;sleep 2;done;docker exec "$DIND" docker info>/dev/null
