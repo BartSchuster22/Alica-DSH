@@ -7,6 +7,7 @@ on:
       - release/d6-candidate/**
       - release/d6-independent-acceptance.json
       - scripts/d6-*
+      - scripts/build-d6-*
       - docs/**
       - licenses/**
       - SECURITY.md
