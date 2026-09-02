@@ -9,6 +9,15 @@ on_error(){
   rc=${1:-$?};set +e;mkdir -p "$EVIDENCE"
   printf 'exit=%s line=%s command=%s\n' "$rc" "${BASH_LINENO[0]:-?}" "${BASH_COMMAND:-?}" > "$EVIDENCE/failure.txt"
   docker exec "$DIND" docker ps -a > "$EVIDENCE/failure-containers.txt" 2>&1
+  ids=$(docker exec "$DIND" docker ps -aq 2>/dev/null || true)
+  if [ -n "$ids" ];then
+    docker exec "$DIND" docker inspect $ids 2>/dev/null | python3 -c 'import json,sys; xs=json.load(sys.stdin); out=[]
+for x in xs:
+ s=x.get("State",{}); h=s.get("Health") or {}; status=h.get("Status","none")
+ if s.get("Status")!="running" or status not in ("healthy","none"):
+  logs=h.get("Log") or []; out.append({"name":x.get("Name"),"state":s.get("Status"),"error":s.get("Error"),"health":status,"failingStreak":h.get("FailingStreak"),"lastHealthLog":logs[-1] if logs else None})
+print(json.dumps(out,separators=(",",":")))' > "$EVIDENCE/failure-unhealthy-summary.json" 2>&1
+  fi
   : > "$EVIDENCE/failure-unhealthy-logs.txt"
   for id in $(docker exec "$DIND" docker ps -aq --filter health=unhealthy --filter name=alica 2>/dev/null);do
     docker exec "$DIND" docker inspect -f 'name={{.Name}} health={{json .State.Health}} error={{.State.Error}}' "$id" >> "$EVIDENCE/failure-unhealthy-logs.txt" 2>&1
