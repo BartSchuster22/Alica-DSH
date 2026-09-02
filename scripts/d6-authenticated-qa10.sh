@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -Eeuo pipefail
+trap 'rc=$?; printf "qa10_failure exit=%s line=%s command=%s\\n" "$rc" "$LINENO" "$BASH_COMMAND" >&2; exit "$rc"' ERR
 umask 077
 ROOT=${UNIFY_ROOT:-/var/lib/alica/release}
 ORIGIN=${UNIFY_PUBLIC_ORIGIN:?required}
