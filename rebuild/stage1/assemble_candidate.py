@@ -58,7 +58,7 @@ def assemble(package,evidence,output):
                 raise ValueError('Archive filesystem identity mismatch')
     if output.exists():raise ValueError('Assembly output must be fresh')
     output.mkdir(parents=True)
-    files=['images.lock.json','compose.template.json','frameworks.json','source-revisions.json']
+    files=['images.lock.json','compose.template.json','frameworks.json','source-revisions.json','final-stop.json']
     for name in files:shutil.copyfile(package/name,output/name)
     public_report={'schema':'dsh-stage1-public-runtime-receipt/v1','pass':report['pass'],'checks':report['checks'],'started_at':report['started_at'],'finished_at':report['finished_at'],'candidate_inventory':report['candidate_inventory'],'preserved_existing_workload_count':len(report['production_before']),'private_raw_evidence_sha256':sha(evidence),'note':'Full live inventories, host identity and raw observations remain in private PROJECT-ALICA evidence.'}
     (output/'runtime-evidence.json').write_text(json.dumps(public_report,indent=2)+'\n')
@@ -74,6 +74,8 @@ def assemble(package,evidence,output):
         if x.get('containerimage.config.digest') in identities or x.get('containerimage.digest') in identities:
             shutil.copyfile(f,metadata/f.name)
     manifest={'schema':'alica-dsh-stage1-engineering-receipt/v1','stage1_runtime_gate':'PASS','production_ready':False,'public_installer_ready':False,'keycloak_product_identity_binding_ready':False,'migration_backup_recovery_ready':False,'services':sorted(SERVICES),'default_hermes_runtimes':1,'memory_storage':'private MemoryV4-owned SQLite, not PostgreSQL','postgresql_consumers':['unify-core','keycloak','hermes-adapter-event-journal'],'ingress':'127.0.0.1:18443; private test CA; no production route change','runtime_project':'dsh-stage1','final_state':'stopped; candidate-only test data and private credentials retained on target','archive':a,'archive_distribution':'Retained in the private engineering artifact store; not a public release', 'private_raw_image_lock_sha256':sha(package/'images.lock.json'),'source_inputs':json.loads((package/'source-revisions.json').read_text()),'resource_admission':report['admission']['decision'],'passed_checks':sorted(REQUIRED),'qualified_at':report['finished_at']}
+    manifest['graceful_shutdown_qualified']=False
+    manifest['shutdown_observation']=json.loads((package/'final-stop.json').read_text())
     manifest['evidence_notes']=['Raw runtime evidence retains the pre-ingress description internal-only networks. The qualified graph has four internal backend networks and a Caddy-only non-internal ingress bridge; no backend may join ingress. This is a description correction, not an admission predicate change.']
     manifest['resource_admission']['restrictions']=[r.replace('internal-only networks','internal backend networks; Caddy-only ingress bridge') for r in manifest['resource_admission']['restrictions']]
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')

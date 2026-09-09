@@ -34,7 +34,7 @@ The assembler rejects a failed/incomplete runtime report, changed existing inven
 - Keycloak is healthy, but product OIDC identity binding is **not ready**.
 - Public installer, signing and release delivery are **not ready**.
 - Native source comparison covers the recorded 357 tracked Python files and declared overlays; it is not a complete third-party supply-chain audit.
-- A stop/restart persistence pass is not a universal graceful-shutdown or disaster-recovery guarantee.
+- Hermes exited **137 with OOMKilled=false** under the bounded stop. The native test project survived restart, but graceful native-runtime shutdown remains **unqualified**, not silently counted as clean shutdown. See `candidate/final-stop.json`. This is not a disaster-recovery guarantee.
 - The raw exercise admission description retains the earlier phrase “internal-only networks.” The actual qualified graph includes the Caddy-only ingress exception. The receipt and current harness correct that description without changing an admission predicate.
 
 `qualify_host.py` and `sample_host.py` remain historical/read-only tools. The former checks inherited DSH 1.0 policy (`applies_to_dsh2: false`); it is not the revised candidate admission gate. Earlier blocked verdicts are retained in Git and private PROJECT-ALICA history, not current acceptance.
