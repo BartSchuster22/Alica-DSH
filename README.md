@@ -4,7 +4,7 @@ Canonical public distribution repository for **ALICA Community DSH**.
 
 ## Rebuild Stage 2 engineering line
 
-See [the Stage 2 operator guide](docs/stage2/README.md) and [pinned release](https://github.com/BartSchuster22/Alica-DSH/releases/tag/dsh-stage2-f390298). Publication is verified only when the release download receipt is attached. Stage 2 is not production/GA approval.
+See [the Stage 2 operator guide](docs/stage2/README.md) and [pinned release](https://github.com/BartSchuster22/Alica-DSH/releases/tag/dsh-stage2-72a4812). Publication is verified only when the release download receipt is attached. Stage 2 is not production/GA approval.
 
 ## Historical D6 independent candidate
 

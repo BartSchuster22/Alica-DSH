@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: stage2-f390298-publication
+  group: stage2-72a4812-publication
   cancel-in-progress: false
 jobs:
   publish:
@@ -14,9 +14,9 @@ jobs:
     timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
-      TAG: dsh-stage2-f390298
-      ASSET: dsh-stage2-f390298-linux-amd64.tar.gz
-      EXPECTED_SHA256: 8fddfc7d2e99f07929955ac10bd6a37de43c9f1504607e80640ca9bf179a49ba
+      TAG: dsh-stage2-72a4812
+      ASSET: dsh-stage2-72a4812-linux-amd64.tar.gz
+      EXPECTED_SHA256: e4935f81096561ec41050250e20f6d0a62dd7e3cd3d9bf4b37607860752964fb
     steps:
       - name: Fetch exact artifact and verify before publication
         run: |
@@ -31,7 +31,7 @@ jobs:
             printf '%s\n' 'Release already exists; refusing overwrite.' >&2
             exit 1
           fi
-          gh release create "$TAG" "$ASSET" "$ASSET.sha256" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title 'DSH rebuild Stage 2 — bounded engineering release' --notes 'Self-contained Linux amd64 engineering bundle. Not production/GA approval. Operator guide and bounded qualification evidence: https://github.com/BartSchuster22/Alica-DSH/blob/dsh-stage2-f390298/docs/stage2/README.md . Public-download verification is complete only when public-download-verification.json is attached.'
+          gh release create "$TAG" "$ASSET" "$ASSET.sha256" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title 'DSH rebuild Stage 2 — bounded engineering release' --notes 'Self-contained Linux amd64 engineering bundle. Not production/GA approval. Operator guide and bounded qualification evidence: https://github.com/BartSchuster22/Alica-DSH/blob/dsh-stage2-72a4812/docs/stage2/README.md . Public-download verification is complete only when public-download-verification.json is attached.'
       - name: Verify anonymous HTTPS download and attach receipt
         run: |
           set -euo pipefail
