@@ -1,0 +1,33 @@
+name: Publish final Stage 2 acceptance
+on:
+  push:
+    branches: [rebuild/stage2-secure-install]
+    paths: [docs/stage2/EVIDENCE.json, .github/workflows/stage2-acceptance.yml]
+permissions:
+  contents: write
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dsh-stage2-72a4812
+    steps:
+      - name: Publish verified acceptance without replacing bundle or preview assets
+        run: |
+          set -euo pipefail
+          curl --proto '=https' -fsSL "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/stage2/EVIDENCE.json" -o stage2-final-acceptance.json
+          curl --proto '=https' -fsSL "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/stage2/ACCEPTANCE.md" -o stage2-operator-guide.md
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads(Path('stage2-final-acceptance.json').read_text())
+          assert r['stage2_complete'] is True and r['production_ready'] is False
+          assert r['installer_tests_passed']==24
+          assert r['artifact']['sha256']=='e4935f81096561ec41050250e20f6d0a62dd7e3cd3d9bf4b37607860752964fb'
+          assert all(r['checks']['public_retry'].values()) and all(r['checks']['public_install'].values())
+          source='https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/blob/'+os.environ['GITHUB_SHA']+'/docs/stage2/ACCEPTANCE.md'
+          Path('notes.md').write_text('Stage 2 bounded engineering acceptance COMPLETE. Production-ready: FALSE. Final acceptance is the attached stage2-final-acceptance.json; it supersedes preview evidence in the original distribution tag documentation. Operator guide, exact revisions, scope and rollback: '+source+' . Earlier f390298 remains immutable preview history. No pristine-OS, offline, cross-platform, provider consent/refresh lifecycle or later-stage production qualification is implied.')
+          PY
+          gh release upload "$TAG" stage2-final-acceptance.json stage2-operator-guide.md --repo "$GITHUB_REPOSITORY"
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file notes.md

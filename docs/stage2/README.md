@@ -1,3 +1,5 @@
+> **Stage 2 bounded engineering acceptance COMPLETE. Production-ready: FALSE.** Final qualification and rollback: [ACCEPTANCE.md](ACCEPTANCE.md); machine-readable evidence: [EVIDENCE.json](EVIDENCE.json). This supersedes pending/preview qualification text below.
+
 # Stage 2 — bounded engineering release
 
 Release: `dsh-stage2-72a4812` (Linux amd64).
@@ -65,7 +67,7 @@ Stop is the tested rollback action; it retains containers, volumes and the priva
 
 See [EVIDENCE.json](EVIDENCE.json). Acceptance used a fresh owned namespace on the authorized development host, with existing image cache and unrelated workloads retained. It included a deliberately failed transaction after a committed database write, successful same-bundle retry, strict HTTPS login, credential/security negatives, native inference, restart retention, browser rendering and owner recovery. The guard stopped the final candidate and observed existing workloads unchanged. This is not a pristine-OS or disconnected-host acceptance claim.
 
-Installer source: `72a4812b4be8c164bbb24ee9b4e73466bcc40451` in UNIFY. Core/UI runtime source: `e44d8fc86849471869f10a1cb0f849cfb7c23c7b`. Keycloak build source: `1f66de17238cd310f56fc3a501750a417ecaecdc`. Exact image IDs and file hashes are inside `release.json`; private source access is not required to install the artifact.
+Installer source: `72a4812610dbba7c0cd5a148b8eaa294b18559c9` in UNIFY. Core/UI runtime source: `e44d8fc86849471869f10a1cb0f849cfb7c23c7b`. Keycloak build source: `1f66de17238cd310f56fc3a501750a417ecaecdc`. Exact image IDs and file hashes are inside `release.json`; private source access is not required to install the artifact.
 
 ## Explicit uninstall and credential rotation
 
