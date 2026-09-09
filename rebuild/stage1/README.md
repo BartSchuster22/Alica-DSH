@@ -1,40 +1,40 @@
-# Stage 1: read-only qualification — deployment BLOCKED
+# Stage 1 — qualified engineering baseline
 
-**Superseding direction (ADR-0022, 2026-09-09):** Stage 1 continues by qualifying the existing Ubuntu 26.04 / Docker 29 host. This script checks the historical DSH 1.0 policy only (`applies_to_dsh2: false`); its rejection must not be used to require a new machine for DSH-2. `sample_host.py` supplies bounded passive observations, not candidate qualification. The earlier blocked-target discussion below is retained as history, superseded where it requires Debian/old resource limits. No candidate deployment until revised qualification passes.
+**Runtime gate: PASS, 2026-09-09.** This is a bounded engineering baseline, not a production release or public installer. Stage 2 remains unauthorized/unstarted by this receipt.
 
+## Qualified scope
 
-This package implements the first Stage 1 host gate of `alica-dsh-rebuild/v1` (PROJECT-ALICA ADR-0020/0021). It is **not** a candidate runtime, a revised installer, a new release manifest or Stage 1 acceptance.
+- Exactly seven services: one Hermes runtime, UNIFY Core, UniUI, MemoryV4, PostgreSQL, Keycloak and Caddy.
+- Ubuntu 26.04 / Docker 29, admitted against observed headroom and explicit candidate limits. No inherited Debian/downgrade/physical-8-GiB requirement was used as a DSH-2 gate.
+- Four internal backend networks. Only Caddy joins the candidate ingress bridge; only `127.0.0.1:18443` is published. A private test CA is verified by the host-side TLS probe. No production route change.
+- Real authenticated Hermes contract, native profile/cron/Kanban CLI, private Core-to-Memory health, seven healthy services, stop/restart and native test-project persistence passed.
+- Existing-workload preservation and existing UI HTTPS 200 passed. Candidate stopped after the exercise. No existing workload was removed or reused.
+- MemoryV4 owns private SQLite storage; it is not a PostgreSQL consumer. PostgreSQL serves Core, Keycloak and the Hermes adapter event journal.
 
-## Run
+## Artifact and evidence ownership
+
+`candidate/` contains the public-safe engineering receipt, image identities/layers, declarative Compose template, one-framework registration, source revisions, matching build metadata and checksums. The assembler rehashes the real image archive and verifies every selected config and ordered filesystem identity before producing this receipt.
+
+Full live inventories, host identity, private paths, observations and failure records remain in **private PROJECT-ALICA evidence**. The public runtime receipt binds that raw evidence by SHA-256 without copying it. The hash-named image archive and executable exercise package remain in the private engineering artifact store; no image binaries or credentials are published here.
+
+The executable admission/render/exercise/transport harness remains owned by **UNIFY**, at `dsh/rebuild/stage1/` and the commit in `candidate/source-revisions.json`. This repository owns distribution assembly, not framework internals. The already-qualified target retains stopped candidate-only test data; the fresh-install harness correctly refuses that occupied namespace. This is not an instruction to delete it or any other host data.
+
+To assemble again with authorized access to the private inputs and a fresh output directory:
 
 ```sh
-python3 rebuild/stage1/qualify_host.py --sudo
+python3 rebuild/stage1/assemble_candidate.py "$PRIVATE_PACKAGE" "$PRIVATE_RUNTIME_EVIDENCE" "$FRESH_OUTPUT"
 python3 -m unittest discover -s rebuild/stage1 -p 'test_*.py' -v
 ```
 
-`--sudo` adds `sudo -n` to read-only Docker calls only. Omit when Docker access is already available. The collector uses Python stdlib, observes `/etc/os-release`, `/proc`, filesystem capacity and Docker inventory. Stdout is JSON. Exit **0** means the retained platform envelope matched; exit **3** means it did not. Neither exit authorizes deployment. It does not install dependencies, pull images, start/stop containers, execute in containers, inspect secret values or modify the host.
+The assembler rejects a failed/incomplete runtime report, changed existing inventory, runtime/image mismatch or archive/config/layer mismatch. Its input `source-revisions.json` records exact recipe revisions. Build metadata can show a preceding HEAD plus working-tree changes; these are not represented as a signed clean-source public release.
 
-The policy is the inherited Debian 13/amd64/systemd, Docker >=28.4.0 <29, Compose >=2.39.4 <3, 4 vCPU, 8 GiB physical RAM and 100 GiB free-disk candidate envelope. No environment variable disables these checks. Headroom for existing workloads and measured candidate resource ceilings require a separate placement assessment even if this policy passes. Swap does not substitute for physical RAM.
+## Limits and remaining stages
 
-Only selected ownership/image labels, mount paths, environment **names**, ports, resource limits and health status are exported. Docker environment values and health logs are omitted. Metadata can still identify infrastructure: keep live inventories in private PROJECT-ALICA, not this public distribution repository. The unit-test host fixture is synthetic and never counted as live acceptance.
+- No production readiness, workload-capacity, migration, backup/recovery or unattended-operation claim.
+- Keycloak is healthy, but product OIDC identity binding is **not ready**.
+- Public installer, signing and release delivery are **not ready**.
+- Native source comparison covers the recorded 357 tracked Python files and declared overlays; it is not a complete third-party supply-chain audit.
+- A stop/restart persistence pass is not a universal graceful-shutdown or disaster-recovery guarantee.
+- The raw exercise admission description retains the earlier phrase “internal-only networks.” The actual qualified graph includes the Caddy-only ingress exception. The receipt and current harness correct that description without changing an admission predicate.
 
-## Observed result, 2026-09-09
-
-Both inspected hosts failed the retained envelope:
-
-- The requested target fails the OS, Docker, physical-RAM and free-disk gates.
-- The engineering host also fails the Compose range.
-
-Exact host identities, versions, resource readings, observation times and private paths are retained in PROJECT-ALICA evidence rather than published here.
-
-All existing services/resources remain protected. Additional unlabeled runtime/database resources have characteristics matching UNIFY combined-runtime acceptance code; their live operational owner/disposal authorization is **not established**. No pruning or removal performed. Missing old temporary fixture paths are contrary evidence, not permission to delete running resources.
-
-## Remaining work and decision
-
-Provide a separate conforming candidate target, or explicitly authorize a revised OS/runtime/resource qualification effort. A budget/new machine and any destructive resize/reinstall are not implicitly authorized by Stage 1. Do not downgrade shared production Docker or weaken the policy to turn red into green.
-
-Then complete ownership closure, candidate source/API compatibility, one-runtime manifest/artifact builds, fresh secrets/volumes/networks, isolated start/stop/restart tests and predecessor-preservation checks. No stub or old multi-runtime image set is installed as a substitute.
-
-Source-image observation narrowed the Hermes discrepancy: the Dockerfile's immutable base registry metadata binds an amd64 manifest and config with revision label `b8b17b8cee50b85adb7fba6ea332dc06731b86f4`. The inherited D6 source list uses `9e54eee44f1cbbe62247a36546e51ff8940373c6`. The inspected SLSA statement resolves base dependencies but does not establish the source Git material. **Neither labels nor this registry lookup prove native API compatibility or complete source provenance.** That gate remains open.
-
-Rollback for this package is a source-commit revert/removal of the isolated worktree. There are no deployed candidate resources to tear down. Never use blanket Docker cleanup as rollback.
+`qualify_host.py` and `sample_host.py` remain historical/read-only tools. The former checks inherited DSH 1.0 policy (`applies_to_dsh2: false`); it is not the revised candidate admission gate. Earlier blocked verdicts are retained in Git and private PROJECT-ALICA history, not current acceptance.
