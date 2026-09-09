@@ -1,0 +1,101 @@
+{
+  "candidate_state": [
+    {
+      "name": "/dsh-stage1-caddy-1",
+      "status": "exited",
+      "exit_code": 0,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-uniui-1",
+      "status": "exited",
+      "exit_code": 0,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-unify-core-1",
+      "status": "exited",
+      "exit_code": 0,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-hermes-1",
+      "status": "exited",
+      "exit_code": 137,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-keycloak-1",
+      "status": "exited",
+      "exit_code": 143,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-memory-v4-1",
+      "status": "exited",
+      "exit_code": 0,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "name": "/dsh-stage1-postgresql-1",
+      "status": "exited",
+      "exit_code": 0,
+      "oom_killed": false,
+      "restart_policy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    }
+  ],
+  "networks": [
+    {
+      "name": "dsh-stage1_application",
+      "internal": true
+    },
+    {
+      "name": "dsh-stage1_database",
+      "internal": true
+    },
+    {
+      "name": "dsh-stage1_control",
+      "internal": true
+    },
+    {
+      "name": "dsh-stage1_memory",
+      "internal": true
+    },
+    {
+      "name": "dsh-stage1_ingress",
+      "internal": false
+    }
+  ],
+  "existing_workloads_still_unchanged": true,
+  "existing_ui_https": "200",
+  "private_raw_evidence_sha256": "de0a8c67de269cfa6e3563d8af598db2e0f9d41f45a7352ec6bd7fe4b2eaec28",
+  "graceful_shutdown_qualified": false,
+  "note": "Hermes exit code 137 with OOMKilled=false under bounded stop. Stop/restart persistence passed; graceful native-runtime shutdown remains unqualified."
+}

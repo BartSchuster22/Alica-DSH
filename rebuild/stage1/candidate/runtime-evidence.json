@@ -1,0 +1,116 @@
+{
+  "schema": "dsh-stage1-public-runtime-receipt/v1",
+  "pass": true,
+  "checks": {
+    "admission_before_deployment": true,
+    "seven_healthy_services": true,
+    "effective_isolation_and_caps": true,
+    "native_adapter_acceptance": true,
+    "native_profile_cron_kanban_cli": true,
+    "private_core_memory_reachability": true,
+    "private_tls_ui_200": true,
+    "first_stop": true,
+    "restart_retains_native_project": true,
+    "resource_guard_not_triggered": true,
+    "final_candidate_stopped": true,
+    "existing_workloads_unchanged": true,
+    "existing_ui_https_200": true
+  },
+  "started_at": "2026-09-09T16:27:24.997966+00:00",
+  "finished_at": "2026-09-09T16:31:43.177961+00:00",
+  "candidate_inventory": [
+    {
+      "name": "/dsh-stage1-caddy-1",
+      "image": "sha256:6a107c5750be160c6b2b909d2329d73e6e4589b618dfcde00bc8145ddd20194f",
+      "service": "caddy",
+      "memory_limit": 67108864,
+      "nano_cpus": 50000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_application",
+        "dsh-stage1_ingress"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-uniui-1",
+      "image": "sha256:222d15cd95d5d6718913c819a8eda0767bb085d1ece4cdd3b68d48a95d8b9f2f",
+      "service": "uniui",
+      "memory_limit": 134217728,
+      "nano_cpus": 100000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_application"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-unify-core-1",
+      "image": "sha256:a4b80f3033a8a958ddc2c24a3ffaa3a145facd4cd94c764bfc05279d719aa614",
+      "service": "unify-core",
+      "memory_limit": 402653184,
+      "nano_cpus": 250000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_application",
+        "dsh-stage1_control",
+        "dsh-stage1_database",
+        "dsh-stage1_memory"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-hermes-1",
+      "image": "sha256:6dcfb52a1fdf81191ea2b9aba036c2127c0b3ba2837281c1c491d9640998aedc",
+      "service": "hermes",
+      "memory_limit": 1073741824,
+      "nano_cpus": 750000000,
+      "pids_limit": 192,
+      "networks": [
+        "dsh-stage1_control",
+        "dsh-stage1_database"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-keycloak-1",
+      "image": "sha256:d6e3d4cf633bfcc8cdfef3e1ab33adb7f48b3096875d96caa00da3e7039b294b",
+      "service": "keycloak",
+      "memory_limit": 805306368,
+      "nano_cpus": 750000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_application",
+        "dsh-stage1_database"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-memory-v4-1",
+      "image": "sha256:f75f26f19fde22e85826d0657e7a23546af85f76cf9a9e7cbc072e202c4c9c82",
+      "service": "memory-v4",
+      "memory_limit": 268435456,
+      "nano_cpus": 200000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_memory"
+      ],
+      "health": "healthy"
+    },
+    {
+      "name": "/dsh-stage1-postgresql-1",
+      "image": "sha256:5c773214aed7adab0900cd0a05dbc468348f76fe1e4c2ca5b0e222e9531f7811",
+      "service": "postgresql",
+      "memory_limit": 268435456,
+      "nano_cpus": 250000000,
+      "pids_limit": 128,
+      "networks": [
+        "dsh-stage1_database"
+      ],
+      "health": "healthy"
+    }
+  ],
+  "preserved_existing_workload_count": 13,
+  "private_raw_evidence_sha256": "301d5f16a880c5ea950d6814005727e573da9ab717a22d0b66d84ccf05587c8f",
+  "note": "Full live inventories, host identity and raw observations remain in private PROJECT-ALICA evidence."
+}

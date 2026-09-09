@@ -1,0 +1,743 @@
+{
+  "name": "${ALICA_PROJECT}",
+  "x-alica-runtime": {
+    "restart": "unless-stopped",
+    "read_only": true,
+    "cap_drop": [
+      "ALL"
+    ],
+    "security_opt": [
+      "no-new-privileges:true"
+    ],
+    "tmpfs": [
+      "/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777"
+    ],
+    "logging": {
+      "driver": "json-file",
+      "options": {
+        "max-size": "10m",
+        "max-file": "3"
+      }
+    }
+  },
+  "services": {
+    "postgresql": {
+      "image": "${POSTGRESQL_IMAGE}",
+      "restart": "no",
+      "user": "70:70",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": {
+        "POSTGRES_DB": "unify",
+        "POSTGRES_USER": "unify",
+        "POSTGRES_PASSWORD_FILE": "/run/secrets/postgres-password",
+        "PGDATA": "/var/lib/postgresql/data/pgdata"
+      },
+      "volumes": [
+        "postgresql-data:/var/lib/postgresql/data",
+        "./postgres-init.sql:/docker-entrypoint-initdb.d/001-alica.sql:ro",
+        "./secrets/postgres-password:/run/secrets/postgres-password:ro"
+      ],
+      "tmpfs": [
+        "/run/postgresql:rw,nosuid,nodev,size=16m,mode=0770,uid=70,gid=70",
+        "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      ],
+      "networks": [
+        "database"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U unify -d unify"
+        ],
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 30
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "postgresql"
+      },
+      "mem_limit": 268435456,
+      "memswap_limit": 268435456,
+      "cpus": 0.25,
+      "pids_limit": 128,
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      }
+    },
+    "keycloak": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777",
+        "/opt/keycloak/data:rw,noexec,nosuid,nodev,size=128m,uid=1000,gid=0,mode=0770"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${KEYCLOAK_IMAGE}",
+      "entrypoint": [
+        "/bin/bash",
+        "-c"
+      ],
+      "command": [
+        "export KC_DB_PASSWORD=\"$$(cat /run/secrets/keycloak-database-password)\"\nexport KC_BOOTSTRAP_ADMIN_PASSWORD=\"$$(cat /run/secrets/keycloak-admin-password)\"\nexec /opt/keycloak/bin/kc.sh start --optimized --http-enabled=true --hostname-strict=false\n"
+      ],
+      "environment": {
+        "KC_DB": "postgres",
+        "KC_DB_URL": "jdbc:postgresql://postgresql:5432/keycloak",
+        "KC_DB_USERNAME": "keycloak",
+        "KC_BOOTSTRAP_ADMIN_USERNAME": "${KEYCLOAK_ADMIN_USERNAME}",
+        "KC_PROXY_HEADERS": "xforwarded",
+        "KC_CACHE": "local",
+        "JAVA_OPTS_KC_HEAP": "-Xms64m -Xmx256m -XX:MaxMetaspaceSize=160m"
+      },
+      "volumes": [
+        "./secrets/keycloak-database-password:/run/secrets/keycloak-database-password:ro",
+        "./secrets/keycloak-admin-password:/run/secrets/keycloak-admin-password:ro"
+      ],
+      "networks": [
+        "database",
+        "application"
+      ],
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.0\r\n\r\n' >&3 && grep -q UP <&3"
+        ],
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 30
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "keycloak"
+      },
+      "mem_limit": 805306368,
+      "memswap_limit": 805306368,
+      "cpus": 0.75,
+      "pids_limit": 128
+    },
+    "memory-v4": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=0700,uid=65532,gid=65532"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${MEMORY_V4_IMAGE}",
+      "user": "65532:65532",
+      "environment": {
+        "MEMORYV4_API_KEY_FILE": "/run/secrets/memory-v4-token",
+        "MEMORYV4_API_ACTOR": "unify-core",
+        "MEMORYV4_API_SCOPE": "org:dsh-stage1",
+        "MEMORYV4_API_ALLOW_ACTOR_DELEGATION": "true",
+        "MEMORYV4_API_PERMISSIONS": "memory.read,memory.search,memory.create-working,memory.create,memory.edit,memory.promote,memory.archive,memory.review,memory.audit.read,memory.admin",
+        "MEMORYV4_DB_PATH": "/data/memoryv4.sqlite3"
+      },
+      "volumes": [
+        "memory-data:/data",
+        "./secrets/memory-v4-token:/run/secrets/memory-v4-token:ro"
+      ],
+      "networks": [
+        "memory"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=2).read()"
+        ],
+        "interval": "10s",
+        "timeout": "3s",
+        "retries": 20
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "memory-v4"
+      },
+      "mem_limit": 268435456,
+      "memswap_limit": 268435456,
+      "cpus": 0.2,
+      "pids_limit": 128
+    },
+    "migrate": {
+      "image": "${UNIFY_CORE_IMAGE}",
+      "command": [
+        "scripts/migrate.mjs",
+        "up"
+      ],
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": {
+        "DATABASE_URL_FILE": "/run/secrets/database-url"
+      },
+      "volumes": [
+        "./secrets/core-database-url:/run/secrets/database-url:ro"
+      ],
+      "networks": [
+        "database"
+      ],
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        }
+      },
+      "profiles": [
+        "jobs"
+      ],
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "migrate"
+      },
+      "restart": "no",
+      "mem_limit": 268435456,
+      "memswap_limit": 268435456,
+      "cpus": 0.5,
+      "pids_limit": 128,
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      }
+    },
+    "bootstrap-admin": {
+      "image": "${UNIFY_CORE_IMAGE}",
+      "command": [
+        "dist/cli/bootstrap-admin.js"
+      ],
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "environment": {
+        "DATABASE_URL_FILE": "/run/secrets/database-url",
+        "AUTH_PEPPER_FILE": "/run/secrets/auth-pepper",
+        "BOOTSTRAP_ADMIN_USERNAME": "${BOOTSTRAP_ADMIN_USERNAME}",
+        "BOOTSTRAP_ADMIN_PASSWORD_FILE": "/run/secrets/bootstrap-admin-password",
+        "BOOTSTRAP_ADMIN_DISPLAY_NAME": "Local Administrator"
+      },
+      "volumes": [
+        "./secrets/core-database-url:/run/secrets/database-url:ro",
+        "./secrets/auth-pepper:/run/secrets/auth-pepper:ro",
+        "./secrets/bootstrap-admin-password:/run/secrets/bootstrap-admin-password:ro"
+      ],
+      "networks": [
+        "database"
+      ],
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        }
+      },
+      "profiles": [
+        "jobs"
+      ],
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "bootstrap-admin"
+      },
+      "restart": "no",
+      "mem_limit": 268435456,
+      "memswap_limit": 268435456,
+      "cpus": 0.5,
+      "pids_limit": 128,
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      }
+    },
+    "unify-core": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${UNIFY_CORE_IMAGE}",
+      "user": "65532:65532",
+      "environment": {
+        "NODE_ENV": "production",
+        "HOST": "0.0.0.0",
+        "PORT": "8080",
+        "RELEASE_ID": "${ALICA_RELEASE_ID}",
+        "HERMES_RUNTIME_IMAGE": "${ALICA_RUNTIME_IMAGE}",
+        "HERMES_DEPLOYED_FRAMEWORK_VERSION": "0.20.0",
+        "HERMES_DEPLOYED_FRAMEWORK_COMMIT": "b8b17b8cee50b85adb7fba6ea332dc06731b86f4",
+        "HERMES_UPSTREAM_REPOSITORY": "NousResearch/hermes-agent",
+        "HERMES_UPDATE_DISCOVERY_INTERVAL_MS": "0",
+        "DATABASE_URL_FILE": "/run/secrets/database-url",
+        "AUTH_PEPPER_FILE": "/run/secrets/auth-pepper",
+        "FRAMEWORK_AUTH_ENV_NAMES": "DSH_FRAMEWORK_TOKEN",
+        "MEMORY_V4_URL": "http://memory-v4:8000",
+        "MEMORY_V4_TOKEN_FILE": "/run/secrets/memory-v4-token",
+        "MEMORY_V4_SCOPE_PATH": "org:dsh-stage1",
+        "MEMORY_V4_ALLOW_PRIVATE_HTTP": "true",
+        "ALLOWED_ORIGINS": "${ALICA_PUBLIC_ORIGIN}",
+        "REQUESTS_PER_MINUTE": "600",
+        "KEYCLOAK_ISSUER": "http://keycloak:8080/realms/alica",
+        "NODE_EXTRA_CA_CERTS": "/run/secrets/framework-ca-cert",
+        "DSH_FRAMEWORK_TOKEN_FILE": "/run/secrets/alica-token",
+        "FRAMEWORK_REGISTRATION_FILE": "/app/frameworks.json",
+        "HERMES_DEPLOYED_IMAGES_JSON": "{\"hermes-alica\":\"${DSH_HERMES_OCI_REF}\"}"
+      },
+      "volumes": [
+        "./secrets/core-database-url:/run/secrets/database-url:ro",
+        "./secrets/auth-pepper:/run/secrets/auth-pepper:ro",
+        "./secrets/alica-token:/run/secrets/alica-token:ro",
+        "./secrets/memory-v4-token:/run/secrets/memory-v4-token:ro",
+        "./secrets/framework-ca.crt:/run/secrets/framework-ca-cert:ro",
+        "./frameworks.json:/app/frameworks.json:ro"
+      ],
+      "networks": [
+        "application",
+        "database",
+        "memory",
+        "control"
+      ],
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        },
+        "keycloak": {
+          "condition": "service_healthy"
+        },
+        "memory-v4": {
+          "condition": "service_healthy"
+        },
+        "hermes": {
+          "condition": "service_healthy"
+        }
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "unify-core"
+      },
+      "mem_limit": 402653184,
+      "memswap_limit": 402653184,
+      "cpus": 0.25,
+      "pids_limit": 128
+    },
+    "uniui": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=16m,mode=0700,uid=65532,gid=65532"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${UNIUI_IMAGE}",
+      "user": "65532:65532",
+      "environment": {
+        "NODE_ENV": "production",
+        "HOST": "0.0.0.0",
+        "PORT": "3000",
+        "GATEWAY_INTERNAL_URL": "http://unify-core:8080"
+      },
+      "networks": [
+        "application"
+      ],
+      "depends_on": {
+        "unify-core": {
+          "condition": "service_healthy"
+        }
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "uniui"
+      },
+      "mem_limit": 134217728,
+      "memswap_limit": 134217728,
+      "cpus": 0.1,
+      "pids_limit": 128
+    },
+    "caddy": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${CADDY_IMAGE}",
+      "user": "10000:10000",
+      "command": [
+        "caddy",
+        "run",
+        "--config",
+        "/etc/caddy/Caddyfile",
+        "--adapter",
+        "caddyfile"
+      ],
+      "volumes": [
+        "./Caddyfile:/etc/caddy/Caddyfile:ro",
+        "caddy-data:/data",
+        "caddy-config:/config",
+        "./secrets/edge.crt:/run/secrets/edge.crt:ro",
+        "./secrets/edge.key:/run/secrets/edge.key:ro"
+      ],
+      "networks": {
+        "application": {
+          "aliases": [
+            "stage1.dsh.invalid"
+          ]
+        },
+        "ingress": {}
+      },
+      "extra_hosts": [
+        "${ALICA_PUBLIC_HOST}:127.0.0.1"
+      ],
+      "ports": [
+        {
+          "target": 8443,
+          "published": "18443",
+          "host_ip": "127.0.0.1",
+          "protocol": "tcp"
+        }
+      ],
+      "depends_on": {
+        "uniui": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "--no-check-certificate",
+          "--quiet",
+          "--output-document=/dev/null",
+          "https://${ALICA_PUBLIC_HOST}:8443/"
+        ],
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 30,
+        "start_period": "5s"
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "caddy"
+      },
+      "mem_limit": 67108864,
+      "memswap_limit": 67108864,
+      "cpus": 0.05,
+      "pids_limit": 128
+    },
+    "hermes": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/run:rw,exec,nosuid,nodev,size=32m,mode=0755",
+        "/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${ALICA_RUNTIME_IMAGE}",
+      "cap_add": [
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "SETGID",
+        "SETUID"
+      ],
+      "environment": {
+        "HERMES_FRAMEWORK_ID": "hermes-alica",
+        "HERMES_DISPLAY_NAME": "DSH",
+        "HERMES_BASE_PROFILE_DISPLAY_NAME": "DSH",
+        "HERMES_INSTANCE_ID": "${ALICA_CELL_ID}-hermes",
+        "HERMES_ADAPTER_SCOPES": "control:read,control:execute,control:events,control:secrets,memory:read,memory:write",
+        "UNIFY_MEMORY_GATEWAY_URL": "http://unify-core:8080",
+        "UNIFY_MEMORY_TOKEN_BUNDLE_FILE": "/run/secrets/adapter-token-bundle",
+        "HERMES_MANAGEMENT_BASE_URL": "http://127.0.0.1:29119",
+        "HERMES_MANAGEMENT_AUTOSTART": "true",
+        "HERMES_API_TOKEN_FILE": "/run/secrets/hermes-api-token",
+        "HERMES_ADAPTER_TOKEN_BUNDLE_FILE": "/run/secrets/adapter-token-bundle",
+        "HERMES_ADAPTER_TLS_KEY_FILE": "/run/secrets/adapter-tls-key",
+        "HERMES_ADAPTER_TLS_CERT_FILE": "/run/secrets/adapter-tls-cert",
+        "HERMES_ADAPTER_TLS_CA_FILE": "/run/secrets/framework-ca-cert",
+        "HERMES_ADAPTER_TLS_SERVER_NAME": "hermes-adapter",
+        "DATABASE_URL_FILE": "/run/secrets/database-url",
+        "NODE_EXTRA_CA_CERTS": "/run/secrets/framework-ca-cert",
+        "RELEASE_ID": "${ALICA_RELEASE_ID}",
+        "PORT": "28082"
+      },
+      "volumes": [
+        "alica-data:/opt/data",
+        "./secrets/alica-api-token:/run/secrets/hermes-api-token:ro",
+        "./secrets/alica-token-bundle.json:/run/secrets/adapter-token-bundle:ro",
+        "./secrets/alica.key:/run/secrets/adapter-tls-key:ro",
+        "./secrets/alica.crt:/run/secrets/adapter-tls-cert:ro",
+        "./secrets/framework-ca.crt:/run/secrets/framework-ca-cert:ro",
+        "./secrets/alica-database-url:/run/secrets/database-url:ro",
+        "./acceptance-client.mjs:/run/acceptance-client.mjs:ro"
+      ],
+      "networks": {
+        "database": {},
+        "control": {
+          "aliases": [
+            "hermes-adapter"
+          ]
+        }
+      },
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/usr/local/bin/node",
+          "/opt/unify-adapter/healthcheck.mjs"
+        ],
+        "interval": "10s",
+        "timeout": "8s",
+        "start_period": "60s",
+        "retries": 30
+      },
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "hermes"
+      },
+      "mem_limit": 1073741824,
+      "memswap_limit": 1073741824,
+      "cpus": 0.75,
+      "pids_limit": 192
+    },
+    "reconcile-frameworks": {
+      "restart": "no",
+      "read_only": true,
+      "cap_drop": [
+        "ALL"
+      ],
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      },
+      "image": "${UNIFY_CORE_IMAGE}",
+      "user": "65532:65532",
+      "environment": {
+        "NODE_ENV": "production",
+        "HOST": "0.0.0.0",
+        "PORT": "8080",
+        "RELEASE_ID": "${ALICA_RELEASE_ID}",
+        "HERMES_RUNTIME_IMAGE": "${ALICA_RUNTIME_IMAGE}",
+        "HERMES_DEPLOYED_FRAMEWORK_VERSION": "0.20.0",
+        "HERMES_DEPLOYED_FRAMEWORK_COMMIT": "b8b17b8cee50b85adb7fba6ea332dc06731b86f4",
+        "HERMES_UPSTREAM_REPOSITORY": "NousResearch/hermes-agent",
+        "HERMES_UPDATE_DISCOVERY_INTERVAL_MS": "0",
+        "DATABASE_URL_FILE": "/run/secrets/database-url",
+        "AUTH_PEPPER_FILE": "/run/secrets/auth-pepper",
+        "FRAMEWORK_AUTH_ENV_NAMES": "DSH_FRAMEWORK_TOKEN",
+        "MEMORY_V4_URL": "http://memory-v4:8000",
+        "MEMORY_V4_TOKEN_FILE": "/run/secrets/memory-v4-token",
+        "MEMORY_V4_SCOPE_PATH": "org:dsh-stage1",
+        "MEMORY_V4_ALLOW_PRIVATE_HTTP": "true",
+        "ALLOWED_ORIGINS": "${ALICA_PUBLIC_ORIGIN}",
+        "REQUESTS_PER_MINUTE": "600",
+        "KEYCLOAK_ISSUER": "http://keycloak:8080/realms/alica",
+        "NODE_EXTRA_CA_CERTS": "/run/secrets/framework-ca-cert",
+        "DSH_FRAMEWORK_TOKEN_FILE": "/run/secrets/alica-token",
+        "FRAMEWORK_REGISTRATION_FILE": "/app/frameworks.json",
+        "HERMES_DEPLOYED_IMAGES_JSON": "{\"hermes-alica\":\"${DSH_HERMES_OCI_REF}\"}"
+      },
+      "volumes": [
+        "./secrets/core-database-url:/run/secrets/database-url:ro",
+        "./secrets/auth-pepper:/run/secrets/auth-pepper:ro",
+        "./secrets/alica-token:/run/secrets/alica-token:ro",
+        "./secrets/memory-v4-token:/run/secrets/memory-v4-token:ro",
+        "./secrets/framework-ca.crt:/run/secrets/framework-ca-cert:ro",
+        "./frameworks.json:/app/frameworks.json:ro"
+      ],
+      "networks": [
+        "application",
+        "database",
+        "memory",
+        "control"
+      ],
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        }
+      },
+      "command": [
+        "dist/cli/reconcile-frameworks.js"
+      ],
+      "profiles": [
+        "jobs"
+      ],
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}",
+        "com.alica.component": "reconcile-frameworks"
+      },
+      "mem_limit": 268435456,
+      "memswap_limit": 268435456,
+      "cpus": 0.5,
+      "pids_limit": 128
+    }
+  },
+  "volumes": {
+    "alica-data": {
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "caddy-config": {
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "caddy-data": {
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "memory-data": {
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "postgresql-data": {
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    }
+  },
+  "networks": {
+    "application": {
+      "internal": true,
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "database": {
+      "internal": true,
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "memory": {
+      "internal": true,
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "control": {
+      "internal": true,
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    },
+    "ingress": {
+      "internal": false,
+      "labels": {
+        "com.alica.stage1": "${ALICA_CELL_ID}"
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "buildx.build.provenance": {
+    "builder": {
+      "id": ""
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "materials": [
+      {
+        "uri": "pkg:docker/docker/dockerfile@1.7?digest=sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e\u0026platform=linux%2Famd64",
+        "digest": {
+          "sha256": "a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e"
+        }
+      },
+      {
+        "uri": "pkg:docker/docker/dockerfile@1.7?digest=sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+        "digest": {
+          "sha256": "a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e"
+        }
+      },
+      {
+        "uri": "pkg:docker/node@22.22.2-alpine?digest=sha256:8ea2348b068a9544dae7317b4f3aafcdc032df1647bb7d768a05a5cad1a7683f\u0026platform=linux%2Famd64",
+        "digest": {
+          "sha256": "8ea2348b068a9544dae7317b4f3aafcdc032df1647bb7d768a05a5cad1a7683f"
+        }
+      },
+      {
+        "uri": "pkg:docker/gcr.io/distroless/nodejs22-debian13@nonroot?digest=sha256:939d6f1671529d230f50b563578e9b5d206af58f038b10ebd7e1233023d4e167\u0026platform=linux%2Famd64",
+        "digest": {
+          "sha256": "939d6f1671529d230f50b563578e9b5d206af58f038b10ebd7e1233023d4e167"
+        }
+      }
+    ],
+    "invocation": {
+      "configSource": {},
+      "parameters": {
+        "frontend": "gateway.v0",
+        "args": {
+          "cmdline": "docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "source": "docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e"
+        },
+        "locals": [
+          {
+            "name": "context"
+          },
+          {
+            "name": "dockerfile"
+          }
+        ]
+      },
+      "environment": {
+        "platform": "linux/amd64"
+      }
+    }
+  },
+  "buildx.build.ref": "dsh-stage1-builder/dsh-stage1-builder0/jpbaii9fxj1dowrprw76gca3b",
+  "containerimage.descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:16df6818ea2abf799b845ef9daa075fa92d02edc9bd241c72413d8e2cb00ae80",
+    "size": 856,
+    "annotations": {
+      "org.opencontainers.image.created": "2026-09-09T14:41:10Z"
+    }
+  },
+  "containerimage.digest": "sha256:16df6818ea2abf799b845ef9daa075fa92d02edc9bd241c72413d8e2cb00ae80",
+  "image.name": "docker.io/alica-dsh-stage1/uniui:ece4c25"
+}

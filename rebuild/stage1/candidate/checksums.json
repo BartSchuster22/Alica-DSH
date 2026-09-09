@@ -1,0 +1,16 @@
+{
+  "build-metadata/caddy-stage1-build-metadata.json": "b49fede8f664365c0f0bac528bef3f7681d0306eba74f4d4fef8eeab37c46961",
+  "build-metadata/core-offline-inventory.json": "0b24201c6d88db48c9e40d8a7e904658b306cb5870183e83b74ed84e382d0c91",
+  "build-metadata/hermes-stage1-native-start.json": "532b9821378db1f71ee8a8167aa8a9d9933d6e44e4b612b92ce8c33bd8a7319c",
+  "build-metadata/keycloak-stage1-build-metadata.json": "ca9427e61910ea0ccb7ca1c5e546a904716a09ea29459f987d1ce1e389d1133d",
+  "build-metadata/memory-stage1-build-metadata.json": "6306dbf3911d1c624493eea88904c91c18b5f0ccdead86436760b90cf8a01c29",
+  "build-metadata/uniui-stage1-build-metadata.json": "4ed0dc313f1c8543d06dea9c266070115087bdad8678e2c3cc182182193e5635",
+  "compose.template.json": "a6a0eddfee44948163518dd47be7b24aa163a03d3c6cb102095d0f4fb11b730a",
+  "final-stop.json": "7b516419ba40614104182a077ee0f4967a62c65989930106184c9ba0d79903e7",
+  "frameworks.json": "f6fe746b780e05ac0714f5463347fbca04f0917501f30359b93dfdfbafee9f16",
+  "images.lock.json": "2cb949a664bcdd51d0fa33424e8e6119164a9e14f1f4d1228c5aa0a9160dd440",
+  "manifest.json": "5ddc259d01bd391b295a75deb981c54a9fe699b8593625cd5ffe98098b92128d",
+  "native-source-check.json": "c77def888a5628729431be79c5b81d40fac41d636de4b451f093d3f414dc36a2",
+  "runtime-evidence.json": "078c05ad080fe092917dc8dff9d9ba8be581b8de6c8125e8d4ed31d1158b2580",
+  "source-revisions.json": "27f8007f49f8305cb73dfd2bfe43e14235e6a1cd4bfe3aa344a8b70c86f96c15"
+}

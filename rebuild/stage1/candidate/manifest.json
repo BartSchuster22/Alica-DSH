@@ -1,0 +1,200 @@
+{
+  "schema": "alica-dsh-stage1-engineering-receipt/v1",
+  "stage1_runtime_gate": "PASS",
+  "production_ready": false,
+  "public_installer_ready": false,
+  "keycloak_product_identity_binding_ready": false,
+  "migration_backup_recovery_ready": false,
+  "services": [
+    "caddy",
+    "hermes",
+    "keycloak",
+    "memory-v4",
+    "postgresql",
+    "unify-core",
+    "uniui"
+  ],
+  "default_hermes_runtimes": 1,
+  "memory_storage": "private MemoryV4-owned SQLite, not PostgreSQL",
+  "postgresql_consumers": [
+    "unify-core",
+    "keycloak",
+    "hermes-adapter-event-journal"
+  ],
+  "ingress": "127.0.0.1:18443; private test CA; no production route change",
+  "runtime_project": "dsh-stage1",
+  "final_state": "stopped; candidate-only test data and private credentials retained on target",
+  "archive": {
+    "filename": "images-98d2e696e10b6ab209a59c536a3df073da67a9c0fbe390c5acc1aaa62ace0a04.tar",
+    "sha256": "98d2e696e10b6ab209a59c536a3df073da67a9c0fbe390c5acc1aaa62ace0a04",
+    "bytes": 1519770624
+  },
+  "archive_distribution": "Retained in the private engineering artifact store; not a public release",
+  "private_raw_image_lock_sha256": "13c903eb7aceb5526cef5b42e1b055e60aa07c6074f09d7a5ef630b050caadcc",
+  "source_inputs": {
+    "unify_harness": "84873cb61504972b43570c3e6283cfc30dc8562b",
+    "unify_hermes_image_source": "73a1a85d4419c6a98729544eb8682d4a583c2fbc",
+    "unify_core_image_source": "9366cca3aced9a562611cba3f728409c27ed92fe",
+    "native_hermes": "b8b17b8cee50b85adb7fba6ea332dc06731b86f4",
+    "memory_v4": "2d74b1cd3cf1da94edb559416d555d107f0c98d9",
+    "distribution_assembler": "b1091d254c3eae7deacd0497f04b33f0baa64fc9",
+    "notes": "Image recipe/material revisions are explicit; build metadata may record a preceding HEAD with working-tree changes. Later formatting-only adapter source passed its build/test stage. Receipt is engineering-only, not a signed public release.",
+    "unify_ui_caddy_keycloak_baseline": "ece4c25902829fba954b7ed3a50ebbee7ff7f3cc"
+  },
+  "resource_admission": {
+    "schema": "dsh-stage1-admission/v1",
+    "scope": "bounded engineering qualification, no production or workload-capacity claim",
+    "pass": true,
+    "checks": {
+      "ubuntu_26_04_amd64": true,
+      "docker_29_observed": true,
+      "compose_v2_observed": true,
+      "cgroup_v2": true,
+      "cpu_cap_plus_host_reserve": true,
+      "memory_cap_plus_1GiB_reserve": true,
+      "disk_images_staging_data_plus_8GiB_reserve": true,
+      "loopback_port_free": true,
+      "candidate_namespace_unused": true,
+      "fresh_candidate_root": true,
+      "isolation_manifest": true,
+      "native_source_verified": true,
+      "image_lock_complete": true,
+      "no_observation_errors": true
+    },
+    "candidate_memory_cap_bytes_including_one_job": 3288334336,
+    "candidate_cpu_cap_including_one_job": 2.85,
+    "host_memory_reserve_bytes": 1073741824,
+    "image_size_sum_bytes": 4143899673,
+    "required_free_disk_bytes": 27313016932,
+    "restrictions": [
+      "one job at a time",
+      "no provider or channel credentials",
+      "internal backend networks; Caddy-only ingress bridge",
+      "loopback-only ingress",
+      "candidate-only stop on low resources",
+      "stop after exercise",
+      "no production mounts, credentials, routes, schedules or Docker socket"
+    ]
+  },
+  "passed_checks": [
+    "admission_before_deployment",
+    "effective_isolation_and_caps",
+    "existing_ui_https_200",
+    "existing_workloads_unchanged",
+    "final_candidate_stopped",
+    "first_stop",
+    "native_adapter_acceptance",
+    "native_profile_cron_kanban_cli",
+    "private_core_memory_reachability",
+    "private_tls_ui_200",
+    "resource_guard_not_triggered",
+    "restart_retains_native_project",
+    "seven_healthy_services"
+  ],
+  "qualified_at": "2026-09-09T16:31:43.177961+00:00",
+  "graceful_shutdown_qualified": false,
+  "shutdown_observation": {
+    "candidate_state": [
+      {
+        "name": "/dsh-stage1-caddy-1",
+        "status": "exited",
+        "exit_code": 0,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-uniui-1",
+        "status": "exited",
+        "exit_code": 0,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-unify-core-1",
+        "status": "exited",
+        "exit_code": 0,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-hermes-1",
+        "status": "exited",
+        "exit_code": 137,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-keycloak-1",
+        "status": "exited",
+        "exit_code": 143,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-memory-v4-1",
+        "status": "exited",
+        "exit_code": 0,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      {
+        "name": "/dsh-stage1-postgresql-1",
+        "status": "exited",
+        "exit_code": 0,
+        "oom_killed": false,
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      }
+    ],
+    "networks": [
+      {
+        "name": "dsh-stage1_application",
+        "internal": true
+      },
+      {
+        "name": "dsh-stage1_database",
+        "internal": true
+      },
+      {
+        "name": "dsh-stage1_control",
+        "internal": true
+      },
+      {
+        "name": "dsh-stage1_memory",
+        "internal": true
+      },
+      {
+        "name": "dsh-stage1_ingress",
+        "internal": false
+      }
+    ],
+    "existing_workloads_still_unchanged": true,
+    "existing_ui_https": "200",
+    "private_raw_evidence_sha256": "de0a8c67de269cfa6e3563d8af598db2e0f9d41f45a7352ec6bd7fe4b2eaec28",
+    "graceful_shutdown_qualified": false,
+    "note": "Hermes exit code 137 with OOMKilled=false under bounded stop. Stop/restart persistence passed; graceful native-runtime shutdown remains unqualified."
+  },
+  "evidence_notes": [
+    "Raw runtime evidence retains the pre-ingress description internal-only networks. The qualified graph has four internal backend networks and a Caddy-only non-internal ingress bridge; no backend may join ingress. This is a description correction, not an admission predicate change."
+  ]
+}

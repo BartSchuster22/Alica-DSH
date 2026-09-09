@@ -1,0 +1,16 @@
+{
+  "source_commit": "b8b17b8cee50b85adb7fba6ea332dc06731b86f4",
+  "image": "alica-dsh-stage1/hermes:native-start",
+  "started": false,
+  "tracked_python_files": 357,
+  "matching": 357,
+  "missing": [],
+  "changed": [],
+  "declared_overlays": [
+    "hermes_cli/web_server.py",
+    "hermes_cli/web_models.py"
+  ],
+  "overlay_source": "deploy/hermes-runtime/patch-provider-validation.py",
+  "pass": true,
+  "scope": "Native CLI, gateway, cron and Kanban Python source consistency, not complete third-party supply-chain audit"
+}

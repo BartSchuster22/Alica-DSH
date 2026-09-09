@@ -1,0 +1,10 @@
+{
+  "unify_harness": "84873cb61504972b43570c3e6283cfc30dc8562b",
+  "unify_hermes_image_source": "73a1a85d4419c6a98729544eb8682d4a583c2fbc",
+  "unify_core_image_source": "9366cca3aced9a562611cba3f728409c27ed92fe",
+  "native_hermes": "b8b17b8cee50b85adb7fba6ea332dc06731b86f4",
+  "memory_v4": "2d74b1cd3cf1da94edb559416d555d107f0c98d9",
+  "distribution_assembler": "b1091d254c3eae7deacd0497f04b33f0baa64fc9",
+  "notes": "Image recipe/material revisions are explicit; build metadata may record a preceding HEAD with working-tree changes. Later formatting-only adapter source passed its build/test stage. Receipt is engineering-only, not a signed public release.",
+  "unify_ui_caddy_keycloak_baseline": "ece4c25902829fba954b7ed3a50ebbee7ff7f3cc"
+}

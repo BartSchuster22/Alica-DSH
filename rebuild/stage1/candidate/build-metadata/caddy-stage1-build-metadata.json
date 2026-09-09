@@ -1,0 +1,44 @@
+{
+  "buildx.build.provenance": {
+    "builder": {
+      "id": ""
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "materials": [
+      {
+        "uri": "pkg:docker/caddy?digest=sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d\u0026platform=linux%2Famd64",
+        "digest": {
+          "sha256": "4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d"
+        }
+      }
+    ],
+    "invocation": {
+      "configSource": {},
+      "parameters": {
+        "frontend": "dockerfile.v0",
+        "locals": [
+          {
+            "name": "context"
+          },
+          {
+            "name": "dockerfile"
+          }
+        ]
+      },
+      "environment": {
+        "platform": "linux/amd64"
+      }
+    }
+  },
+  "buildx.build.ref": "dsh-stage1-builder/dsh-stage1-builder0/fbk30w1vhsigmstzg1e3ruyus",
+  "containerimage.descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:1480138640a205f0b9c81bee6a9e39a8b8ae6607ec3e80669644e974dad279a1",
+    "size": 856,
+    "annotations": {
+      "org.opencontainers.image.created": "2026-09-09T14:46:41Z"
+    }
+  },
+  "containerimage.digest": "sha256:1480138640a205f0b9c81bee6a9e39a8b8ae6607ec3e80669644e974dad279a1",
+  "image.name": "docker.io/alica-dsh-stage1/caddy:ece4c25"
+}
