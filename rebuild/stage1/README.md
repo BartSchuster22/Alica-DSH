@@ -1,5 +1,8 @@
 # Stage 1: read-only qualification — deployment BLOCKED
 
+**Superseding direction (ADR-0022, 2026-09-09):** Stage 1 continues by qualifying the existing Ubuntu 26.04 / Docker 29 host. This script checks the historical DSH 1.0 policy only (`applies_to_dsh2: false`); its rejection must not be used to require a new machine for DSH-2. `sample_host.py` supplies bounded passive observations, not candidate qualification. The earlier blocked-target discussion below is retained as history, superseded where it requires Debian/old resource limits. No candidate deployment until revised qualification passes.
+
+
 This package implements the first Stage 1 host gate of `alica-dsh-rebuild/v1` (PROJECT-ALICA ADR-0020/0021). It is **not** a candidate runtime, a revised installer, a new release manifest or Stage 1 acceptance.
 
 ## Run

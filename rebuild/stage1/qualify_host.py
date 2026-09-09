@@ -40,7 +40,8 @@ def assess(o):
         val = version(o.get(field))
         checks[field] = val is not None and tuple(p[field + '_min']) <= val < tuple(p[field + '_max_exclusive'])
     checks['inventory_complete'] = not o.get('errors') and isinstance(o.get('containers'), list) and isinstance(o.get('volumes'), list) and isinstance(o.get('networks'), list)
-    return {'eligible_inherited_envelope': all(checks.values()), 'checks': checks,
+    return {'policy_id': 'dsh-1.0-historical', 'applies_to_dsh2': False,
+            'eligible_inherited_envelope': all(checks.values()), 'checks': checks,
             'failed_checks': [k for k, ok in checks.items() if not ok],
             'deployment_authorized_by_report': False,
             'note': 'Passing platform checks does not establish shared-host headroom, ownership closure, image compatibility or candidate isolation.'}

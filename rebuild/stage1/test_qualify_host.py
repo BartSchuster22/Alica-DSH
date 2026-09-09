@@ -90,6 +90,12 @@ class QualificationTests(unittest.TestCase):
         changed['started_at'] = 't3'
         self.assertNotEqual(q.binding_fingerprint([c]), q.binding_fingerprint([changed]))
 
+    def test_historical_policy_does_not_qualify_dsh2(self):
+        result = q.assess(self.o)
+        self.assertEqual(result['policy_id'], 'dsh-1.0-historical')
+        self.assertFalse(result['applies_to_dsh2'])
+        self.assertFalse(result['deployment_authorized_by_report'])
+
     def test_no_mutating_docker_command_on_failure_path(self):
         with patch.object(q.subprocess, 'run', side_effect=FileNotFoundError) as runner:
             q.observe(sudo=True)
