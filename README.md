@@ -2,7 +2,11 @@
 
 Canonical public distribution repository for **ALICA Community DSH**.
 
-## D6 independent candidate
+## Rebuild Stage 2 engineering line
+
+See [the Stage 2 operator guide](docs/stage2/README.md) and [pinned release](https://github.com/BartSchuster22/Alica-DSH/releases/tag/dsh-stage2-f390298). Publication is verified only when the release download receipt is attached. Stage 2 is not production/GA approval.
+
+## Historical D6 independent candidate
 
 The exact D6 candidate is under [`release/d6-candidate`](release/d6-candidate). It preserves every accepted D5 component byte while adding real bundled SBOM/provenance evidence, release documentation, signed trust metadata and a closed independent-acceptance matrix.
 

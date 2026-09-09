@@ -1,0 +1,65 @@
+{
+  "scope": "bounded isolated namespace; not pristine-OS or offline acceptance",
+  "installer_revision": "f390298b4be8c164bbb24ee9b4e73466bcc40451",
+  "installer_tests_passed": 21,
+  "observed_at": "2026-09-09T21:38:48.283075+00:00",
+  "checks": {
+    "injected-failure-result.json": {
+      "injected_failure_after_committed_database_write": true,
+      "rolled_back": true,
+      "candidate_stopped": true
+    },
+    "retry-and-database-boundary-result.json": {
+      "database_write_retained_across_failed_install_retry": true,
+      "original_runtime_secret_retained": true,
+      "core_not_superuser": true,
+      "core_cannot_create_roles_or_databases": true,
+      "core_cannot_read_identity_database": true
+    },
+    "oidc-result.json": {
+      "wrong_password_denied": true,
+      "mandatory_password_change": true,
+      "real_core_identity_session": true,
+      "native_inventory_through_identity_session": true
+    },
+    "security-result.json": {
+      "missing_csrf_denied": true,
+      "foreign_origin_denied": true,
+      "owner_can_create_scoped_credential": true,
+      "wrong_project_denied": true,
+      "authorized_missing_project_returns_404": true,
+      "service_token_cannot_be_browser_session": true,
+      "mixed_credential_classes_denied": true,
+      "listed_credentials_redacted": true,
+      "explicit_revocation": true,
+      "revoked_credential_denied": true,
+      "core_password_login_disabled": true
+    },
+    "native-retention-result.json": {
+      "native_agent_executed": true,
+      "model": "gpt-6-astra",
+      "provider": "openai-codex",
+      "expected_response": true,
+      "completed": true,
+      "refresh_credential_copied": false,
+      "configuration_and_native_credential_retained_after_restart": true
+    },
+    "recovery-result.json": {
+      "old_password_denied": true,
+      "recovery_temporary_password_accepted": true,
+      "mandatory_password_change": true,
+      "recovered_core_session": true
+    },
+    "guard": {
+      "install_command": true,
+      "candidate_stopped": true,
+      "existing_workloads_unchanged": true
+    },
+    "browser": {
+      "real_login": true,
+      "native_selected_model_rendered": true,
+      "page_errors": 0,
+      "trust": "explicit leaf SPKI pin; strict CA verification tested separately"
+    }
+  }
+}

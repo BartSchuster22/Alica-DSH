@@ -1,0 +1,46 @@
+name: Publish pinned Stage 2 engineering bundle
+on:
+  push:
+    branches: [rebuild/stage2-secure-install]
+    paths: [.github/workflows/stage2-publish.yml]
+permissions:
+  contents: write
+concurrency:
+  group: stage2-f390298-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dsh-stage2-f390298
+      ASSET: dsh-stage2-f390298-linux-amd64.tar.gz
+      EXPECTED_SHA256: 8fddfc7d2e99f07929955ac10bd6a37de43c9f1504607e80640ca9bf179a49ba
+    steps:
+      - name: Fetch exact artifact and verify before publication
+        run: |
+          set -euo pipefail
+          curl --proto '=http' --fail --retry 3 --max-time 600 --output "$ASSET" "http://167.233.135.142:28444/$ASSET"
+          printf '%s  %s\n' "$EXPECTED_SHA256" "$ASSET" | sha256sum --check -
+          printf '%s  %s\n' "$EXPECTED_SHA256" "$ASSET" > "$ASSET.sha256"
+      - name: Create immutable engineering prerelease
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            printf '%s\n' 'Release already exists; refusing overwrite.' >&2
+            exit 1
+          fi
+          gh release create "$TAG" "$ASSET" "$ASSET.sha256" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title 'DSH rebuild Stage 2 — bounded engineering release' --notes 'Self-contained Linux amd64 engineering bundle. Not production/GA approval. Operator guide and bounded qualification evidence: https://github.com/BartSchuster22/Alica-DSH/blob/dsh-stage2-f390298/docs/stage2/README.md . Public-download verification is complete only when public-download-verification.json is attached.'
+      - name: Verify anonymous HTTPS download and attach receipt
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 --fail --location --retry 6 --retry-all-errors --retry-delay 5 --max-time 600 --output public-download.tar.gz "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ASSET"
+          printf '%s  %s\n' "$EXPECTED_SHA256" public-download.tar.gz | sha256sum --check -
+          python3 - <<'PY'
+          import json,os,datetime
+          from pathlib import Path
+          receipt={'anonymous_https_download':True,'sha256_verified':True,'sha256':os.environ['EXPECTED_SHA256'],'artifact':os.environ['ASSET'],'workflow_commit':os.environ['GITHUB_SHA'],'verified_at':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          Path('public-download-verification.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+          gh release upload "$TAG" public-download-verification.json --repo "$GITHUB_REPOSITORY"
