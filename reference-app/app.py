@@ -57,7 +57,7 @@ class Core:
         except (OSError,urllib.error.URLError,http.client.HTTPException): raise Failure('core_outcome_unknown',502)
 
 class Application:
-    def __init__(self,path,application_id,customers,core,callback_secret=None,retention_days=7):
+    def __init__(self,path,application_id,customers,core,callback_secret=None,retention_days=7,native_project_id=None):
         require(UUID.fullmatch(application_id),'invalid_application_id')
         require(isinstance(customers,dict) and 1<=len(customers)<=1000,'invalid_customers')
         subjects=set()
@@ -70,7 +70,7 @@ class Application:
         require(callback_secret is None or (isinstance(callback_secret,str) and len(callback_secret)>=32),'invalid_callback_secret')
         self.path,self.id,self.customers,self.core=str(path),application_id,customers,core
         self.secret,self.retention=callback_secret,retention_days*86400
-        self.lock=threading.Lock()
+        self.lock=threading.RLock()
         self.dummy=password_hash(secrets.token_urlsafe(24))
         Path(path).parent.mkdir(parents=True,exist_ok=True,mode=0o700)
         with self.db() as db:
@@ -90,6 +90,8 @@ CREATE TABLE IF NOT EXISTS deliveries(id TEXT PRIMARY KEY,receipt TEXT NOT NULL,
                 require(existing['customer'] in customers and customers[existing['customer']]['subject']==existing['subject'],'customer_subject_binding_changed')
             for c in customers:db.execute('INSERT OR IGNORE INTO accounts(customer,subject) VALUES(?,?)',(c,customers[c]['subject']))
         os.chmod(path,0o600)
+        from recurring import Recurring
+        self.recurring=Recurring(self,require,native_project_id)
     @contextlib.contextmanager
     def db(self):
         db=sqlite3.connect(self.path,timeout=10);db.row_factory=sqlite3.Row
@@ -196,6 +198,7 @@ CREATE TABLE IF NOT EXISTS deliveries(id TEXT PRIMARY KEY,receipt TEXT NOT NULL,
             if id:self.row(db,customer,id)
             else:
                 db.execute('UPDATE accounts SET deleting=1 WHERE customer=?',(customer,))
+                db.execute('UPDATE recurring_grants SET revoked=1,payload=NULL WHERE customer=?',(customer,))
             db.execute("UPDATE requests SET deleting=1,attempt=0,polls=0,next_at=0 WHERE customer=? AND state!='deleted'"+(' AND id=?' if id else ''),(customer,id) if id else (customer,))
         return {'deletionRequested':True,'complete':False,'backupExpiry':'operator-managed, not verified'}
     def retry(self,customer,id):
@@ -271,6 +274,15 @@ class Handler(http.server.BaseHTTPRequestHandler):
             name={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}[path]
             return self.send(200,(Path(__file__).parent/'static'/name).read_bytes(),content_type={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path])
         if self.command=='POST' and path=='/callback':return self.send(200,app.callback(self.headers,self.read()))
+        recurring=re.fullmatch(r'/internal/recurring/([a-f0-9-]{36})(?:/events/([A-Za-z0-9_.:-]{1,128})(/cancel)?)?',path)
+        if recurring:
+            auth=self.headers.get('Authorization','');require(auth.startswith('Bearer '),'recurring_auth_denied',401)
+            id,key,cancel=recurring.groups();token=auth[7:]
+            if self.command=='GET' and not key:return self.send(200,app.recurring.info(id,token))
+            require(key and self.command in ('GET','POST'))
+            require(not cancel or self.command=='POST','method_not_allowed',405)
+            if self.command=='POST':require(strict_json(self.read())=={})
+            return self.send(200,app.recurring.event(id,token,key,dispatch=self.command=='POST' and not cancel,cancel=bool(cancel)))
         value={}
         if self.command=='POST':
             require(self.headers.get('Origin')==self.server.origin,'origin_denied',403)
@@ -283,6 +295,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.command=='POST':require(hmac.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']),'csrf_denied',403)
         if self.command=='GET' and path=='/api/state':return self.send(200,{**app.listing(customer),'customer':customer,'csrf':session['csrf']})
         if self.command=='GET' and path=='/api/export':return self.send(200,app.export(customer),{'Content-Disposition':'attachment; filename="customer-export.json"'})
+        if self.command=='POST' and path=='/api/recurring':return self.send(201,app.recurring.issue(customer,value))
+        revoke=re.fullmatch(r'/api/recurring/([a-f0-9-]{36})/revoke',path)
+        if self.command=='POST' and revoke:
+            require(not value);return self.send(200,app.recurring.revoke(customer,revoke[1]))
         if self.command=='POST' and path=='/api/requests':return self.send(202,app.submit(customer,value))
         if self.command=='POST' and path=='/api/delete':
             require(not value);return self.send(202,app.delete(customer))
@@ -321,7 +337,7 @@ def main():
     require(u.scheme=='https' and u.hostname and not u.path and not u.query and not u.fragment and not u.username and not u.password,'invalid_origin')
     customers=strict_json(Path(os.environ['REFERENCE_CUSTOMERS_FILE']).read_bytes())
     core=Core(os.environ['REFERENCE_CORE_URL'],secret_file('REFERENCE_CORE_TOKEN'),os.environ.get('REFERENCE_CORE_CA_FILE'))
-    app=Application(os.environ.get('REFERENCE_DB','/data/reference.sqlite3'),os.environ['REFERENCE_APPLICATION_ID'],customers,core,secret_file('REFERENCE_CALLBACK_SECRET',False),int(os.environ.get('REFERENCE_RETENTION_DAYS','7')))
+    app=Application(os.environ.get('REFERENCE_DB','/data/reference.sqlite3'),os.environ['REFERENCE_APPLICATION_ID'],customers,core,secret_file('REFERENCE_CALLBACK_SECRET',False),int(os.environ.get('REFERENCE_RETENTION_DAYS','7')),native_project_id=os.environ.get('REFERENCE_NATIVE_PROJECT_ID'))
     host=os.environ.get('REFERENCE_BIND','127.0.0.1');port=int(os.environ.get('REFERENCE_PORT','8088'))
     cert,key=os.environ.get('REFERENCE_TLS_CERT'),os.environ.get('REFERENCE_TLS_KEY')
     require(bool(cert)==bool(key),'tls_pair_required')
