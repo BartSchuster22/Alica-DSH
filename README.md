@@ -21,3 +21,10 @@ The exact D6 candidate is under [`release/d6-candidate`](release/d6-candidate). 
 The public D6 workflow builds a checksum-bound complete offline bundle, keyless-signs and verifies immutable OCI images, and runs the same authenticated acceptance matrix on separate online and disconnected clean hosts. Stable/general-availability promotion is not implied by candidate acceptance.
 
 This repository must not contain private signing keys, registry tokens, generated installation credentials or unsupported release claims.
+
+## Rebuild Stage 3 engineering line
+
+[External reference integration — bounded engineering PASS](docs/stage3/README.md).
+[Application contract/schema](docs/stage3/CONTRACT-V1.md) and
+[standalone customer reference app](reference-app/README.md).
+Stage 3 acceptance is not production/GA approval; Stages 4–7 remain separate.
