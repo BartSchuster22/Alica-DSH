@@ -1,0 +1,49 @@
+name: Publish immutable Stage 7 QA candidate
+on:
+  push:
+    branches: [rebuild/stage7-independent-acceptance]
+    paths: [.github/workflows/stage7-publish.yml]
+permissions:
+  contents: write
+concurrency:
+  group: stage7-4273c86-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dsh-stage7-qa1-4273c86
+      ASSET: dsh-stage7-qa1-4273c86-linux-amd64.tar.gz
+      EXPECTED_SHA256: 9f7455f10e90e96b40c631a897354074e03d002720e71b02d4348cb41aba9d16
+    steps:
+      - name: Fetch immutable bytes and authenticated assembly metadata
+        run: |
+          set -euo pipefail
+          curl --proto '=http' --fail --retry 3 --max-time 600 --output "$ASSET" "http://188.245.221.1:28444/$ASSET"
+          printf '%s  %s\n' "$EXPECTED_SHA256" "$ASSET" | sha256sum --check -
+          printf '%s  %s\n' "$EXPECTED_SHA256" "$ASSET" > "$ASSET.sha256"
+          for file in candidate-envelope.json candidate-trust.json build-receipt.json README.md release_trust.py; do
+            curl --proto '=https' --tlsv1.2 --fail --location --max-time 60 "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/stage7/$file" -o "$file"
+          done
+          printf '%s  %s\n' '5af48e80bffa12df7921c2c688f4f2f2249c68032d04e6f7e10621668d264034' candidate-trust.json | sha256sum --check -
+      - name: Publish explicitly unqualified prerelease without overwrite
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            printf '%s\n' 'Release exists: refusing replacement.' >&2
+            exit 1
+          fi
+          gh release create "$TAG" "$ASSET" "$ASSET.sha256" candidate-envelope.json candidate-trust.json build-receipt.json README.md release_trust.py --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title 'Stage 7 QA candidate — independent acceptance pending' --notes 'UNQUALIFIED QA candidate. Stage 7.1–7.3 and production acceptance are NOT granted by publication, checksums or a signature. No Stage 5/6 restored-state results count as independent installation evidence. Operator scope and pinned trust are in the attached README.md. Earlier Stage 2/D6 releases are historical, not evidence for this candidate.'
+      - name: Independently verify anonymous HTTPS asset download
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 --fail --location --retry 6 --retry-all-errors --retry-delay 5 --max-time 600 --output public-download.tar.gz "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ASSET"
+          printf '%s  %s\n' "$EXPECTED_SHA256" public-download.tar.gz | sha256sum --check -
+          python3 - <<'PY'
+          import datetime,json,os
+          from pathlib import Path
+          Path('public-download-verification.json').write_text(json.dumps({'schema':'stage7-public-download/v1','anonymousHttpsDownload':True,'archiveSha256Verified':True,'sha256':os.environ['EXPECTED_SHA256'],'artifact':os.environ['ASSET'],'workflowCommit':os.environ['GITHUB_SHA'],'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'stage7Accepted':False,'productionAccepted':False},indent=2)+'\n')
+          PY
+          gh release upload "$TAG" public-download-verification.json --repo "$GITHUB_REPOSITORY"

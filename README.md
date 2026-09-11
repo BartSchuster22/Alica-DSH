@@ -1,3 +1,5 @@
+> **Stage 7 independent acceptance is IN PROGRESS, not PASS.** The assembled [Stage 7 QA candidate](docs/stage7/README.md) is explicitly unqualified. Historical Stage 2/D6 release results are not whole-product or Stage 7 acceptance. Production readiness remains false.
+
 # Alica-DSH
 
 Canonical public distribution repository for **ALICA Community DSH**.
