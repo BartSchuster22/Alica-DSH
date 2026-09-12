@@ -4,10 +4,10 @@ This is an immutable assembled candidate for independent Stage 7.1–7.3 testing
 
 ## Pinned identity
 
-- Artifact: `dsh-stage7-qa1-4273c86-linux-amd64.tar.gz`
-- Archive SHA-256: `9f7455f10e90e96b40c631a897354074e03d002720e71b02d4348cb41aba9d16`
-- Release SHA-256: `2971e0b830542465e2d53d6f096bde2a4b8484523fc2753b1b4e8c08e4308937`
-- Assembler source: UNIFY `4273c8662bc93c03597dcc8a2ed6104cb1c989b9`.
+- Artifact: `dsh-stage7-qa1-ed2f09b-linux-amd64.tar.gz`
+- Archive SHA-256: `171bfef29467825548cba0c669f14bbe0620178ae546ff8c5dab288b3b334a88`
+- Release SHA-256: `f3ce059a6e2c1b575ead2fb6e6dbededa4420505285ac9220d5a9ea2b13a9da3`
+- Assembler source: UNIFY `ed2f09b62bc93c03597dcc8a2ed6104cb1c989b9`.
 - Host operations source: Doghouse `585494dd0368bdc9ae0cc95586a0ead7e074bab6`.
 - QA key ID: `9b02c8bc02a6b8081031519e192bd508f74d305d1dab9fe28af4440e8b833ac6`.
 - External trust-file SHA-256: `5af48e80bffa12df7921c2c688f4f2f2249c68032d04e6f7e10621668d264034`.
@@ -34,3 +34,6 @@ Required tools: Python 3 with `cryptography`, Docker/Compose, OpenSSL and curl. 
 ## Exclusions
 
 No production routing, PSI activation, licence change, GA release or Stage 7.4–7.6 approval. No day/week soak, unmeasured provider-cost guarantee or general database migration claim. Refer to the later independent acceptance record, when one actually exists; this candidate intentionally carries `stage7Accepted: false`.
+
+## Correction provenance
+This new immutable candidate corrects CLI lifecycle routing through host operations and explicit bind-file modes under restrictive umask. The original 4273c86 public candidate failed a fresh DSH2 installation at PostgreSQL secret readability. No acceptance is inherited. Six packaging/regression tests passed on the development host; target acceptance is pending.
