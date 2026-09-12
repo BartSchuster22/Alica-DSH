@@ -1,0 +1,29 @@
+name: Stage 7 QA documentation correction
+on:
+  push:
+    branches: [rebuild/stage7-independent-acceptance]
+    paths: [.github/workflows/stage7-docs-correction.yml]
+permissions:
+  contents: write
+jobs:
+  correct:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dsh-stage7-qa1-2772d9c
+    steps:
+      - name: Add explicit errata without replacing immutable assets
+        run: |
+          set -euo pipefail
+          FILE=README-correction-2772d9c.md
+          curl --proto '=https' --fail --location "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/stage7/$FILE" -o "$FILE"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets > assets.json
+          python3 - <<'PY'
+          import json
+          names={a['name'] for a in json.load(open('assets.json'))['assets']}
+          assert {'dsh-stage7-qa1-2772d9c-linux-amd64.tar.gz','candidate-envelope.json','candidate-trust.json','README.md'}<=names
+          assert 'README-correction-2772d9c.md' not in names
+          PY
+          gh release upload "$TAG" "$FILE" --repo "$GITHUB_REPOSITORY"
+          gh release edit "$TAG" --notes-file "$FILE" --repo "$GITHUB_REPOSITORY"
