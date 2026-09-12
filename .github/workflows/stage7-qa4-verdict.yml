@@ -1,0 +1,53 @@
+name: Publish scoped Stage 7 QA4 fresh-OS verdict
+on:
+  push:
+    branches: [publish/stage7-qa4-verdict]
+    paths:
+      - .github/workflows/stage7-qa4-verdict.yml
+      - docs/stage7/candidates/72297c3/fresh-os/**
+permissions:
+  contents: write
+concurrency:
+  group: stage7-qa4-final-verdict
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dsh-stage7-qa4-72297c3
+    steps:
+      - name: Fetch immutable commit evidence and verify all checksums
+        run: |
+          set -euo pipefail
+          BASE="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/docs/stage7/candidates/72297c3/fresh-os"
+          for FILE in SHA256SUMS stage7-qa4-verdict.json stage7-qa4-evidence.json stage7-qa4-failures.json stage7-qa4-input-hashes.json stage7-qa4-progress.json stage7-qa4-fresh-os.json stage7-qa4-safeguard.json stage7-qa4-verdict.md; do
+            curl --proto '=https' --tlsv1.2 --fail --location --retry 3 --max-time 60 "$BASE/$FILE" -o "$FILE"
+          done
+          sha256sum --check SHA256SUMS
+          python3 - <<'PY'
+          import json
+          v=json.load(open('stage7-qa4-verdict.json'));p=json.load(open('stage7-qa4-progress.json'));f=json.load(open('stage7-qa4-fresh-os.json'));e=json.load(open('stage7-qa4-evidence.json'))['reports']
+          assert v['verdict']=='PASS' and v['scope']==['7.1','7.2','7.3'] and v['productionAccepted'] is False and v['predecessorPassInherited'] is False
+          assert v['candidateArchiveSha256']=='26f98d6ffc8ecc576628b061a9851b8cd40e1e917f070a8567b9fb48ee969553'
+          assert p['runtimeRecoveryPrivacyGatesExecuted'] and p['qa4RecurrenceExecuted']
+          last={x['name']:x for x in p['stages']};assert len(v['requiredStages'])>=26 and all(last[n]['exitCode']==0 for n in v['requiredStages'])
+          assert f['previousQa4StateAbsent'] and f['emptyDockerVerified'] and f['phase']=='fresh-os-ready'
+          assert e['clean-install']['bootId']==f['after']['bootId'] and e['multi-fact-reuse']['passed'] and e['qualified-recurring-soak']['allResultsCertainAndGoverned']
+          assert e['final-health']['passed'] and e['update-control-state']['highestAttempt']==5
+          PY
+      - name: Append evidence assets without replacing candidate or historical assets
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isPrerelease --jq .isPrerelease | python3 -c 'import sys; assert sys.stdin.read().strip()=="true"'
+          gh release upload "$TAG" stage7-qa4-verdict.json stage7-qa4-evidence.json stage7-qa4-failures.json stage7-qa4-input-hashes.json stage7-qa4-progress.json stage7-qa4-fresh-os.json stage7-qa4-safeguard.json stage7-qa4-verdict.md --repo "$GITHUB_REPOSITORY"
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --prerelease --title 'Stage 7.1–7.3 QA4 — independently qualified (QA only)' --notes-file stage7-qa4-verdict.md
+      - name: Verify anonymous HTTPS evidence downloads
+        run: |
+          set -euo pipefail
+          mkdir anonymous
+          while read -r HASH FILE; do
+            curl --proto '=https' --tlsv1.2 --fail --location --retry 3 --max-time 60 "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$FILE" -o "anonymous/$FILE"
+            printf '%s  %s\n' "$HASH" "anonymous/$FILE" | sha256sum --check -
+          done < SHA256SUMS
